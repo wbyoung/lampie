@@ -1,0 +1,22 @@
+script:
+  random_color_notification:
+    sequence:
+      - variables:
+          lampie_response:
+            led_config:
+              - color: >
+                  {{
+                    [
+                      'red',
+                      'blue',
+                      'cyan',
+                      'green',
+                      'pink',
+                      'orange',
+                      'yellow',
+                      'purple',
+                    ]|random
+                  }}
+                effect: slow_blink
+      - stop: done
+        response_variable: lampie_response

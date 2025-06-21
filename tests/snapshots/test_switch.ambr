@@ -1,0 +1,121 @@
+# serializer version: 1
+# name: test_restore_sensor_save_state[missing_stored_data][stored-data]
+  list([
+    dict({
+      'config_override': None,
+      'on': False,
+    }),
+  ])
+# ---
+# name: test_restore_sensor_save_state[notification_info][stored-data]
+  list([
+    dict({
+      'config_override': None,
+      'on': True,
+    }),
+  ])
+# ---
+# name: test_restore_sensor_save_state[notification_info_with_custom_config][stored-data]
+  list([
+    dict({
+      'config_override': list([
+        dict({
+          'brightness': 1,
+          'color': 'blue',
+          'duration': None,
+          'effect': 'solid',
+        }),
+      ]),
+      'on': True,
+    }),
+  ])
+# ---
+# name: test_restore_state[missing_stored_data][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'led_config_override': None,
+    'notification_on': False,
+  })
+# ---
+# name: test_restore_state[notification_info][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'led_config_override': None,
+    'notification_on': True,
+  })
+# ---
+# name: test_restore_state[notification_info_with_custom_config][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'led_config_override': tuple(
+      dict({
+        'brightness': 1,
+        'color': <Color.BLUE: 170>,
+        'duration': None,
+        'effect': <Effect.SOLID: 1>,
+      }),
+    ),
+    'notification_on': True,
+  })
+# ---
+# name: test_switches[switch.doors_open_notification-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': set({
+    }),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'switch',
+    'entity_category': None,
+    'entity_id': 'switch.doors_open_notification',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:circle-box',
+    'original_name': 'Notification',
+    'platform': 'lampie',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'notification',
+    'unique_id': 'mock-entry-id_notification',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_switches[switch.doors_open_notification-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---

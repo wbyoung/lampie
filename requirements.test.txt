@@ -1,0 +1,9 @@
+pre_commit==4.2.0
+pytest==8.3.5
+pytest-cov==6.0.0
+pytest-homeassistant-custom-component==0.13.252
+syrupy==4.8.1
+
+# pinned to the value in `homeassistant/package_constraints.txt`
+# related: home-assistant/core#147742, home-assistant/core#127688
+bleak==0.22.3

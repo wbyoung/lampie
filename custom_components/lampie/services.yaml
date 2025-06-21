@@ -1,0 +1,30 @@
+activate:
+  fields:
+    notification:
+      required: true
+      selector:
+        text:
+    leds:
+      required: false
+      selector:
+        object:
+override:
+  fields:
+    entity_id:
+      required: true
+      selector:
+        entity:
+          multiple: true
+          filter:
+            integration: zha
+            domain:
+              - light
+              - fan
+    leds:
+      required: true
+      selector:
+        object:
+    name:
+      required: false
+      selector:
+        text:

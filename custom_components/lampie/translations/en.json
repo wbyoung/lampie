@@ -1,0 +1,181 @@
+{
+    "config": {
+        "abort": {
+            "already_configured": "Device is already configured"
+        },
+        "error": {
+            "extra_priorities": "Remove extra entries: {extra_slugs}",
+            "invalid_color_name": "{color} is not a valid color string",
+            "invalid_color_out_of_range": "{color} must be between 0 and 255",
+            "invalid_duration": "{duration} must be a number, 'HH:MM' or 'HH:MM:SS'",
+            "invalid_led_config_length": "Expected exactly seven items; one for each LED",
+            "invalid_led_config_member": "{color} at {index} is not valid",
+            "invalid_led_config_override": "Remove {key} to use advanced LED config",
+            "invalid_led_config_type": "{type} is not supported for colors",
+            "missing_color": "Color must be provided",
+            "missing_effect": "Effect must be provided",
+            "missing_priorities": "Missing entries: {missing_slugs}",
+            "unknown": "Unexpected error"
+        },
+        "step": {
+            "user": {
+                "data": {
+                    "color": "Color, i.e. cyan or a number",
+                    "duration": "Duration in seconds, 'HH:MM' or 'HH:MM:SS'",
+                    "effect": "Effect type",
+                    "name": "Name of the nofitication",
+                    "switches": "Switches to display notifications"
+                },
+                "description": "Coordinate notifications on switches with LED bars",
+                "sections": {
+                    "advanced_options": {
+                        "data": {
+                            "dismiss_action": "Dismiss action",
+                            "end_action": "End action",
+                            "led_config": "Full LED configuration",
+                            "start_action": "Start action"
+                        },
+                        "data_description": {
+                            "led_config": "A list of color, effect, and duration. See the documentation for details."
+                        },
+                        "name": "Advanced configuration"
+                    }
+                },
+                "title": "Lampie"
+            },
+            "priority": {
+                "data": {
+                    "priority": "Include: {overlap}"
+                },
+                "description": "Define priority for notifications on `{switch_id}`.",
+                "title": "{switch_name} Priority"
+            }
+        }
+    },
+    "entity": {
+        "sensor": {
+            "brightness": {
+                "name": "Effect brightness"
+            },
+            "color": {
+                "name": "Effect color"
+            },
+            "duration": {
+                "name": "Effect duration"
+            },
+            "effect": {
+                "name": "Effect type"
+            },
+            "notification": {
+                "name": "Notification"
+            }
+        },
+        "switch": {
+            "notification": {
+                "name": "Notification"
+            }
+        }
+    },
+    "exceptions": {
+        "invalid_notification": {
+            "message": "Invalid notification provided. Got {slug}"
+        }
+    },
+    "issues": {
+        "switch_entity_removed": {
+            "title": "Switch entity has been removed",
+            "fix_flow": {
+                "step": {
+                    "confirm": {
+                        "description": "The entity `{entity_id}` has been removed from HA, but is used in Lampie {name}. Please remove `{entity_id}` from the list of switches.",
+                        "title": "Switch entity has been removed"
+                    }
+                }
+            }
+        }
+    },
+    "options": {
+        "error": {
+            "extra_priorities": "Remove extra entries: {extra_slugs}",
+            "invalid_color_name": "{color} is not a valid color string",
+            "invalid_color_out_of_range": "{color} must be between 0 and 255",
+            "invalid_duration": "{duration} must be a number, 'HH:MM' or 'HH:MM:SS'",
+            "invalid_led_config_length": "Expected exactly seven items; one for each LED",
+            "invalid_led_config_member": "{color} at {index} is not valid",
+            "invalid_led_config_override": "Remove {key} to use advanced LED config",
+            "invalid_led_config_type": "{type} is not supported for colors",
+            "missing_color": "Color must be provided",
+            "missing_effect": "Effect must be provided",
+            "missing_priorities": "Missing entries: {missing_slugs}",
+            "unknown": "Unexpected error"
+        },
+        "step": {
+            "init": {
+                "data": {
+                    "color": "Color, i.e. cyan or a number",
+                    "duration": "Duration in seconds, 'HH:MM' or 'HH:MM:SS'",
+                    "effect": "Effect type",
+                    "name": "Name of the nofitication",
+                    "switches": "Switches to display notifications"
+                },
+                "description": "Coordinate notifications on switches with LED bars",
+                "sections": {
+                    "advanced_options": {
+                        "data": {
+                            "dismiss_action": "Dismiss action",
+                            "end_action": "End action",
+                            "led_config": "Full LED configuration",
+                            "start_action": "Start action"
+                        },
+                        "data_description": {
+                            "led_config": "A list of color, effect, and duration. See the documentation for details."
+                        },
+                        "name": "Advanced configuration"
+                    }
+                },
+                "title": "Lampie: {config_title}"
+            },
+            "priority": {
+                "data": {
+                    "priority": "Include: {overlap}"
+                },
+                "description": "Define priority for notifications on `{switch_id}`.",
+                "title": "{config_title}: {switch_name} Priority"
+            }
+        }
+    },
+    "services": {
+        "activate": {
+            "description": "Activate a notification regardless of whether it is already active.",
+            "fields": {
+                "notification": {
+                    "description": "The slug of the notification to activate.",
+                    "name": "Notification"
+                },
+                "leds": {
+                    "description": "The LED configuration.",
+                    "name": "LEDs"
+                }
+            },
+            "name": "Activate notification"
+        },
+        "override": {
+            "description": "Activate an LED configuration & override any notifications.",
+            "fields": {
+                "entity_id": {
+                    "name": "Switches to target",
+                    "description": "List of switches to activate an LED override."
+                },
+                "leds": {
+                    "description": "The LED configuration.",
+                    "name": "LEDs"
+                },
+                "name": {
+                    "name": "A name for this override",
+                    "description": "Used as the name for the notification in Lampie sensors."
+                }
+            },
+            "name": "Activate LED configuration"
+        }
+    }
+}

@@ -1,0 +1,10 @@
+{
+  "services": {
+    "activate": {
+      "service": "mdi:circle-box"
+    },
+    "override": {
+      "service": "mdi:palette"
+    }
+  }
+}

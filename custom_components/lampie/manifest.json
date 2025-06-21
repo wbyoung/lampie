@@ -1,0 +1,17 @@
+{
+  "domain": "lampie",
+  "name": "Lampie",
+  "codeowners": [
+    "@wbyoung"
+  ],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/wbyoung/lampie",
+  "homekit": {},
+  "iot_class": "calculated",
+  "issue_tracker": "https://github.com/wbyoung/lampie/issues",
+  "requirements": [],
+  "ssdp": [],
+  "version": "0.1.0",
+  "zeroconf": []
+}

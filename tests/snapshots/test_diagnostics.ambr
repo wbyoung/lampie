@@ -1,0 +1,118 @@
+# serializer version: 1
+# name: test_entry_diagnostics
+  dict({
+    'device_registry': dict({
+      'light.kitchen': dict({
+        'area_id': None,
+        'configuration_url': None,
+        'connections': list([
+        ]),
+        'disabled_by': None,
+        'entry_type': None,
+        'hw_version': None,
+        'identifiers': list([
+          list([
+            'zha',
+            'mock-ieee:kitchen',
+            'light',
+            'kitchen',
+          ]),
+        ]),
+        'labels': list([
+        ]),
+        'manufacturer': 'Inovelli',
+        'model': 'VZM31-SN',
+        'model_id': None,
+        'name': 'Kitchen',
+        'name_by_user': None,
+        'serial_number': None,
+        'sw_version': None,
+        'via_device_id': None,
+      }),
+    }),
+    'entry': dict({
+      'data': dict({
+        'color': 'red',
+        'effect': 'open_close',
+        'switches': list([
+          'light.kitchen',
+        ]),
+      }),
+      'disabled_by': None,
+      'discovery_keys': dict({
+      }),
+      'domain': 'lampie',
+      'minor_version': 1,
+      'options': dict({
+      }),
+      'pref_disable_new_entities': False,
+      'pref_disable_polling': False,
+      'source': 'user',
+      'subentries': list([
+      ]),
+      'title': 'Doors Open',
+      'unique_id': None,
+      'version': 1,
+    }),
+    'notification': dict({
+      'expiration': dict({
+        'cancel_listener': None,
+        'started_at': '2025-05-20T03:51:32.003245-07:00',
+      }),
+      'led_config_override': None,
+      'notification_on': True,
+    }),
+    'switch_registry': dict({
+      'light.kitchen': dict({
+        'area_id': None,
+        'categories': dict({
+        }),
+        'config_entry_id': None,
+        'config_subentry_id': None,
+        'disabled_by': None,
+        'entity_category': None,
+        'entity_id': 'light.kitchen',
+        'has_entity_name': False,
+        'hidden_by': None,
+        'icon': None,
+        'labels': list([
+        ]),
+        'name': None,
+        'options': dict({
+        }),
+        'original_name': None,
+        'platform': 'zha',
+        'translation_key': None,
+        'unique_id': 'kitchen',
+      }),
+    }),
+    'switches': dict({
+      'light.kitchen': dict({
+        'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+        'expiration': dict({
+          'cancel_listener': None,
+          'started_at': None,
+        }),
+        'led_config': list([
+          dict({
+            'brightness': 1,
+            'color': 0,
+            'duration': None,
+            'effect': dict({
+              '__type': "<enum 'Effect'>",
+              'repr': '<Effect.OPEN_CLOSE: 6>',
+            }),
+          }),
+        ]),
+        'led_config_source': dict({
+          'type': 'notification',
+          'value': 'doors_open',
+        }),
+        'local_protetction_id': 'switch.kitchen_local_protection',
+        'priorities': list([
+          'doors_open',
+        ]),
+      }),
+    }),
+  })
+# ---
