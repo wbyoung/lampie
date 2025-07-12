@@ -1022,26 +1022,26 @@ class LampieOrchestrator:
             slug: Slug = coordinator.slug
             entry = coordinator.config_entry
             switch_ids: list[SwitchId] = entry.data[CONF_SWITCH_ENTITIES]
-            switch_priorities: dict[SwitchId, tuple[Slug, ...]] = entry.data.get(
+            switch_priorities: dict[SwitchId, list[Slug]] = entry.data.get(
                 CONF_PRIORITY, {}
             )
 
             for switch_id in switch_ids:
                 device_id = async_entity_id_to_device_id(hass, switch_id)
-                priorities = switch_priorities.get(switch_id) or (slug,)
-                expected = self.switch_info(switch_id).priorities
+                priorities = switch_priorities.get(switch_id) or [slug]
+                expected = [*self.switch_info(switch_id).priorities]
                 entity_entries = er.async_entries_for_device(entity_registry, device_id)
 
                 if switch_id in processed_switches and expected != priorities:
                     _LOGGER.warning(
                         "priorities mismatch found for %s in %s: "
-                        "%s (for %s) != %s (for %s)",
+                        "%s (previously seen) != %s (for %s), loading order: %s",
                         switch_id,
                         slug,
-                        list(expected),
-                        ", ".join([repr(slug) for slug in processed_slugs]),
+                        expected,
                         priorities,
                         slug,
+                        ", ".join([repr(slug) for slug in processed_slugs]),
                     )
 
                 if switch_id in processed_switches:

@@ -1622,8 +1622,8 @@ async def test_mismatched_priorities_generate_warning(
 
     assert (
         "priorities mismatch found for light.kitchen in medicine: "
-        "['medicine', 'doors_open'] (for 'doors_open') != "
-        "['doors_open', 'medicine'] (for medicine)"
+        "['medicine', 'doors_open'] (previously seen) != "
+        "['doors_open', 'medicine'] (for medicine), loading order: 'doors_open'"
     ) in caplog.text
 
 
