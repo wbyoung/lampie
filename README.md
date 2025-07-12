@@ -258,6 +258,11 @@ Restore state functionality is provided via a subset of entities:
 
 If you disable these entities, it is possible that various other entities may not be restored after restarting Home Assistant.
 
+## Credits
+
+Icon designed by [Oblak Labs][oblak-labs-attribution].
+
+[oblak-labs-attribution]: https://thenounproject.com/creator/oblaklabs
 [config-flow-start]: https://my.home-assistant.io/redirect/config_flow_start/?domain=lampie
 [hacs]: https://hacs.xyz/
 [hacs-repo]: https://github.com/hacs/integration
