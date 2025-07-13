@@ -5,6 +5,7 @@
 [![Version](https://img.shields.io/github/v/release/wbyoung/lampie)][releases]
 ![Downloads](https://img.shields.io/github/downloads/wbyoung/lampie/total)
 ![Build](https://img.shields.io/github/actions/workflow/status/wbyoung/lampie/pytest.yml)
+[![Github Sponsors](https://img.shields.io/badge/GitHub%20Sponsors-grey?&logo=GitHub-Sponsors&logoColor=EA4AAA)][gh-sponsors]
 
 Orchestrate notifications across multiple Inovelli switches.
 
@@ -269,3 +270,4 @@ Icon designed by [Oblak Labs][oblak-labs-attribution].
 [hacs-badge]: https://my.home-assistant.io/badges/hacs_repository.svg
 [hacs-open]: https://my.home-assistant.io/redirect/hacs_repository/?owner=wbyoung&repository=lampie&category=integration
 [releases]: https://github.com/wbyoung/lampie/releases
+[gh-sponsors]: https://github.com/sponsors/wbyoung
