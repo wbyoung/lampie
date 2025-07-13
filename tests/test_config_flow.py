@@ -1,9 +1,11 @@
 """Test Lampie config flow."""
 
+from contextlib import contextmanager
 from unittest.mock import patch
 
 from homeassistant.config_entries import (
     SOURCE_USER,
+    ConfigEntry,
     ConfigEntryDisabler,
     ConfigEntryState,
 )
@@ -25,7 +27,7 @@ from custom_components.lampie.const import (
 )
 from custom_components.lampie.types import LampieConfigEntryRuntimeData
 
-from . import Scenario, add_mock_switch
+from . import Scenario, add_mock_switch, setup_added_integration
 
 FLOW_SCENARIOS = {
     "non_overlapping": {
@@ -780,6 +782,7 @@ async def test_update_priorities_across_entries(hass: HomeAssistant) -> None:
             },
         ),
     )
+    await setup_added_integration(hass, doors_open_entry)
 
     windows_open_entry = _add_entry_to_hass(
         hass,
@@ -803,6 +806,7 @@ async def test_update_priorities_across_entries(hass: HomeAssistant) -> None:
             },
         ),
     )
+    await setup_added_integration(hass, windows_open_entry)
 
     medicine_entry = _add_entry_to_hass(
         hass,
@@ -835,6 +839,23 @@ async def test_update_priorities_across_entries(hass: HomeAssistant) -> None:
             },
         ),
     )
+    await setup_added_integration(hass, medicine_entry)
+
+    unrelated_entry = _add_entry_to_hass(
+        hass,
+        MockConfigEntry(
+            domain=DOMAIN,
+            title="Unrelated",
+            data={
+                CONF_SWITCH_ENTITIES: [
+                    "light.bathroom",
+                ],
+                CONF_COLOR: "purple",
+                CONF_EFFECT: "aurora",
+            },
+        ),
+    )
+    await setup_added_integration(hass, unrelated_entry)
 
     hass.states.async_set(
         "light.kitchen",
@@ -857,10 +878,12 @@ async def test_update_priorities_across_entries(hass: HomeAssistant) -> None:
         {"friendly_name": "Bedroom Light"},
     )
 
-    with (
-        patch("custom_components.lampie.async_setup_entry", return_value=True),
-        patch("homeassistant.config_entries.ConfigEntries.async_reload") as mock_reload,
-    ):
+    assert doors_open_entry.state is ConfigEntryState.LOADED
+    assert windows_open_entry.state is ConfigEntryState.LOADED
+    assert medicine_entry.state is ConfigEntryState.NOT_LOADED
+    assert unrelated_entry.state is ConfigEntryState.LOADED
+
+    async def reconfigure_windows_open(color: str):
         # start the options flow for the windows open entry
         result = await hass.config_entries.options.async_init(
             windows_open_entry.entry_id
@@ -877,7 +900,7 @@ async def test_update_priorities_across_entries(hass: HomeAssistant) -> None:
             result["flow_id"],
             user_input={
                 CONF_SWITCH_ENTITIES: ["light.dining_room", "light.entryway"],
-                CONF_COLOR: "orange",
+                CONF_COLOR: color,
                 CONF_EFFECT: "open_close",
                 SECTION_ADVANCED_OPTIONS: {},
             },
@@ -907,6 +930,7 @@ async def test_update_priorities_across_entries(hass: HomeAssistant) -> None:
             },
         )
 
+        await hass.async_block_till_done()
         assert result["type"] is FlowResultType.CREATE_ENTRY
 
         assert doors_open_entry.state is ConfigEntryState.LOADED
@@ -942,9 +966,89 @@ async def test_update_priorities_across_entries(hass: HomeAssistant) -> None:
                 "medicine",
             ],
         }
-        await hass.async_block_till_done()
+        assert unrelated_entry.state is ConfigEntryState.LOADED
 
-        assert not mock_reload.called
+    def call_slugs(mock_calls) -> set[str]:
+        entry_slugs = {
+            doors_open_entry.entry_id: "doors_open",
+            windows_open_entry.entry_id: "windows_open",
+            medicine_entry.entry_id: "medicine",
+            unrelated_entry.entry_id: "unrelated",
+        }
+        return {
+            (
+                (entry_id := arg.entry_id if isinstance(arg, ConfigEntry) else arg)
+                and entry_slugs.get(entry_id)
+            )
+            or arg
+            for call in mock_calls
+            for arg in call.args
+        }
+
+    @contextmanager
+    def patches():
+        with (
+            patch("custom_components.lampie.async_setup_entry", return_value=True),
+            patch.object(
+                hass.config_entries,
+                "async_update_entry",
+                side_effect=hass.config_entries.async_update_entry,
+            ) as mock_update_entry,
+            patch.object(
+                hass.config_entries,
+                "async_reload",
+                return_value=True,
+            ) as mock_reload,
+            patch.object(
+                hass.config_entries,
+                "async_unload",
+                side_effect=hass.config_entries.async_unload,
+            ) as mock_unload,
+            patch.object(
+                hass.config_entries,
+                "async_setup",
+                side_effect=hass.config_entries.async_setup,
+            ) as mock_setup,
+        ):
+            yield {
+                "update_entry": mock_update_entry,
+                "reload": mock_reload,
+                "unload": mock_unload,
+                "setup": mock_setup,
+            }
+
+    with patches() as mocks:
+        await reconfigure_windows_open("yellow")
+
+        assert call_slugs(mocks["update_entry"].mock_calls) == {
+            "doors_open",
+            "medicine",
+            "windows_open",
+        }, "update_entry calls do not match expected"
+
+        assert call_slugs(mocks["unload"].mock_calls) == {
+            "doors_open",
+        }, "unload calls do not match expected"
+
+        assert call_slugs(mocks["setup"].mock_calls) == {
+            "doors_open",
+        }, "setup calls do not match expected"
+
+    # another run through should not result in unload or setup at all because
+    # there are no changes to the priorities.
+    with patches() as mocks:
+        await reconfigure_windows_open("green")
+
+        assert call_slugs(mocks["update_entry"].mock_calls) == {
+            "windows_open",
+        }, "update_entry calls do not match expected (no priority change)"
+
+        assert call_slugs(mocks["unload"].mock_calls) == set(), (
+            "mock_unload calls do not match expected (no priority change)"
+        )
+        assert call_slugs(mocks["setup"].mock_calls) == set(), (
+            "mock_setup calls do not match expected (no priority change)"
+        )
 
 
 def _add_entry_to_hass(hass: HomeAssistant, entry: MockConfigEntry):

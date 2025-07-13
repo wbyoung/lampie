@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections import deque
-from collections.abc import AsyncGenerator, Callable, KeysView, Sequence
+from collections.abc import AsyncGenerator, Callable, Sequence
 from contextlib import asynccontextmanager, suppress
 import logging
 from typing import Any, Final, NamedTuple
@@ -115,9 +115,6 @@ class LampieConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call-arg]
         """
         return await self.flow_coordinator.async_step_priority(user_input)
 
-    def priority_keys(self) -> Sequence[str]:  # noqa: PLR6301
-        return []
-
 
 class LampieOptionsFlow(OptionsFlow):
     """Handle a option flow."""
@@ -148,10 +145,6 @@ class LampieOptionsFlow(OptionsFlow):
             The config flow result.
         """
         return await self.flow_coordinator.async_step_priority(user_input)
-
-    def priority_keys(self) -> KeysView[str]:
-        priorities: dict[str, Any] = self.config_entry.data.get(CONF_PRIORITY, {})
-        return priorities.keys()
 
     def update_entry(self, entry_data: dict[str, Any]) -> None:
         self.hass.config_entries.async_update_entry(
@@ -583,22 +576,35 @@ class LampieFlowCoordinator:
 
     @asynccontextmanager
     async def _unloaded(self, other_entries: list[ConfigEntry]) -> AsyncGenerator[None]:
+        other_entries = [  # filter to only the loaded entries
+            entry for entry in other_entries if entry.state is ConfigEntryState.LOADED
+        ]
         for entry in other_entries:
             await self.hass.config_entries.async_unload(entry.entry_id)
 
         yield
 
         for entry in other_entries:
-            if entry.state is ConfigEntryState.NOT_LOADED:
-                await self.hass.config_entries.async_setup(entry.entry_id)
+            assert entry.state is ConfigEntryState.NOT_LOADED
+            await self.hass.config_entries.async_setup(entry.entry_id)
 
     async def _update_other_entries_priorities(self) -> None:
         self_slug = slugify(self.title)
         other_entries = self._other_entries()
+        initial_priorities = self._initial_data().get(CONF_PRIORITY, {})
         new_priorities = self.entry_data.get(CONF_PRIORITY, {})
+
+        # get the keys we need to update, just those that have changed
         priority_keys = [
-            *self.flow_source.priority_keys(),
-            *new_priorities.keys(),
+            key
+            for key in (*initial_priorities.keys(), *new_priorities.keys())
+            if initial_priorities.get(key, []) != new_priorities.get(key, [])
+        ]
+
+        other_entries = [
+            entry
+            for entry in other_entries
+            if (set(priority_keys) & set(entry.data[CONF_SWITCH_ENTITIES]))
         ]
 
         async with (
