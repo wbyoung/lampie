@@ -199,6 +199,42 @@ RESTORE_STATE_SCENARIOS = (
         },
     ),
     Scenario(
+        "switch_info_with_numeric_color",
+        {
+            "storage_entity_id": "sensor.kitchen_notification",
+            "switch_info": LampieSwitchInfo(
+                led_config=(
+                    LEDConfig(80, effect=Effect.SOLID, duration=4, brightness=50.0),
+                ),
+                led_config_source=LEDConfigSource("doors_open"),
+                local_protetction_id="unstored:entity_id",
+                disable_clear_notification_id="unstored:entity_id",
+                priorities=("doors_open",),
+            ),
+            "stored_data": {
+                "config": [
+                    {
+                        "color": 80,
+                        "brightness": 50.0,
+                        "duration": 4,
+                        "effect": "solid",
+                    }
+                ],
+                "source": {
+                    "type": "notification",
+                    "value": "doors_open",
+                },
+            },
+            "expected_states": {
+                "sensor.kitchen_notification": "doors_open",
+                "sensor.kitchen_effect_color": "80",
+                "sensor.kitchen_effect_type": "solid",
+                "sensor.kitchen_effect_duration": "4",
+                "sensor.kitchen_effect_brightness": "50.0",
+            },
+        },
+    ),
+    Scenario(
         "switch_info_for_override_service_call",
         {
             "storage_entity_id": "sensor.kitchen_notification",

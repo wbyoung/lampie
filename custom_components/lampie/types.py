@@ -137,7 +137,9 @@ class LEDConfig:
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> Self:
         return cls(
-            color=getattr(Color, data[ATTR_COLOR].upper()),
+            color=getattr(Color, data[ATTR_COLOR].upper())
+            if isinstance(data[ATTR_COLOR], str)
+            else data[ATTR_COLOR],
             effect=getattr(Effect, data[ATTR_EFFECT].upper()),
             brightness=float(data[ATTR_BRIGHTNESS]),
             duration=int(data[ATTR_DURATION])

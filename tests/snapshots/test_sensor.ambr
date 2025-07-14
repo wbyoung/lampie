@@ -67,6 +67,24 @@
     }),
   ])
 # ---
+# name: test_restore_sensor_save_state[switch_info_with_numeric_color][stored-data]
+  list([
+    dict({
+      'config': list([
+        dict({
+          'brightness': 50.0,
+          'color': 80,
+          'duration': 4,
+          'effect': 'solid',
+        }),
+      ]),
+      'source': dict({
+        'type': 'notification',
+        'value': 'doors_open',
+      }),
+    }),
+  ])
+# ---
 # name: test_restore_state[missing_stored_data][switch_info]
   dict({
     'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
@@ -212,6 +230,32 @@
     'led_config_source': dict({
       'type': <LEDConfigSourceType.SERVICE: 'service'>,
       'value': 'lampie.override',
+    }),
+    'local_protetction_id': 'switch.kitchen_local_protection',
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
+# name: test_restore_state[switch_info_with_numeric_color][switch_info]
+  dict({
+    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'led_config': tuple(
+      dict({
+        'brightness': 50.0,
+        'color': 80,
+        'duration': 4,
+        'effect': <Effect.SOLID: 1>,
+      }),
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': 'doors_open',
     }),
     'local_protetction_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
