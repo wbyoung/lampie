@@ -523,18 +523,18 @@ class LampieOrchestrator:
             )
             _LOGGER.debug("start action response: %r", response)
 
-            if "led_config" in response:
+            if "leds" in response:
                 led_config = tuple(
-                    LEDConfig.from_config(item) for item in response["led_config"]
+                    LEDConfig.from_config(item) for item in response["leds"]
                 )
                 self.store_notification_info(
                     slug,
                     led_config_override=led_config,
                 )
-                response["led_config"] = led_config
+                response["leds"] = led_config
 
         return _StartScriptResult(
-            led_config=response.get("led_config"),
+            led_config=response.get("leds"),
             block_activation=response.get("block_activation", False),
         )
 

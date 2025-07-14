@@ -992,7 +992,7 @@ async def test_toggle_notifications_with_shared_switches(
                 }
             },
             "scripts": _response_script(
-                "color_override", {"led_config": [{"color": "cyan"}]}
+                "color_override", {"leds": [{"color": "cyan"}]}
             ),
             "steps": [
                 {"target": "switch.doors_open_notification", "action": SERVICE_TURN_ON}
@@ -1016,7 +1016,7 @@ async def test_toggle_notifications_with_shared_switches(
                         {
                             "variables": {
                                 "lampie_response": (
-                                    "{{ {'led_config': "
+                                    "{{ {'leds': "
                                     "[{'color': 'green' if notification == 'doors_open' else 'yellow'}] + "
                                     "[{}] * 6 "
                                     "} }}"

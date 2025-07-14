@@ -3,7 +3,7 @@ script:
     sequence:
       - variables:
           lampie_response:
-            led_config:
+            leds:
               - color: >
                   {{
                     [

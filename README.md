@@ -105,7 +105,7 @@ A script that will be called when the notification is activated. This can occur 
 - Input fields:
   - `notification`: The slug of the notification being activated.
 - Response variables _all are optional_:
-  - `led_config` _default_ &raquo; `null`: An override LED configuration to use or `null` to use the already configured value. See: [`examples/start-action.yaml`](examples/start-action.yaml).
+  - `leds` _default_ &raquo; `null`: An override LED configuration to use or `null` to use the already configured value. See: [`examples/start-action.yaml`](examples/start-action.yaml).
   - `block_activation` _default_ &raquo; `False`: Allow blocking of activation (including marking the notification as `on`).
 
 #### End Action
