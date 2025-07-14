@@ -688,7 +688,7 @@ class LampieOrchestrator:
         return {
             "led_color": int(led.color),
             "led_effect": led.effect.value,
-            "led_level": led.brightness * 100,
+            "led_level": int(led.brightness),
             "led_duration": 255
             if led.duration is None
             or led.duration == ALREADY_EXPIRED

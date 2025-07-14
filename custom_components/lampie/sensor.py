@@ -93,8 +93,8 @@ SENSOR_TYPES: tuple[SensorEntityDescription, ...] = (
     LampieSensorDescription(
         key=ATTR_BRIGHTNESS,
         translation_key=ATTR_BRIGHTNESS,
-        value_fn=_combined(lambda item: item.brightness * 100, mean),
-        attrs_fn=lambda data: _multi(data, lambda item: item.brightness * 100),
+        value_fn=_combined(lambda item: item.brightness, mean),
+        attrs_fn=lambda data: _multi(data, lambda item: item.brightness),
         suggested_display_precision=0,
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,

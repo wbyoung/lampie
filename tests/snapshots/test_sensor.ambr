@@ -36,7 +36,7 @@
     dict({
       'config': list([
         dict({
-          'brightness': 0.5,
+          'brightness': 50.0,
           'color': 'red',
           'duration': 4,
           'effect': 'solid',
@@ -54,7 +54,7 @@
     dict({
       'config': list([
         dict({
-          'brightness': 1,
+          'brightness': 100.0,
           'color': 'blue',
           'duration': None,
           'effect': 'solid',
@@ -177,7 +177,7 @@
     }),
     'led_config': tuple(
       dict({
-        'brightness': 0.5,
+        'brightness': 50.0,
         'color': <Color.RED: 0>,
         'duration': 4,
         'effect': <Effect.SOLID: 1>,
@@ -203,7 +203,7 @@
     }),
     'led_config': tuple(
       dict({
-        'brightness': 1,
+        'brightness': 100.0,
         'color': <Color.BLUE: 170>,
         'duration': None,
         'effect': <Effect.SOLID: 1>,
@@ -523,11 +523,11 @@
       'individual': list([
         80.0,
         20.0,
-        100,
+        100.0,
         80.0,
         20.0,
         80.0,
-        100,
+        100.0,
       ]),
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
@@ -820,7 +820,7 @@
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
-    'state': '100',
+    'state': '100.0',
   })
 # ---
 # name: test_sensors_with_simple_led_config[sensor.kitchen_effect_color-entry]

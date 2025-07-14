@@ -20,7 +20,7 @@
     dict({
       'config_override': list([
         dict({
-          'brightness': 1,
+          'brightness': 100.0,
           'color': 'blue',
           'duration': None,
           'effect': 'solid',
@@ -61,7 +61,7 @@
     }),
     'led_config_override': tuple(
       dict({
-        'brightness': 1,
+        'brightness': 100.0,
         'color': <Color.BLUE: 170>,
         'duration': None,
         'effect': <Effect.SOLID: 1>,

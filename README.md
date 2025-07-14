@@ -127,7 +127,7 @@ Individual LEDs can be configured via this option. The configuration should prov
 
 - `color` _default_ &raquo; `blue`: The predefined color (see above) or number in the range 0 - 255.
 - `effect` _default_ &raquo; `solid`: The effect type.
-- `brightness` _default_ &raquo; `1`: The brightness percentage in the range 0 - 1.
+- `brightness` _default_ &raquo; `100`: The brightness percentage in the range 0 - 100.
 - `duration` _default_ &raquo; `null`: The duration in seconds or `null` for a notification that does not expire.
 
 ## Entities

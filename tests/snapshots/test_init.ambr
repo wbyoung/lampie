@@ -592,7 +592,7 @@
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
-    'state': '100',
+    'state': '100.0',
   })
 # ---
 # name: test_toggle_notification_with_actions[color_override][sensor.kitchen_effect_color]
@@ -710,13 +710,13 @@
       'friendly_name': 'Kitchen Effect brightness',
       'icon': 'mdi:timer',
       'individual': list([
-        100,
-        100,
-        100,
-        100,
-        100,
-        100,
-        100,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
       ]),
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
@@ -726,7 +726,7 @@
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
-    'state': '100',
+    'state': '100.0',
   })
 # ---
 # name: test_toggle_notification_with_actions[single_led_change][sensor.kitchen_effect_color]
@@ -1764,7 +1764,7 @@
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
-    'state': '100',
+    'state': '100.0',
   })
 # ---
 # name: test_toggle_notifications[doors_open_5m_duration_unexpired][sensor.kitchen_effect_color]
@@ -1855,7 +1855,7 @@
     }),
     'led_config': tuple(
       dict({
-        'brightness': 1,
+        'brightness': 100.0,
         'color': <Color.RED: 0>,
         'duration': 300,
         'effect': <Effect.OPEN_CLOSE: 6>,
@@ -1921,7 +1921,7 @@
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
-    'state': '100',
+    'state': '100.0',
   })
 # ---
 # name: test_toggle_notifications[doors_open_5m_reactivated_and_unexpired][sensor.kitchen_effect_color]
@@ -2012,7 +2012,7 @@
     }),
     'led_config': tuple(
       dict({
-        'brightness': 1,
+        'brightness': 100.0,
         'color': <Color.RED: 0>,
         'duration': 300,
         'effect': <Effect.OPEN_CLOSE: 6>,
@@ -2705,13 +2705,13 @@
       'friendly_name': 'Kitchen Effect brightness',
       'icon': 'mdi:timer',
       'individual': list([
-        100,
-        100,
-        100,
-        100,
-        100,
-        100,
-        100,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
       ]),
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
@@ -2721,7 +2721,7 @@
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
-    'state': '100',
+    'state': '100.0',
   })
 # ---
 # name: test_toggle_notifications[doors_open_mixed_long_durations_partially_expired][sensor.kitchen_effect_color]
@@ -2839,43 +2839,43 @@
     }),
     'led_config': tuple(
       dict({
-        'brightness': 1,
+        'brightness': 100.0,
         'color': <Color.RED: 0>,
         'duration': None,
         'effect': <Effect.SOLID: 1>,
       }),
       dict({
-        'brightness': 1,
+        'brightness': 100.0,
         'color': <Color.BLUE: 170>,
         'duration': 0,
         'effect': <Effect.CLEAR: 255>,
       }),
       dict({
-        'brightness': 1,
+        'brightness': 100.0,
         'color': <Color.WHITE: 255>,
         'duration': 600.0,
         'effect': <Effect.SOLID: 1>,
       }),
       dict({
-        'brightness': 1,
+        'brightness': 100.0,
         'color': <Color.RED: 0>,
         'duration': None,
         'effect': <Effect.SOLID: 1>,
       }),
       dict({
-        'brightness': 1,
+        'brightness': 100.0,
         'color': <Color.BLUE: 170>,
         'duration': 0,
         'effect': <Effect.CLEAR: 255>,
       }),
       dict({
-        'brightness': 1,
+        'brightness': 100.0,
         'color': <Color.WHITE: 255>,
         'duration': 600.0,
         'effect': <Effect.SOLID: 1>,
       }),
       dict({
-        'brightness': 1,
+        'brightness': 100.0,
         'color': 0,
         'duration': None,
         'effect': <Effect.SOLID: 1>,
@@ -3141,7 +3141,7 @@
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
-    'state': '100',
+    'state': '100.0',
   })
 # ---
 # name: test_toggle_notifications[doors_open_on,kitchen_override_leds_5m_duration_expired][sensor.kitchen_effect_color]
@@ -3230,7 +3230,7 @@
     }),
     'led_config': tuple(
       dict({
-        'brightness': 1,
+        'brightness': 100.0,
         'color': <Color.RED: 0>,
         'duration': None,
         'effect': <Effect.OPEN_CLOSE: 6>,
@@ -3355,7 +3355,7 @@
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
-    'state': '100',
+    'state': '100.0',
   })
 # ---
 # name: test_toggle_notifications[doors_open_on,kitchen_override_leds_dismissed][sensor.kitchen_effect_color]
@@ -3444,7 +3444,7 @@
     }),
     'led_config': tuple(
       dict({
-        'brightness': 1,
+        'brightness': 100.0,
         'color': <Color.RED: 0>,
         'duration': None,
         'effect': <Effect.OPEN_CLOSE: 6>,
@@ -3681,7 +3681,7 @@
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
-    'state': '100',
+    'state': '100.0',
   })
 # ---
 # name: test_toggle_notifications[kitchen_override,doors_open_on][sensor.kitchen_effect_color]
@@ -3770,7 +3770,7 @@
     }),
     'led_config': tuple(
       dict({
-        'brightness': 1,
+        'brightness': 100.0,
         'color': <Color.GREEN: 90>,
         'duration': None,
         'effect': <Effect.SOLID: 1>,
@@ -4186,7 +4186,7 @@
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
-    'state': '100',
+    'state': '100.0',
   })
 # ---
 # name: test_toggle_notifications[kitchen_override_leds_5m_duration_unexpired][sensor.kitchen_effect_color]
@@ -4277,7 +4277,7 @@
     }),
     'led_config': tuple(
       dict({
-        'brightness': 1,
+        'brightness': 100.0,
         'color': <Color.GREEN: 90>,
         'duration': 300.0,
         'effect': <Effect.SOLID: 1>,
@@ -4343,7 +4343,7 @@
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
-    'state': '100',
+    'state': '100.0',
   })
 # ---
 # name: test_toggle_notifications[kitchen_override_leds_clear][sensor.kitchen_effect_color]
@@ -4432,7 +4432,7 @@
     }),
     'led_config': tuple(
       dict({
-        'brightness': 1,
+        'brightness': 100.0,
         'color': <Color.BLUE: 170>,
         'duration': None,
         'effect': <Effect.CLEAR: 255>,
@@ -5141,13 +5141,13 @@
       'friendly_name': 'Kitchen Effect brightness',
       'icon': 'mdi:timer',
       'individual': list([
-        100,
-        100,
-        100,
-        100,
-        100,
-        100,
-        100,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
       ]),
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
@@ -5157,7 +5157,7 @@
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
-    'state': '100',
+    'state': '100.0',
   })
 # ---
 # name: test_toggle_notifications[kitchen_override_leds_mixed_long_durations_partially_expired][sensor.kitchen_effect_color]
@@ -5275,43 +5275,43 @@
     }),
     'led_config': tuple(
       dict({
-        'brightness': 1,
+        'brightness': 100.0,
         'color': <Color.RED: 0>,
         'duration': 600.0,
         'effect': <Effect.SOLID: 1>,
       }),
       dict({
-        'brightness': 1,
+        'brightness': 100.0,
         'color': <Color.BLUE: 170>,
         'duration': 0,
         'effect': <Effect.CLEAR: 255>,
       }),
       dict({
-        'brightness': 1,
+        'brightness': 100.0,
         'color': <Color.WHITE: 255>,
         'duration': 600.0,
         'effect': <Effect.SOLID: 1>,
       }),
       dict({
-        'brightness': 1,
+        'brightness': 100.0,
         'color': <Color.RED: 0>,
         'duration': 600.0,
         'effect': <Effect.SOLID: 1>,
       }),
       dict({
-        'brightness': 1,
+        'brightness': 100.0,
         'color': <Color.BLUE: 170>,
         'duration': 0,
         'effect': <Effect.CLEAR: 255>,
       }),
       dict({
-        'brightness': 1,
+        'brightness': 100.0,
         'color': <Color.WHITE: 255>,
         'duration': 600.0,
         'effect': <Effect.SOLID: 1>,
       }),
       dict({
-        'brightness': 1,
+        'brightness': 100.0,
         'color': 0,
         'duration': 600.0,
         'effect': <Effect.SOLID: 1>,
@@ -5562,7 +5562,7 @@
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
-    'state': '100',
+    'state': '100.0',
   })
 # ---
 # name: test_toggle_notifications[kitchen_override_leds_named][sensor.kitchen_effect_color]
@@ -5651,7 +5651,7 @@
     }),
     'led_config': tuple(
       dict({
-        'brightness': 1,
+        'brightness': 100.0,
         'color': <Color.GREEN: 90>,
         'duration': None,
         'effect': <Effect.SOLID: 1>,
@@ -5877,7 +5877,7 @@
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
-    'state': '100',
+    'state': '100.0',
   })
 # ---
 # name: test_toggle_notifications_with_shared_switches[both_on][sensor.entryway_effect_color]
@@ -5951,7 +5951,7 @@
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
-    'state': '100',
+    'state': '100.0',
   })
 # ---
 # name: test_toggle_notifications_with_shared_switches[both_on][sensor.kitchen_effect_color]
@@ -6197,7 +6197,7 @@
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
-    'state': '100',
+    'state': '100.0',
   })
 # ---
 # name: test_toggle_notifications_with_shared_switches[both_on_then_doors_open_off][sensor.kitchen_effect_color]
@@ -6458,13 +6458,13 @@
       'friendly_name': 'Kitchen Effect brightness',
       'icon': 'mdi:timer',
       'individual': list([
-        100,
-        100,
-        100,
-        100,
-        100,
-        100,
-        100,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
       ]),
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
@@ -6474,7 +6474,7 @@
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
-    'state': '100',
+    'state': '100.0',
   })
 # ---
 # name: test_toggle_notifications_with_shared_switches[both_on_then_doors_open_off_custom_medicine_leds][sensor.kitchen_effect_color]
@@ -6856,7 +6856,7 @@
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
-    'state': '100',
+    'state': '100.0',
   })
 # ---
 # name: test_toggle_notifications_with_shared_switches[both_on_then_medicine_off][sensor.entryway_effect_color]
@@ -6930,7 +6930,7 @@
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
-    'state': '100',
+    'state': '100.0',
   })
 # ---
 # name: test_toggle_notifications_with_shared_switches[both_on_then_medicine_off][sensor.kitchen_effect_color]
@@ -7124,7 +7124,7 @@
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
-    'state': '100',
+    'state': '100.0',
   })
 # ---
 # name: test_toggle_notifications_with_shared_switches[doors_open_on][sensor.entryway_effect_color]
@@ -7198,7 +7198,7 @@
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
-    'state': '100',
+    'state': '100.0',
   })
 # ---
 # name: test_toggle_notifications_with_shared_switches[doors_open_on][sensor.kitchen_effect_color]
@@ -7348,7 +7348,7 @@
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
-    'state': '100',
+    'state': '100.0',
   })
 # ---
 # name: test_toggle_notifications_with_shared_switches[doors_open_on_with_third_switch][sensor.dining_room_effect_color]
@@ -7422,7 +7422,7 @@
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
-    'state': '100',
+    'state': '100.0',
   })
 # ---
 # name: test_toggle_notifications_with_shared_switches[doors_open_on_with_third_switch][sensor.entryway_effect_color]
@@ -7720,7 +7720,7 @@
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,
-    'state': '100',
+    'state': '100.0',
   })
 # ---
 # name: test_toggle_notifications_with_shared_switches[medicine_on][sensor.kitchen_effect_color]

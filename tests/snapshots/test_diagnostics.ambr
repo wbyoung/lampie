@@ -95,7 +95,7 @@
         }),
         'led_config': list([
           dict({
-            'brightness': 1,
+            'brightness': 100.0,
             'color': 0,
             'duration': None,
             'effect': dict({

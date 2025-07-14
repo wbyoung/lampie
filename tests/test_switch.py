@@ -115,7 +115,7 @@ RESTORE_STATE_SCENARIOS = (
                 "config_override": [
                     {
                         "color": "blue",
-                        "brightness": 1,
+                        "brightness": 100,
                         "duration": None,
                         "effect": "solid",
                     }

@@ -87,43 +87,43 @@ async def test_sensors_with_advanced_led_config(
         led_config=(
             LEDConfig(
                 color=Color.RED,
-                brightness=0.8,
+                brightness=80.0,
                 effect=Effect.SLOW_BLINK,
                 duration=5,
             ),
             LEDConfig(
                 color=Color.ORANGE,
-                brightness=0.2,
+                brightness=20.0,
                 effect=Effect.SOLID,
                 duration=10,
             ),
             LEDConfig(
                 color=Color.YELLOW,
-                brightness=1,
+                brightness=100.0,
                 effect=Effect.SLOW_BLINK,
                 duration=5,
             ),
             LEDConfig(
                 color=Color.RED + 1,
-                brightness=0.8,
+                brightness=80.0,
                 effect=Effect.SLOW_BLINK,
                 duration=5,
             ),
             LEDConfig(
                 color=Color.ORANGE - 1,
-                brightness=0.2,
+                brightness=20.0,
                 effect=Effect.SOLID,
                 duration=10,
             ),
             LEDConfig(
                 color=int(Color.YELLOW),
-                brightness=0.8,
+                brightness=80.0,
                 effect=Effect.SLOW_BLINK,
                 duration=5,
             ),
             LEDConfig(
                 color=Color.WHITE,
-                brightness=1,
+                brightness=100.0,
                 effect=Effect.SOLID,
                 duration=10,
             ),
@@ -167,7 +167,7 @@ RESTORE_STATE_SCENARIOS = (
             "switch_info": LampieSwitchInfo(
                 led_config=(
                     LEDConfig(
-                        Color.RED, effect=Effect.SOLID, duration=4, brightness=0.5
+                        Color.RED, effect=Effect.SOLID, duration=4, brightness=50.0
                     ),
                 ),
                 led_config_source=LEDConfigSource("doors_open"),
@@ -179,7 +179,7 @@ RESTORE_STATE_SCENARIOS = (
                 "config": [
                     {
                         "color": "red",
-                        "brightness": 0.5,
+                        "brightness": 50.0,
                         "duration": 4,
                         "effect": "solid",
                     }
@@ -215,7 +215,7 @@ RESTORE_STATE_SCENARIOS = (
                 "config": [
                     {
                         "color": "blue",
-                        "brightness": 1,
+                        "brightness": 100.0,
                         "duration": None,
                         "effect": "solid",
                     }
@@ -230,7 +230,7 @@ RESTORE_STATE_SCENARIOS = (
                 "sensor.kitchen_effect_color": "blue",
                 "sensor.kitchen_effect_type": "solid",
                 "sensor.kitchen_effect_duration": "unknown",
-                "sensor.kitchen_effect_brightness": "100",
+                "sensor.kitchen_effect_brightness": "100.0",
             },
         },
     ),
@@ -284,7 +284,7 @@ RESTORE_STATE_SCENARIOS = (
                         "config": [
                             {
                                 "color": "blue",
-                                "brightness": 1,
+                                "brightness": 100.0,
                                 "duration": None,
                                 "effect": "solid",
                             }

@@ -121,7 +121,7 @@ class LEDConfig:
 
     color: Color | int
     effect: Effect
-    brightness: float = 1
+    brightness: float = 100.0
     duration: int | None = None
 
     def to_dict(self) -> dict[str, Any]:
@@ -139,8 +139,10 @@ class LEDConfig:
         return cls(
             color=getattr(Color, data[ATTR_COLOR].upper()),
             effect=getattr(Effect, data[ATTR_EFFECT].upper()),
-            brightness=data[ATTR_BRIGHTNESS],
-            duration=data[ATTR_DURATION],
+            brightness=float(data[ATTR_BRIGHTNESS]),
+            duration=int(data[ATTR_DURATION])
+            if data[ATTR_DURATION] is not None
+            else None,
         )
 
     @staticmethod
@@ -152,7 +154,7 @@ class LEDConfig:
         color = (
             Color.parse(color) if isinstance(color, str) else Color.color_number(color)
         )
-        brightness: float = config.get(CONF_BRIGTNESS, 1)
+        brightness: float = config.get(CONF_BRIGTNESS, 100.0)
         effect: Effect = getattr(
             Effect, config.get(CONF_EFFECT, Effect.SOLID.name).upper()
         )
