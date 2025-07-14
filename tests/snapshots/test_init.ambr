@@ -487,7 +487,10 @@
       'script',
       'block_next',
       dict({
+        'device_id': None,
+        'dismissed': False,
         'notification': 'doors_open',
+        'switch_id': None,
       }),
     ),
   ])
@@ -1647,7 +1650,10 @@
       'script',
       'block_dismissal',
       dict({
+        'device_id': None,
+        'dismissed': False,
         'notification': 'doors_open',
+        'switch_id': None,
       }),
     ),
   ])

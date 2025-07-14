@@ -105,7 +105,7 @@ class ExpirationInfoSnapshot(dict):  # noqa: FURB189
 
 
 any_device_id_matcher = path_type(
-    mapping={r".*\.device_id": (str,)},
-    replacer=lambda *_: ANY,
+    mapping={r".*\.device_id": (str, None.__class__)},
+    replacer=lambda result, _: ANY if result is not None else None,
     regex=True,
 )

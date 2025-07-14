@@ -549,6 +549,9 @@ class LampieOrchestrator:
         if end_action:
             args = {
                 "notification": slug,
+                "switch_id": None,
+                "device_id": None,
+                "dismissed": False,
                 **(
                     {
                         "switch_id": switch_id,
