@@ -72,7 +72,7 @@ async def _activate(
     slugs: list[str] = call.data[ATTR_NOTIFICATION]
     led_config: tuple[LEDConfig, ...] | None = call.data.get(ATTR_LED_CONFIG)
     led_config_source = (
-        LEDConfigSource("lampie.activate", LEDConfigSourceType.SERVICE)
+        LEDConfigSource(f"{','.join(slugs)}[custom]", LEDConfigSourceType.SERVICE)
         if led_config is not None
         else None
     )
