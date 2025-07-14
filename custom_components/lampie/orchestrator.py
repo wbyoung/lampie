@@ -99,6 +99,11 @@ class _EndScriptResult(NamedTuple):
     block_next: bool
 
 
+class _LampieUnmanagedSwitchCoordinator:
+    def async_update_listeners(self) -> None:
+        pass
+
+
 if TYPE_CHECKING:
 
     class _ExpirationHandler(Protocol):
@@ -487,9 +492,12 @@ class LampieOrchestrator:
             ).notification_on,
         )
 
-    def _primary_for_switch(self, switch_id: SwitchId) -> LampieUpdateCoordinator:
-        slug = self._switches[switch_id].priorities[0]
-        return self._coordinators[slug]
+    def _primary_for_switch(
+        self, switch_id: SwitchId
+    ) -> LampieUpdateCoordinator | _LampieUnmanagedSwitchCoordinator:
+        priorities = self._switches[switch_id].priorities
+        coordinator = self._coordinators.get(priorities[0]) if priorities else None
+        return coordinator or _LampieUnmanagedSwitchCoordinator()
 
     async def _invoke_start_action(self, slug: Slug) -> _StartScriptResult:
         coordinator = self._coordinators[slug]

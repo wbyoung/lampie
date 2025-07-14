@@ -101,7 +101,6 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
             "configs": {
                 "doors_open": {CONF_DURATION: dt.timedelta(seconds=10).total_seconds()}
             },
-            "initial_states": {},
             "steps": [
                 {
                     "action": f"{SWITCH_DOMAIN}.{SERVICE_TURN_ON}",
@@ -619,6 +618,31 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
             "expected_zha_calls": 1,
         },
     ),
+    Scenario(
+        "entryway_override",
+        {
+            "configs": {},
+            "initial_states": {
+                "light.entryway": "on",
+            },
+            "steps": [
+                {
+                    "action": f"{DOMAIN}.{SERVICE_NAME_OVERRIDE}",
+                    "target": "light.entryway",
+                    "data": {
+                        ATTR_LED_CONFIG: [
+                            {ATTR_COLOR: "green"},
+                        ],
+                    },
+                },
+            ],
+            "expected_notification_state": "off",
+            "expected_notifiation_timer": False,
+            "expected_switch_timer": False,
+            "expected_events": 0,
+            "expected_zha_calls": 1,
+        },
+    ),
 )
 async def test_toggle_notifications(
     hass: HomeAssistant,
@@ -651,6 +675,7 @@ async def test_toggle_notifications(
     )
 
     for entity_id, state in (initial_states or {}).items():
+        add_mock_switch(hass, entity_id)
         hass.states.async_set(entity_id, state)
 
     assert await async_setup_component(hass, "script", {"script": scripts})
