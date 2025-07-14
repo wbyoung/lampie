@@ -22,7 +22,6 @@ ATTR_VALUE: Final = "value"
 
 CONF_BRIGTNESS: Final = "brightness"
 CONF_COLOR: Final = "color"
-CONF_DISMISS_ACTION: Final = "dismiss_action"
 CONF_DURATION: Final = "duration"
 CONF_EFFECT: Final = "effect"
 CONF_END_ACTION: Final = "end_action"

@@ -39,7 +39,6 @@ import voluptuous as vol
 
 from .const import (
     CONF_COLOR,
-    CONF_DISMISS_ACTION,
     CONF_DURATION,
     CONF_EFFECT,
     CONF_END_ACTION,
@@ -60,7 +59,6 @@ SECTION_ADVANCED_ATTRS: Final = {
     CONF_LED_CONFIG,
     CONF_START_ACTION,
     CONF_END_ACTION,
-    CONF_DISMISS_ACTION,
 }
 
 
@@ -276,11 +274,6 @@ class LampieFlowCoordinator:
                                 ),
                                 vol.Optional(
                                     CONF_END_ACTION,
-                                ): EntitySelector(
-                                    EntitySelectorConfig(domain=[SCRIPT_DOMAIN]),
-                                ),
-                                vol.Optional(
-                                    CONF_DISMISS_ACTION,
                                 ): EntitySelector(
                                     EntitySelectorConfig(domain=[SCRIPT_DOMAIN]),
                                 ),
