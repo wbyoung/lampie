@@ -648,6 +648,7 @@ class LampieOrchestrator:
         from_params = [self._switch_command_led_params(led) for led in from_config]
         device_info = async_device_info_to_link_from_entity(self._hass, switch_id)
         id_tuple = next(iter(device_info["identifiers"]))
+        updated_leds = []
         ieee = id_tuple[1]
 
         # actually apply the desired changes either for the full LED bar or for
@@ -665,6 +666,7 @@ class LampieOrchestrator:
 
             if led_mode == _LEDMode.INDIVIDUAL:
                 params["led_number"] = idx
+                updated_leds.append(str(idx))
 
             _LOGGER.log(TRACE, "update LED %s command: %r", idx, params)
             await self._hass.services.async_call(
@@ -682,6 +684,12 @@ class LampieOrchestrator:
                 },
                 blocking=True,
             )
+
+        _LOGGER.debug(
+            "issued commands to update %s leds: %s",
+            switch_id,
+            "all" if led_mode == _LEDMode.ALL else ", ".join(updated_leds),
+        )
 
     @staticmethod
     def _switch_command_led_params(led: LEDConfig) -> dict[str, Any]:
