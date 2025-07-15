@@ -308,6 +308,31 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
         },
     ),
     Scenario(
+        "doors_open_multiple_switches_dismissed",
+        {
+            "configs": {
+                "doors_open": {
+                    CONF_SWITCH_ENTITIES: ["light.kitchen", "light.entryway"],
+                }
+            },
+            "initial_states": {
+                "light.entryway": "on",
+            },
+            "steps": [
+                {
+                    "action": f"{SWITCH_DOMAIN}.{SERVICE_TURN_ON}",
+                    "target": "switch.doors_open_notification",
+                },
+                {"event": {"command": "button_3_double"}},
+            ],
+            "expected_notification_state": "off",
+            "expected_notifiation_timer": False,
+            "expected_switch_timer": False,
+            "expected_events": 1,
+            "expected_zha_calls": 3,
+        },
+    ),
+    Scenario(
         "kitchen_override_leds_named",
         {
             "configs": {},

@@ -329,7 +329,7 @@ class LampieOrchestrator:
             await self._switch_apply_notification_or_override(
                 switch_id,
                 exclude={LEDConfigSourceType.NOTIFICATION} if block_next else None,
-                via_switch_firmware=via_switch_firmware,
+                via_switch_firmware=via_switch_firmware and via_switch == switch_id,
                 log_context="dismiss-notification",
             )
 
