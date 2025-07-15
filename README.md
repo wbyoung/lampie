@@ -28,6 +28,20 @@ What it can do:
 
 _Note: currently this is limited to Blue switches using ZHA, but ideally Z2M and other Inovelli switches will be added in the future._
 
+**Configure notifications** for multiple switches easily:
+
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/02f4888b-836c-4114-8a1d-bff66738087e" />
+
+The integration creates a **simple switch** to turn the notification on and off:
+
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/1ed2590f-7fc3-4ff9-99d2-a50cdf75a6c1" />
+
+And sensors on each of the switches to see the **current state of each switch**:
+
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/c36e008d-900f-4daa-9510-60171f6bd45d" />
+
+_Because sometimes one notification may have a [higher priority](#notification-priority) and override another._
+
 ## Installation
 
 ### HACS
@@ -260,6 +274,12 @@ Restore state functionality is provided via a subset of entities:
 - [`sensor.<switch_id>_notification`](#sensorswitch_id_notification)
 
 If you disable these entities, it is possible that various other entities may not be restored after restarting Home Assistant.
+
+## More Screenshots
+
+Once configured, the integration links the various entities to logical devices:
+
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/b961a8f6-0393-41bf-a9cb-185fd83c45f9" />
 
 ## Credits
 
