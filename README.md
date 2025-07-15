@@ -1,6 +1,6 @@
 # Lampie for Home Assistant
 
-[![HACS](https://img.shields.io/badge/custom-grey?logo=homeassistantcommunitystore&logoColor=white)][hacs-repo]
+[![HACS](https://img.shields.io/badge/default-grey?logo=homeassistantcommunitystore&logoColor=white)][hacs-repo]
 [![HACS installs](https://img.shields.io/github/downloads/wbyoung/lampie/latest/total?label=installs&color=blue)][hacs-repo]
 [![Version](https://img.shields.io/github/v/release/wbyoung/lampie)][releases]
 ![Downloads](https://img.shields.io/github/downloads/wbyoung/lampie/total)
@@ -48,13 +48,10 @@ _Because sometimes one notification may have a [higher priority](#notification-p
 
 Installation through [HACS][hacs] is the preferred installation method.
 
-1. Go to the HACS dashboard.
-1. Click the ellipsis menu (three dots) in the top right &rarr; choose _Custom repositories_.
-1. Enter the URL of this GitHub repository,
-   `https://github.com/wbyoung/lampie`, in the _Repository_ field.
-1. Select _Integration_ as the category.
-1. Click _Add_.
-1. Search for "Lampie" &rarr; select it &rarr; press _DOWNLOAD_.
+[![Open the Lampie integration in HACS][hacs-badge]][hacs-open]
+
+1. Click the button above or go to HACS &rarr; Integrations &rarr; search for
+   "Lampie" &rarr; select it.
 1. Press _DOWNLOAD_.
 1. Select the version (it will auto select the latest) &rarr; press _DOWNLOAD_.
 1. Restart Home Assistant then continue to [the setup section](#setup).
