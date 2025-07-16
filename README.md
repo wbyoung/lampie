@@ -18,7 +18,7 @@ What it can do:
 - **Notification priority**  
   Display notifications with a predefined priority so that the most important is shown first.
 - **Longer timeframes**  
-  Notifications can have a duration longer than the built-in limit of 254 second.
+  Notifications can have durations of any length of time & are not constrained by what the switch firmware supports, i.e. 90 minutes.
 - **State monitoring**  
   Entities are created allowing you to tell when notifications are displayed and details about color, effect, duration, etc.
 - **Customized actions**  
@@ -159,7 +159,7 @@ The switch to turn on or off the notification.
 #### Attributes
 
 - `started_at`: The time the notification started, only present when a duration is used.
-- `expires_at`: The time the notification expires, only present when a duration is used and it's longer than the built-in limit of 254 second.
+- `expires_at`: The time the notification expires; only present when a duration is used and it's not supported by the switch firmware.
 
 ### `sensor.<switch_id>_notification`
 
@@ -197,7 +197,7 @@ When using [individual LEDs](#full-led-configuration):
 #### Attributes
 
 - `started_at`: The time the [switch override](#lampieoverride) started, only present when a duration is used.
-- `expires_at`: The time the [switch override](#lampieoverride) expires, only present when a duration is used and it's longer than the built-in limit of 254 second.
+- `expires_at`: The time the [switch override](#lampieoverride) expires; only present when a duration is used and it's not supported by the switch firmware.
 
 ### `sensor.<switch_id>_effect`
 

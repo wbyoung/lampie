@@ -53,7 +53,10 @@ _LOGGER = logging.getLogger(__name__)
 
 ZHA_DOMAIN: Final = "zha"
 ALREADY_EXPIRED: Final = 0
-MAX_FIRMWARE_DURATION_SECONDS: Final = 254
+
+FIRMWARE_SECONDS_MAX = dt.timedelta(seconds=60).total_seconds()
+FIRMWARE_MINUTES_MAX = dt.timedelta(minutes=60).total_seconds()
+FIRMWARE_HOURS_MAX = dt.timedelta(hours=134).total_seconds()
 
 CLEAR_CONFIG = LEDConfig(
     color=Color.BLUE,
@@ -691,8 +694,10 @@ class LampieOrchestrator:
             "all" if led_mode == _LEDMode.ALL else ", ".join(updated_leds),
         )
 
-    @staticmethod
-    def _switch_command_led_params(led: LEDConfig) -> dict[str, Any]:
+    @classmethod
+    def _switch_command_led_params(cls, led: LEDConfig) -> dict[str, Any]:
+        firmware_duration = cls._firmware_duration(led.duration)
+
         return {
             "led_color": int(led.color),
             "led_effect": led.effect.value,
@@ -700,9 +705,30 @@ class LampieOrchestrator:
             "led_duration": 255
             if led.duration is None
             or led.duration == ALREADY_EXPIRED
-            or led.duration > MAX_FIRMWARE_DURATION_SECONDS
-            else max([min([led.duration, MAX_FIRMWARE_DURATION_SECONDS]), 0]),
+            or firmware_duration is None
+            else firmware_duration,
         }
+
+    @classmethod
+    def _firmware_duration(cls, seconds: int | None) -> int | None:
+        """Convert a timeframe to a duration supported by the switch firmware.
+
+        Args:
+            seconds: The duration as a number of seconds.
+
+        Returns:
+            The duration parameter value (0-255) if it can be handled by the
+                firmware or None if it cannot be.
+        """
+        if seconds is None or seconds == ALREADY_EXPIRED:
+            return None
+        if seconds <= FIRMWARE_SECONDS_MAX:
+            return seconds
+        if seconds <= FIRMWARE_MINUTES_MAX and seconds % 60 == 0:
+            return 60 + seconds // 60
+        if seconds <= FIRMWARE_HOURS_MAX and seconds % 3600 == 0:
+            return 120 + seconds // 3600
+        return None
 
     @staticmethod
     @callback
@@ -984,7 +1010,8 @@ class LampieOrchestrator:
             item.duration
             for item in led_config
             if item.duration is not None
-            and item.duration > MAX_FIRMWARE_DURATION_SECONDS
+            and item.duration != ALREADY_EXPIRED
+            and self._firmware_duration(item.duration) is None
         ]
         duration: int | None = min(durations) if durations else None
 

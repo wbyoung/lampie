@@ -116,10 +116,48 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
         },
     ),
     Scenario(
-        "doors_open_5m_duration_unexpired",
+        "doors_open_various_firmware_durations_expired",
         {
             "configs": {
-                "doors_open": {CONF_DURATION: dt.timedelta(minutes=5).total_seconds()}
+                "doors_open": {
+                    CONF_LED_CONFIG: [
+                        {CONF_COLOR: "blue", CONF_DURATION: 30},
+                        {CONF_COLOR: "blue", CONF_DURATION: 300},
+                        {CONF_COLOR: "blue", CONF_DURATION: 7200},
+                        {CONF_COLOR: "blue", CONF_DURATION: 30},
+                        {CONF_COLOR: "blue", CONF_DURATION: 7200},
+                        {CONF_COLOR: "blue", CONF_DURATION: 300},
+                        {CONF_COLOR: "blue", CONF_DURATION: 30},
+                    ]
+                }
+            },
+            "steps": [
+                {
+                    "action": f"{SWITCH_DOMAIN}.{SERVICE_TURN_ON}",
+                    "target": "switch.doors_open_notification",
+                },
+                {"event": {"command": "led_effect_complete_LED_1"}},
+                {"event": {"command": "led_effect_complete_LED_4"}},
+                {"event": {"command": "led_effect_complete_LED_7"}},
+                {"event": {"command": "led_effect_complete_LED_2"}},
+                {"event": {"command": "led_effect_complete_LED_6"}},
+                {"event": {"command": "led_effect_complete_LED_3"}},
+                {"event": {"command": "led_effect_complete_LED_5"}},
+            ],
+            "expected_notification_state": "off",
+            "expected_notifiation_timer": False,
+            "expected_switch_timer": False,
+            "expected_events": 1,
+            "expected_zha_calls": 7,
+        },
+    ),
+    Scenario(
+        "doors_open_5m1s_duration_unexpired",
+        {
+            "configs": {
+                "doors_open": {
+                    CONF_DURATION: dt.timedelta(minutes=5, seconds=1).total_seconds()
+                }
             },
             "steps": [
                 {
@@ -135,10 +173,12 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
         },
     ),
     Scenario(
-        "doors_open_5m_duration_expired",
+        "doors_open_5m1s_duration_expired",
         {
             "configs": {
-                "doors_open": {CONF_DURATION: dt.timedelta(minutes=5).total_seconds()}
+                "doors_open": {
+                    CONF_DURATION: dt.timedelta(minutes=5, seconds=1).total_seconds()
+                }
             },
             "steps": [
                 {
@@ -155,17 +195,17 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
         },
     ),
     Scenario(
-        "doors_open_mixed_long_durations_partially_expired",
+        "doors_open_mixed_specific_durations_partially_expired",
         {
             "configs": {
                 "doors_open": {
                     CONF_LED_CONFIG: [
                         {CONF_COLOR: "red"},
-                        {CONF_COLOR: "orange", CONF_DURATION: "0:05"},
-                        {CONF_COLOR: "white", CONF_DURATION: "0:10"},
+                        {CONF_COLOR: "orange", CONF_DURATION: "0:05:01"},
+                        {CONF_COLOR: "white", CONF_DURATION: "0:10:01"},
                         {CONF_COLOR: "red"},
-                        {CONF_COLOR: "orange", CONF_DURATION: "0:05"},
-                        {CONF_COLOR: "white", CONF_DURATION: "0:10"},
+                        {CONF_COLOR: "orange", CONF_DURATION: "0:05:01"},
+                        {CONF_COLOR: "white", CONF_DURATION: "0:10:01"},
                         {CONF_COLOR: 0},
                     ],
                 }
@@ -175,7 +215,7 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                     "action": f"{SWITCH_DOMAIN}.{SERVICE_TURN_ON}",
                     "target": "switch.doors_open_notification",
                 },
-                {"delay": dt.timedelta(minutes=5, seconds=1)},
+                {"delay": dt.timedelta(minutes=5, seconds=2)},
             ],
             "expected_notification_state": "on",
             "expected_notifiation_timer": True,
@@ -185,18 +225,18 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
         },
     ),
     Scenario(
-        "doors_open_mixed_long_durations_expired",
+        "doors_open_mixed_specific_durations_expired",
         {
             "configs": {
                 "doors_open": {
                     CONF_LED_CONFIG: [
-                        {CONF_COLOR: "red", CONF_DURATION: "0:05"},
-                        {CONF_COLOR: "orange", CONF_DURATION: "0:05"},
-                        {CONF_COLOR: "white", CONF_DURATION: "0:10"},
-                        {CONF_COLOR: "red", CONF_DURATION: "0:05"},
-                        {CONF_COLOR: "orange", CONF_DURATION: "0:05"},
-                        {CONF_COLOR: "white", CONF_DURATION: "0:10"},
-                        {CONF_COLOR: 0, CONF_DURATION: "0:05"},
+                        {CONF_COLOR: "red", CONF_DURATION: "0:05:01"},
+                        {CONF_COLOR: "orange", CONF_DURATION: "0:05:01"},
+                        {CONF_COLOR: "white", CONF_DURATION: "0:10:01"},
+                        {CONF_COLOR: "red", CONF_DURATION: "0:05:01"},
+                        {CONF_COLOR: "orange", CONF_DURATION: "0:05:01"},
+                        {CONF_COLOR: "white", CONF_DURATION: "0:10:01"},
+                        {CONF_COLOR: 0, CONF_DURATION: "0:05:01"},
                     ],
                 }
             },
@@ -205,7 +245,7 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                     "action": f"{SWITCH_DOMAIN}.{SERVICE_TURN_ON}",
                     "target": "switch.doors_open_notification",
                 },
-                {"delay": dt.timedelta(minutes=5, seconds=1)},
+                {"delay": dt.timedelta(minutes=5, seconds=2)},
                 {"delay": dt.timedelta(minutes=5, seconds=1)},
             ],
             "expected_notification_state": "off",
@@ -216,10 +256,12 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
         },
     ),
     Scenario(
-        "doors_open_5m_dismissed",
+        "doors_open_5m1s_dismissed",
         {
             "configs": {
-                "doors_open": {CONF_DURATION: dt.timedelta(minutes=5).total_seconds()}
+                "doors_open": {
+                    CONF_DURATION: dt.timedelta(minutes=5, seconds=1).total_seconds()
+                }
             },
             "steps": [
                 {
@@ -236,10 +278,12 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
         },
     ),
     Scenario(
-        "doors_open_5m_turned_off",
+        "doors_open_5m1s_turned_off",
         {
             "configs": {
-                "doors_open": {CONF_DURATION: dt.timedelta(minutes=5).total_seconds()}
+                "doors_open": {
+                    CONF_DURATION: dt.timedelta(minutes=5, seconds=1).total_seconds()
+                }
             },
             "steps": [
                 {
@@ -259,10 +303,12 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
         },
     ),
     Scenario(
-        "doors_open_5m_reactivated_and_unexpired",
+        "doors_open_5m1s_reactivated_and_unexpired",
         {
             "configs": {
-                "doors_open": {CONF_DURATION: dt.timedelta(minutes=5).total_seconds()}
+                "doors_open": {
+                    CONF_DURATION: dt.timedelta(minutes=5, seconds=1).total_seconds()
+                }
             },
             "steps": [
                 {
@@ -284,11 +330,11 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
         },
     ),
     Scenario(
-        "doors_open_5m_duration_expired_not_blocked_via_end_action",
+        "doors_open_5m1s_duration_expired_not_blocked_via_end_action",
         {
             "configs": {
                 "doors_open": {
-                    CONF_DURATION: dt.timedelta(minutes=5).total_seconds(),
+                    CONF_DURATION: dt.timedelta(minutes=5, seconds=1).total_seconds(),
                     CONF_END_ACTION: "script.block_dismissal",
                 }
             },
@@ -298,7 +344,7 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                     "action": f"{SWITCH_DOMAIN}.{SERVICE_TURN_ON}",
                     "target": "switch.doors_open_notification",
                 },
-                {"delay": dt.timedelta(minutes=5, seconds=1)},
+                {"delay": dt.timedelta(minutes=5, seconds=2)},
             ],
             "expected_notification_state": "off",
             "expected_notifiation_timer": False,
@@ -437,7 +483,7 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
         },
     ),
     Scenario(
-        "kitchen_override_leds_5m_duration_unexpired",
+        "kitchen_override_leds_5m1s_duration_unexpired",
         {
             "configs": {},
             "steps": [
@@ -446,7 +492,7 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                     "target": "light.kitchen",
                     "data": {
                         ATTR_LED_CONFIG: [
-                            {ATTR_COLOR: "green", ATTR_DURATION: "0:05"},
+                            {ATTR_COLOR: "green", ATTR_DURATION: "0:05:01"},
                         ],
                     },
                 },
@@ -512,7 +558,7 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
         },
     ),
     Scenario(
-        "doors_open_on,kitchen_override_leds_5m_duration_expired",
+        "doors_open_on,kitchen_override_leds_5m1s_duration_expired",
         {
             "configs": {},
             "steps": [
@@ -525,11 +571,11 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                     "target": "light.kitchen",
                     "data": {
                         ATTR_LED_CONFIG: [
-                            {ATTR_COLOR: "green", ATTR_DURATION: "0:05"},
+                            {ATTR_COLOR: "green", ATTR_DURATION: "0:05:01"},
                         ],
                     },
                 },
-                {"delay": dt.timedelta(minutes=5, seconds=1)},
+                {"delay": dt.timedelta(minutes=5, seconds=2)},
             ],
             "expected_notification_state": "on",
             "expected_notifiation_timer": False,
@@ -539,7 +585,7 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
         },
     ),
     Scenario(
-        "kitchen_override_leds_5m_duration_expired",
+        "kitchen_override_leds_5m1s_duration_expired",
         {
             "configs": {},
             "steps": [
@@ -548,11 +594,11 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                     "target": "light.kitchen",
                     "data": {
                         ATTR_LED_CONFIG: [
-                            {ATTR_COLOR: "green", ATTR_DURATION: "0:05"},
+                            {ATTR_COLOR: "green", ATTR_DURATION: "0:05:01"},
                         ],
                     },
                 },
-                {"delay": dt.timedelta(minutes=5, seconds=1)},
+                {"delay": dt.timedelta(minutes=5, seconds=2)},
             ],
             "expected_notification_state": "off",
             "expected_notifiation_timer": False,
@@ -562,7 +608,7 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
         },
     ),
     Scenario(
-        "kitchen_override_leds_mixed_long_durations_partially_expired",
+        "kitchen_override_leds_mixed_specific_durations_partially_expired",
         {
             "configs": {},
             "steps": [
@@ -571,17 +617,17 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                     "target": "light.kitchen",
                     "data": {
                         ATTR_LED_CONFIG: [
-                            {CONF_COLOR: "red", CONF_DURATION: "0:10"},
-                            {CONF_COLOR: "orange", CONF_DURATION: "0:05"},
-                            {CONF_COLOR: "white", CONF_DURATION: "0:10"},
-                            {CONF_COLOR: "red", CONF_DURATION: "0:10"},
-                            {CONF_COLOR: "orange", CONF_DURATION: "0:05"},
-                            {CONF_COLOR: "white", CONF_DURATION: "0:10"},
-                            {CONF_COLOR: 0, CONF_DURATION: "0:10"},
+                            {CONF_COLOR: "red", CONF_DURATION: "0:10:01"},
+                            {CONF_COLOR: "orange", CONF_DURATION: "0:05:01"},
+                            {CONF_COLOR: "white", CONF_DURATION: "0:10:01"},
+                            {CONF_COLOR: "red", CONF_DURATION: "0:10:01"},
+                            {CONF_COLOR: "orange", CONF_DURATION: "0:05:01"},
+                            {CONF_COLOR: "white", CONF_DURATION: "0:10:01"},
+                            {CONF_COLOR: 0, CONF_DURATION: "0:10:01"},
                         ],
                     },
                 },
-                {"delay": dt.timedelta(minutes=5, seconds=1)},
+                {"delay": dt.timedelta(minutes=5, seconds=2)},
             ],
             "expected_notification_state": "off",
             "expected_notifiation_timer": False,
@@ -591,7 +637,7 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
         },
     ),
     Scenario(
-        "kitchen_override_leds_mixed_long_durations_expired",
+        "kitchen_override_leds_mixed_specific_durations_expired",
         {
             "configs": {},
             "steps": [
@@ -600,17 +646,17 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                     "target": "light.kitchen",
                     "data": {
                         ATTR_LED_CONFIG: [
-                            {CONF_COLOR: "red", CONF_DURATION: "0:05"},
-                            {CONF_COLOR: "orange", CONF_DURATION: "0:05"},
-                            {CONF_COLOR: "white", CONF_DURATION: "0:10"},
-                            {CONF_COLOR: "red", CONF_DURATION: "0:05"},
-                            {CONF_COLOR: "orange", CONF_DURATION: "0:05"},
-                            {CONF_COLOR: "white", CONF_DURATION: "0:10"},
-                            {CONF_COLOR: 0, CONF_DURATION: "0:05"},
+                            {CONF_COLOR: "red", CONF_DURATION: "0:05:01"},
+                            {CONF_COLOR: "orange", CONF_DURATION: "0:05:01"},
+                            {CONF_COLOR: "white", CONF_DURATION: "0:10:01"},
+                            {CONF_COLOR: "red", CONF_DURATION: "0:05:01"},
+                            {CONF_COLOR: "orange", CONF_DURATION: "0:05:01"},
+                            {CONF_COLOR: "white", CONF_DURATION: "0:10:01"},
+                            {CONF_COLOR: 0, CONF_DURATION: "0:05:01"},
                         ],
                     },
                 },
-                {"delay": dt.timedelta(minutes=5, seconds=1)},
+                {"delay": dt.timedelta(minutes=5, seconds=2)},
                 {"delay": dt.timedelta(minutes=5, seconds=1)},
             ],
             "expected_notification_state": "off",
@@ -621,7 +667,7 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
         },
     ),
     Scenario(
-        "kitchen_override_leds_5m_duration_dismissed",
+        "kitchen_override_leds_5m1s_duration_dismissed",
         {
             "configs": {},
             "steps": [
@@ -630,7 +676,7 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                     "target": "light.kitchen",
                     "data": {
                         ATTR_LED_CONFIG: [
-                            {ATTR_COLOR: "green", ATTR_DURATION: "0:05"},
+                            {ATTR_COLOR: "green", ATTR_DURATION: "0:05:01"},
                         ],
                     },
                 },
