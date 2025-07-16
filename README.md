@@ -17,7 +17,7 @@ What it can do:
   Dismissal of the notification from any switch will dismiss the notification on all switches.
 - **Notification priority**  
   Display notifications with a predefined priority so that the most important is shown first.
-- **Longer timeframes**  
+- **Customizable timeframes**  
   Notifications can have durations of any length of time & are not constrained by what the switch firmware supports, i.e. 90 minutes.
 - **State monitoring**  
   Entities are created allowing you to tell when notifications are displayed and details about color, effect, duration, etc.
