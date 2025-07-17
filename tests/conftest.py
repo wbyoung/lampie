@@ -1,6 +1,8 @@
 """Fixtures for testing."""
 
+from collections.abc import Generator
 import logging
+from unittest.mock import AsyncMock, Mock, patch
 
 from freezegun.api import FrozenDateTimeFactory
 from homeassistant.core import HomeAssistant
@@ -16,6 +18,7 @@ from custom_components.lampie.const import (
     DOMAIN,
     TRACE,
 )
+from custom_components.lampie.types import Integration
 
 from . import MOCK_UTC_NOW, MockNow, add_mock_switch, setup_integration
 from .syrupy import LampieSnapshotExtension
@@ -52,6 +55,19 @@ def auto_enable_custom_integrations(enable_custom_integrations):
     return
 
 
+@pytest.fixture(name="mqtt_subscribe", autouse=True)
+def auto_patch_mqtt_async_subscribe() -> Generator[AsyncMock]:
+    """Patch mqtt.async_subscribe."""
+
+    unsub = Mock()
+
+    with patch(
+        "homeassistant.components.mqtt.async_subscribe", return_value=unsub
+    ) as mock_subscribe:
+        mock_subscribe._unsub = unsub
+        yield mock_subscribe
+
+
 @pytest.fixture
 def snapshot(snapshot: SnapshotAssertion) -> SnapshotAssertion:
     """Return snapshot assertion fixture with the Home Assistant extension."""
@@ -84,11 +100,22 @@ def mock_config_entry() -> MockConfigEntry:
     )
 
 
+@pytest.fixture(name="integration_domain")
+def mock_integration_domain() -> Integration:
+    """Return the default mocked integration domain."""
+    return Integration.ZHA
+
+
 @pytest.fixture(name="switch")
-def mock_switch(hass: HomeAssistant) -> er.RegistryEntry:
+def mock_switch(
+    hass: HomeAssistant, integration_domain: Integration
+) -> er.RegistryEntry:
     """Return the default mocked config entry."""
     return add_mock_switch(
-        hass, "light.kitchen", {"manufacturer": "Inovelli", "model": "VZM31-SN"}
+        hass,
+        "light.kitchen",
+        {"manufacturer": "Inovelli", "model": "VZM31-SN"},
+        integration=integration_domain,
     )
 
 

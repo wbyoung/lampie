@@ -16,6 +16,8 @@ from pytest_homeassistant_custom_component.common import (
     async_fire_time_changed,
 )
 
+from custom_components.lampie.types import Integration
+
 ZHA_DOMAIN = "zha"
 MOCK_UTC_NOW = dt.datetime(2025, 5, 20, 10, 51, 32, 3245, tzinfo=dt.UTC)
 
@@ -47,7 +49,11 @@ async def setup_added_integration(
 
 
 def add_mock_switch(
-    hass, entity_id, device_attrs: dict[str, Any] | None = None
+    hass,
+    entity_id,
+    device_attrs: dict[str, Any] | None = None,
+    *,
+    integration: Integration = Integration.ZHA,
 ) -> er.RegistryEntry:
     """Add a switch device and (some) related entities.
 
@@ -55,41 +61,81 @@ def add_mock_switch(
         The created switch entity.
     """
     domain, object_id = entity_id.split(".")
+
+    integration_domain = {
+        Integration.ZHA: "zha",
+        Integration.Z2M: "mqtt",
+    }[integration]
+
+    identifiers = {
+        Integration.ZHA: ("zha", f"mock-ieee:{object_id}"),
+        Integration.Z2M: ("mqtt", f"mock-z2m-device-name_{object_id}"),
+    }[integration]
+
     device_registry = dr.async_get(hass)
     entity_registry = er.async_get(hass)
     mock_config_entry = MockConfigEntry(
-        title=" ".join(object_id.capitalize().split("_")), domain=ZHA_DOMAIN, data={}
+        title=" ".join(object_id.capitalize().split("_")),
+        domain=integration_domain,
+        data={},
     )
     mock_config_entry.add_to_hass(hass)
     device_entry = device_registry.async_get_or_create(
         name=mock_config_entry.title,
         config_entry_id=mock_config_entry.entry_id,
-        identifiers={(ZHA_DOMAIN, f"mock-ieee:{object_id}")},
+        identifiers={identifiers},
         **(device_attrs or {}),
     )
     switch = entity_registry.async_get_or_create(
         domain,
-        ZHA_DOMAIN,
+        integration_domain,
         object_id,
         suggested_object_id=object_id,
         device_id=device_entry.id,
     )
-    entity_registry.async_get_or_create(
-        "switch",
-        ZHA_DOMAIN,
-        f"{object_id}-local_protection",
-        suggested_object_id=f"{object_id}_local_protection",
-        translation_key="local_protection",
-        device_id=device_entry.id,
-    )
-    entity_registry.async_get_or_create(
-        "switch",
-        ZHA_DOMAIN,
-        f"{object_id}-disable_clear_notifications_double_tap",
-        suggested_object_id=f"{object_id}_disable_config_2x_tap_to_clear_notifications",
-        translation_key="disable_clear_notifications_double_tap",
-        device_id=device_entry.id,
-    )
+
+    if integration == Integration.ZHA:
+        entity_registry.async_get_or_create(
+            "switch",
+            integration_domain,
+            f"{object_id}-local_protection",
+            suggested_object_id=f"{object_id}_local_protection",
+            translation_key="local_protection",
+            device_id=device_entry.id,
+        )
+        entity_registry.async_get_or_create(
+            "switch",
+            integration_domain,
+            f"{object_id}-disable_clear_notifications_double_tap",
+            suggested_object_id=f"{object_id}_disable_config_2x_tap_to_clear_notifications",
+            translation_key="disable_clear_notifications_double_tap",
+            device_id=device_entry.id,
+        )
+
+    if integration == Integration.Z2M:
+        entity_registry.async_get_or_create(
+            "select",
+            integration_domain,
+            "0x0000000000000000_localProtection_zigbee2mqtt",
+            suggested_object_id=f"{object_id}_localProtection",  # note: not part of real Z2M setup
+            original_name="LocalProtection",
+            capabilities={
+                "options": ["Disabled", "Enabled"],
+            },
+            device_id=device_entry.id,
+        )
+        entity_registry.async_get_or_create(
+            "select",
+            integration_domain,
+            "0x0000000000000000_doubleTapClearNotifications_zigbee2mqtt",
+            suggested_object_id=f"{object_id}_doubleTapClearNotifications",  # note: not part of real Z2M setup
+            original_name="DoubleTapClearNotifications",
+            capabilities={
+                "options": ["Enabled (Default)", "Disabled"],
+            },
+            device_id=device_entry.id,
+        )
+
     return switch
 
 
