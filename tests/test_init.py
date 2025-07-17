@@ -8,8 +8,9 @@ import inspect
 import logging
 import re
 from typing import Any
-from unittest.mock import patch
+from unittest.mock import AsyncMock, patch
 
+from homeassistant.components.mqtt import ReceiveMessage
 from homeassistant.components.switch import DOMAIN as SWITCH_DOMAIN
 from homeassistant.config_entries import ConfigEntryState
 from homeassistant.const import ATTR_ENTITY_ID, SERVICE_TURN_OFF, SERVICE_TURN_ON
@@ -19,8 +20,9 @@ from homeassistant.helpers import (
     entity_registry as er,
     issue_registry as ir,
 )
+from homeassistant.helpers.json import json_dumps
 from homeassistant.setup import async_setup_component
-from homeassistant.util import slugify
+from homeassistant.util import dt as dt_util, slugify
 import pytest
 from pytest_homeassistant_custom_component.common import (
     MockConfigEntry,
@@ -44,7 +46,7 @@ from custom_components.lampie.const import (
     DOMAIN,
     TRACE,
 )
-from custom_components.lampie.orchestrator import LampieOrchestrator
+from custom_components.lampie.orchestrator import DATA_MQTT, LampieOrchestrator
 from custom_components.lampie.services import (
     SERVICE_NAME_ACTIVATE,
     SERVICE_NAME_OVERRIDE,
@@ -52,6 +54,7 @@ from custom_components.lampie.services import (
 from custom_components.lampie.types import (
     Color,
     Effect,
+    Integration,
     LEDConfig,
     LEDConfigSource,
     LEDConfigSourceType,
@@ -84,6 +87,15 @@ type ScenarioStageHandler = Callable[
 ]
 
 
+_true_dict: dict[str, Any] = defaultdict(lambda: True)
+_false_dict: dict[str, Any] = defaultdict(lambda: False)
+
+
+@pytest.fixture(name="integration_overrides")
+def mock_integration_overrides() -> dict[str, Any]:
+    return {}
+
+
 @pytest.fixture(name="configs")
 def mock_configs() -> dict[str, Any]:
     return {}
@@ -97,6 +109,11 @@ def mock_initial_states() -> dict[str, str]:
 @pytest.fixture(name="scripts")
 def mock_scripts() -> dict[str, Any]:
     return {}
+
+
+@pytest.fixture(name="steps")
+def mock_steps() -> list[dict[str, Any]]:
+    return []
 
 
 @pytest.fixture(name="expected_states")
@@ -119,8 +136,8 @@ def mock_expected_service_calls() -> int | ANYType | None:
     return ANY
 
 
-@pytest.fixture(name="expected_zha_calls")
-def mock_expected_zha_calls() -> int | ANYType | None:
+@pytest.fixture(name="expected_cluster_commands")
+def mock_expected_cluster_commands() -> int | ANYType | None:
     return ANY
 
 
@@ -131,7 +148,7 @@ def mock_expected_log_messages() -> str | None:
 
 @pytest.fixture(name="snapshots")
 def mock_snapshots() -> dict[str, Any]:
-    return {}
+    return _true_dict
 
 
 def scenario_stages(
@@ -228,6 +245,7 @@ def _scenario_stages(
 
 async def _setup(
     hass: HomeAssistant,
+    integration_domain: Integration,
     configs: dict[str, dict[str, Any]],
     initial_states: dict[str, str],
     scripts: dict[str, Any],
@@ -241,10 +259,44 @@ async def _setup(
         scripts: A set of scripts to setup with the scripts integration.
 
         hass: Injected (do not configure in scenarios).
+        integration_domain: The domain for the tests being run.
         kwargs: Catchall for additional injected values.
     """
     configs = configs or {}  # ensure AbsentNone is converted to dict
     initial_states = initial_states or {}
+
+    # mock out services that send commands to the cluster right away since it's
+    # possible that these will be used during integration setup (i.e. Z2M makes
+    # requests for state information on `localProtection` and
+    # `doubleTapClearNotifications`).
+    zha_cluster_commands = async_mock_service(
+        hass, "zha", "issue_zigbee_cluster_command"
+    )
+    mqtt_publish_commands = async_mock_service(hass, "mqtt", "publish")
+
+    cluster_commands = {
+        Integration.ZHA: zha_cluster_commands,
+        Integration.Z2M: mqtt_publish_commands,
+    }[integration_domain]
+
+    # register the any additional switches needed from config entries.
+    for switch_id in {
+        switch_id
+        for config in configs.values()
+        for switch_id in config.get(CONF_SWITCH_ENTITIES, [])
+    }:
+        add_mock_switch(hass, switch_id, integration=integration_domain)
+
+    # register the any additional switches needed from `initial_states`.
+    for entity_id in initial_states:
+        if entity_id.startswith("light."):
+            add_mock_switch(hass, entity_id, integration=integration_domain)
+
+    # setup initial states
+    for entity_id, state in initial_states.items():
+        hass.states.async_set(entity_id, state)
+
+    # setup the standard config entry if it's being used.
     standard_config_entry: MockConfigEntry | None = kwargs.get("config_entry")
 
     if standard_config_entry is not None:
@@ -260,23 +312,6 @@ async def _setup(
         )
 
         await setup_added_integration(hass, standard_config_entry)
-
-    # register the any additional switches needed from config entries.
-    for switch_id in {
-        switch_id
-        for config in configs.values()
-        for switch_id in config.get(CONF_SWITCH_ENTITIES, [])
-    }:
-        add_mock_switch(hass, switch_id)
-
-    # register the any additional switches needed from `initial_states`.
-    for entity_id in initial_states:
-        if entity_id.startswith("light."):
-            add_mock_switch(hass, entity_id)
-
-    # setup initial states
-    for entity_id, state in initial_states.items():
-        hass.states.async_set(entity_id, state)
 
     # add config entries based on those in the config items.
     for config_key, config_data in configs.items():
@@ -297,8 +332,6 @@ async def _setup(
     if scripts is not None:
         assert await async_setup_component(hass, "script", {"script": scripts})
 
-    cluster_commands = async_mock_service(hass, "zha", "issue_zigbee_cluster_command")
-
     return {
         "_cluster_commands": cluster_commands,
     }
@@ -306,8 +339,11 @@ async def _setup(
 
 async def _steps(
     hass: HomeAssistant,
+    mqtt_subscribe: AsyncMock,
+    integration_domain: Integration,
     now: MockNow,
     steps: list[dict[str, Any]],
+    device_registry: dr.DeviceRegistry,
     entity_registry: er.EntityRegistry,
     **kwargs: Any,
 ) -> dict[str, Any]:
@@ -318,7 +354,10 @@ async def _steps(
         steps: A list of mappings.
 
         hass: Injected (do not configure in scenarios).
+        mqtt_subscribe: The mock for MQTT subscriptions.
+        integration_domain: The domain for the tests being run.
         now: Injected (do not configure in scenarios).
+        device_registry: Injected (do not configure in scenarios).
         entity_registry: Injected (do not configure in scenarios).
         kwargs: Catchall for additional injected values.
     """
@@ -356,7 +395,7 @@ async def _steps(
             elif "delay" in step:
                 now._tick(step["delay"].total_seconds())
 
-            if "device_config" in step:
+            if "device_config" in step and integration_domain == Integration.ZHA:
                 device_config = step["device_config"]
                 target = device_config["target"]
 
@@ -378,6 +417,33 @@ async def _steps(
                         disable_clear_notification_id,
                         device_config["disable_clear_notification"],
                     )
+            elif "device_config" in step and integration_domain == Integration.Z2M:
+                device_config = step["device_config"]
+                target = device_config["target"]
+                payload = {}
+
+                if "local_protection" in device_config:
+                    payload["localProtection"] = (
+                        "Enabled"
+                        if device_config["local_protection"] == "on"
+                        else "Disabled"
+                    )
+
+                if "disable_clear_notification" in device_config:
+                    payload["doubleTapClearNotifications"] = (
+                        "Disabled"
+                        if device_config["disable_clear_notification"] == "on"
+                        else "Enabled"
+                    )
+
+                step_events.append(
+                    {
+                        "event": {
+                            "entity_id": target,
+                            "payload": payload,
+                        }
+                    }
+                )
 
             for step in step_actions:
                 domain, service_name = step["action"].split(".")
@@ -391,7 +457,7 @@ async def _steps(
                     blocking=True,
                 )
 
-            for step in step_events:
+            for step in step_events if integration_domain == Integration.ZHA else []:
                 event_data = {**step["event"]}
                 entity_id = event_data.pop("entity_id", None)
                 device_id = (
@@ -410,6 +476,62 @@ async def _steps(
                     },
                 )
 
+            for step in step_events if integration_domain == Integration.Z2M else []:
+                event_data = {**step["event"]}
+                entity_id = event_data.pop("entity_id", None)
+                device_id = (
+                    standard_switch.device_id if standard_switch is not None else None
+                )
+
+                # if supplied, get the device related to the entity_id instead
+                if entity_id is not None:
+                    device_id = entity_registry.async_get(entity_id).device_id
+
+                command = event_data.pop("command", None)
+                payload = {**event_data.pop("payload", {})}
+                subscribe_calls = mqtt_subscribe.mock_calls
+                last_subscribe_call = subscribe_calls[-1]
+                _, subscribed_topic, callback, *_rest = last_subscribe_call.args
+
+                assert subscribed_topic == "home/z2m/+"
+
+                # `add_mock_switch` matches `device.name` & MQTT device name, so
+                # just get the device name from the entity_id given in the
+                # scenario.
+                device = device_registry.async_get(device_id)
+                device_name = device.name
+
+                topic = event_data.pop("topic", f"home/z2m/{device_name}")
+                action = {
+                    "button_3_double": "config_double",
+                }.get(command)
+
+                if command and command.startswith("led_effect_complete_"):
+                    notification_complete = re.sub(
+                        r"^led_effect_complete_", "", command
+                    )
+                else:
+                    notification_complete = None
+
+                if action:
+                    payload["action"] = action
+                elif notification_complete:
+                    payload["notificationComplete"] = notification_complete
+                elif not payload:
+                    payload["action"] = f"unsupported_action_{command}"
+
+                _LOGGER.debug("publishing to %s: %s", topic, payload)
+                await callback(
+                    ReceiveMessage(
+                        topic=topic,
+                        payload=json_dumps(payload),
+                        qos=0,
+                        retain=False,
+                        subscribed_topic=topic,
+                        timestamp=dt_util.utcnow(),
+                    )
+                )
+
             await hass.async_block_till_done()
 
         # capture service calls to assert about start/end action invocations
@@ -417,7 +539,11 @@ async def _steps(
             (domain, service, args, *rest)
             for call in mocked_service_call.mock_calls
             for domain, service, args, *rest in [call.args]
-            if (domain, service) != ("zha", "issue_zigbee_cluster_command")
+            if (domain, service)
+            not in {
+                ("zha", "issue_zigbee_cluster_command"),
+                ("mqtt", "publish"),
+            }
         ]
 
     return {
@@ -428,6 +554,8 @@ async def _steps(
 
 async def _assert_expectations(  # noqa: RUF029
     hass: HomeAssistant,
+    integration_domain: Integration,
+    integration_overrides: dict[str, Any],
     configs: dict[str, dict[str, Any]],
     initial_states: dict[str, str],
     _cluster_commands: list[Any],
@@ -437,11 +565,11 @@ async def _assert_expectations(  # noqa: RUF029
     expected_timers: dict[str, bool],
     expected_events: int | ANYType | None,
     expected_service_calls: int | ANYType | None,
-    expected_zha_calls: int | ANYType | None,
+    expected_cluster_commands: int | ANYType | None,
     expected_log_messages: str | AbsentNone | None,
     entity_registry: er.EntityRegistry,
     snapshot: SnapshotAssertion,
-    snapshots: dict[str, Any],
+    snapshots: dict[str, Any] | AbsentNone,
     caplog: pytest.LogCaptureFixture,
     **kwargs: Any,
 ) -> dict[str, Any]:
@@ -449,6 +577,9 @@ async def _assert_expectations(  # noqa: RUF029
 
     Args:
         configs: See `_setup`.
+        integration_domain: The domain for the tests being run.
+        integration_overrides: Overrides to apply to expectations/snapshots.
+            Mappings are merged & other values are simply replaced.
         initial_states: See `_setup`.
         expected_states: Mapping of entity ID to state value.
         expected_timers: Mapping of `notification|slug` or `switch|entity_id` to
@@ -461,10 +592,10 @@ async def _assert_expectations(  # noqa: RUF029
             service calls that are for sending messages to the device cluster.
             So it's usually just asserting against the `script` invocations used
             for start/end actions.
-        expected_zha_calls: Number of expected service calls into the device
-            cluster (or ANY to simply snapshot).
+        expected_cluster_commands: Number of expected service calls into the
+            device cluster (or ANY to simply snapshot).
         expected_log_messages: Message to check to ensure it's logged.
-        snapshots: A mapping for what to snapshot with the following keys:
+        snapshots: A mapping for what to snapshot with the required keys:
             configs (default=`True`):  A boolean (reused for all config entries)
                 or a mapping from config entry slugs to one of `bool`,
                 `"standard_info"` or `"entities"`. `"standard_info"` will
@@ -487,25 +618,61 @@ async def _assert_expectations(  # noqa: RUF029
         caplog: Injected (do not configure in scenarios).
         kwargs: Catchall for additional injected values.
     """
-    configs = configs or {}  # ensure AbsentNone is converted to dict
+    # ensure AbsentNone is converted to dict
+    configs = configs or {}
+    expected_states = expected_states or {}
+
+    # apply overrides to test inputs
+    overrides = (integration_overrides or {}).get(integration_domain, {})
+
+    if "expected_states" in overrides:
+        expected_states = {**expected_states, **overrides["expected_states"]}
+    if "expected_timers" in overrides:
+        expected_timers = {**expected_timers, **overrides["expected_timers"]}
+    if "expected_events" in overrides:
+        expected_events = overrides["expected_events"]
+    if "expected_service_calls" in overrides:
+        expected_service_calls = overrides["expected_service_calls"]
+    if "expected_cluster_commands" in overrides:
+        expected_cluster_commands = overrides["expected_cluster_commands"]
+    if "expected_log_messages" in overrides:
+        expected_log_messages = overrides["expected_log_messages"]
+    if "snapshots" in overrides:
+        snapshots = overrides["snapshots"]
+
+    # z2m always does an extra call to request state, so handle the
+    # non-overriden cases by incrementing the expectation by one to avoid having
+    # to always override it.
+    if (
+        "expected_cluster_commands" not in overrides
+        and isinstance(expected_cluster_commands, int)
+        and integration_domain == Integration.Z2M
+    ):
+        expected_cluster_commands += 1
+
+    # only snapshot by default for ZHA
+    if snapshots == Scenario.ABSENT:
+        snapshots_default = integration_domain == Integration.ZHA
+        snapshots = defaultdict(lambda: snapshots_default)
+
     standard_config_entry: MockConfigEntry | None = kwargs.get("config_entry")
     standard_switch: er.RegistryEntry | None = kwargs.get("switch")
     orchestrator: LampieOrchestrator = hass.data[DOMAIN]
 
-    snapshot_configs = snapshots.get("configs", True)
-    snapshot_switches = snapshots.get("switches", True)
-    snapshot_events = snapshots.get("events", True)
-    snapshot_service_calls = snapshots.get("service_calls", True)
-    snapshot_cluster_commands = snapshots.get("cluster_commands", True)
+    snapshot_configs = snapshots["configs"]
+    snapshot_switches = snapshots["switches"]
+    snapshot_events = snapshots["events"]
+    snapshot_service_calls = snapshots["service_calls"]
+    snapshot_cluster_commands = snapshots["cluster_commands"]
 
     if isinstance(snapshot_configs, bool):
-        value = snapshot_configs
-        snapshot_configs = defaultdict(lambda: value)
+        snapshot_configs_default = snapshot_configs
+        snapshot_configs = defaultdict(lambda: snapshot_configs_default)
 
     if (
         standard_config_entry is not None
         and standard_switch is not None
-        and snapshot_configs.get("doors_open", True) in {True, "standard_info"}
+        and snapshot_configs["doors_open"] in {True, "standard_info"}
     ):
         notification_info = orchestrator.notification_info("doors_open")
         switch_info = orchestrator.switch_info(standard_switch.entity_id)
@@ -521,8 +688,10 @@ async def _assert_expectations(  # noqa: RUF029
             name="service_calls", matcher=any_device_id_matcher
         )
 
-    if expected_zha_calls and snapshot_cluster_commands:
-        assert _cluster_commands == snapshot(name="zha_cluster_commands")
+    if expected_cluster_commands and snapshot_cluster_commands:
+        assert _cluster_commands == snapshot(
+            name=f"{integration_domain}_cluster_commands"
+        )
 
     # assert switch info against internal state to avoid creating the switch
     # info: this allows some test cases to assert that the orchestrator
@@ -540,7 +709,7 @@ async def _assert_expectations(  # noqa: RUF029
         for entity in entity_registry.entities.get_entries_for_config_entry_id(
             entry.entry_id
         )
-        if snapshot_configs.get(slugify(entry.title), True) in {True, "entities"}
+        if snapshot_configs[slugify(entry.title)] in {True, "entities"}
     ):
         assert hass.states.get(entity.entity_id) == snapshot(name=entity.entity_id)
 
@@ -584,9 +753,9 @@ async def _assert_expectations(  # noqa: RUF029
             f"expected {expected_service_calls} services calls (usually script invocations)"
         )
 
-    if expected_zha_calls not in {None, Scenario.ABSENT, ANY}:
-        assert len(_cluster_commands) == expected_zha_calls, (
-            f"expected {expected_zha_calls} cluster command service calls"
+    if expected_cluster_commands not in {None, Scenario.ABSENT, ANY}:
+        assert len(_cluster_commands) == expected_cluster_commands, (
+            f"expected {expected_cluster_commands} cluster command service calls"
         )
 
     if expected_log_messages not in {None, Scenario.ABSENT}:
@@ -653,7 +822,7 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 "switch|light.kitchen": False,
             },
             "expected_events": 1,
-            "expected_zha_calls": 1,
+            "expected_cluster_commands": 1,
         },
     ),
     Scenario(
@@ -685,13 +854,14 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 {"event": {"command": "led_effect_complete_LED_3"}},
                 {"event": {"command": "led_effect_complete_LED_5"}},
             ],
+            "snapshots": _true_dict,
             "expected_states": {"switch.doors_open_notification": "off"},
             "expected_timers": {
                 "notification|doors_open": False,
                 "switch|light.kitchen": False,
             },
             "expected_events": 1,
-            "expected_zha_calls": 7,
+            "expected_cluster_commands": 7,
         },
     ),
     Scenario(
@@ -713,8 +883,9 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 "notification|doors_open": True,
                 "switch|light.kitchen": False,
             },
+            "snapshots": _true_dict,
             "expected_events": 0,
-            "expected_zha_calls": 1,
+            "expected_cluster_commands": 1,
         },
     ),
     Scenario(
@@ -738,7 +909,7 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 "switch|light.kitchen": False,
             },
             "expected_events": 1,
-            "expected_zha_calls": 2,
+            "expected_cluster_commands": 2,
         },
     ),
     Scenario(
@@ -770,7 +941,7 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 "switch|light.kitchen": False,
             },
             "expected_events": 0,
-            "expected_zha_calls": 9,
+            "expected_cluster_commands": 9,
         },
     ),
     Scenario(
@@ -803,7 +974,7 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 "switch|light.kitchen": False,
             },
             "expected_events": 1,
-            "expected_zha_calls": 14,
+            "expected_cluster_commands": 14,
         },
     ),
     Scenario(
@@ -827,7 +998,38 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 "switch|light.kitchen": False,
             },
             "expected_events": 1,
-            "expected_zha_calls": 1,
+            "expected_cluster_commands": 1,
+        },
+    ),
+    Scenario(
+        "doors_open_5m1s_dismissed_local_protection_and_2x_tap_dismissal_enabled",
+        {
+            "configs": {
+                "doors_open": {
+                    CONF_DURATION: dt.timedelta(minutes=5, seconds=1).total_seconds()
+                }
+            },
+            "steps": [
+                {
+                    "device_config": {
+                        "target": "light.kitchen",
+                        "local_protection": "on",
+                        "disable_clear_notification": "off",
+                    },
+                },
+                {
+                    "action": f"{SWITCH_DOMAIN}.{SERVICE_TURN_ON}",
+                    "target": "switch.doors_open_notification",
+                },
+                {"event": {"command": "button_3_double"}},
+            ],
+            "expected_states": {"switch.doors_open_notification": "off"},
+            "expected_timers": {
+                "notification|doors_open": False,
+                "switch|light.kitchen": False,
+            },
+            "expected_events": 1,
+            "expected_cluster_commands": 2,
         },
     ),
     Scenario(
@@ -854,7 +1056,7 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 "switch|light.kitchen": False,
             },
             "expected_events": 0,
-            "expected_zha_calls": 2,
+            "expected_cluster_commands": 2,
         },
     ),
     Scenario(
@@ -883,7 +1085,7 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 "switch|light.kitchen": False,
             },
             "expected_events": 0,
-            "expected_zha_calls": 1,
+            "expected_cluster_commands": 1,
         },
     ),
     Scenario(
@@ -909,7 +1111,7 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 "switch|light.kitchen": False,
             },
             "expected_events": 1,
-            "expected_zha_calls": 2,
+            "expected_cluster_commands": 2,
         },
     ),
     Scenario(
@@ -930,13 +1132,18 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 },
                 {"event": {"command": "button_3_double"}},
             ],
+            "integration_overrides": {
+                Integration.Z2M: {
+                    "expected_cluster_commands": 5,  # 2 switches setup + normal expectation
+                },
+            },
             "expected_states": {"switch.doors_open_notification": "off"},
             "expected_timers": {
                 "notification|doors_open": False,
                 "switch|light.kitchen": False,
             },
             "expected_events": 1,
-            "expected_zha_calls": 3,
+            "expected_cluster_commands": 3,
         },
     ),
     Scenario(
@@ -961,7 +1168,7 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 "switch|light.kitchen": False,
             },
             "expected_events": 0,
-            "expected_zha_calls": 1,
+            "expected_cluster_commands": 1,
         },
     ),
     Scenario(
@@ -992,7 +1199,7 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 "switch|light.kitchen": False,
             },
             "expected_events": 0,
-            "expected_zha_calls": 2,
+            "expected_cluster_commands": 2,
         },
     ),
     Scenario(
@@ -1023,7 +1230,7 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 "switch|light.kitchen": False,
             },
             "expected_events": 0,
-            "expected_zha_calls": 2,
+            "expected_cluster_commands": 2,
         },
     ),
     Scenario(
@@ -1048,7 +1255,7 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 "switch|light.kitchen": False,
             },
             "expected_events": 1,
-            "expected_zha_calls": 1,
+            "expected_cluster_commands": 1,
         },
     ),
     Scenario(
@@ -1072,7 +1279,7 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 "switch|light.kitchen": True,
             },
             "expected_events": 0,
-            "expected_zha_calls": 1,
+            "expected_cluster_commands": 1,
         },
     ),
     Scenario(
@@ -1100,7 +1307,7 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 "switch|light.kitchen": False,
             },
             "expected_events": 0,
-            "expected_zha_calls": 1,
+            "expected_cluster_commands": 1,
         },
     ),
     Scenario(
@@ -1135,7 +1342,7 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 "switch|light.kitchen": False,
             },
             "expected_events": 0,
-            "expected_zha_calls": 3,
+            "expected_cluster_commands": 3,
         },
     ),
     Scenario(
@@ -1164,7 +1371,7 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 "switch|light.kitchen": False,
             },
             "expected_events": 1,
-            "expected_zha_calls": 2,
+            "expected_cluster_commands": 2,
         },
     ),
     Scenario(
@@ -1193,7 +1400,7 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 "switch|light.kitchen": False,
             },
             "expected_events": 1,
-            "expected_zha_calls": 3,
+            "expected_cluster_commands": 3,
         },
     ),
     Scenario(
@@ -1218,7 +1425,7 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 "switch|light.kitchen": False,
             },
             "expected_events": 1,
-            "expected_zha_calls": 2,
+            "expected_cluster_commands": 2,
         },
     ),
     Scenario(
@@ -1249,7 +1456,7 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 "switch|light.kitchen": True,
             },
             "expected_events": 0,
-            "expected_zha_calls": 9,
+            "expected_cluster_commands": 9,
         },
     ),
     Scenario(
@@ -1281,7 +1488,7 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 "switch|light.kitchen": False,
             },
             "expected_events": 1,
-            "expected_zha_calls": 14,
+            "expected_cluster_commands": 14,
         },
     ),
     Scenario(
@@ -1306,7 +1513,7 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 "switch|light.kitchen": False,
             },
             "expected_events": 1,
-            "expected_zha_calls": 1,
+            "expected_cluster_commands": 1,
         },
     ),
     Scenario(
@@ -1327,13 +1534,56 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                     },
                 },
             ],
+            "integration_overrides": {
+                Integration.Z2M: {
+                    "expected_cluster_commands": 3,  # 2 switches setup + normal expectation
+                },
+            },
             "expected_states": {"switch.doors_open_notification": "off"},
             "expected_timers": {
                 "notification|doors_open": False,
                 "switch|light.kitchen": False,
             },
             "expected_events": 0,
-            "expected_zha_calls": 1,
+            "expected_cluster_commands": 1,
+        },
+    ),
+    Scenario(
+        "entryway_override_unrelated_command",
+        {
+            "configs": {},
+            "initial_states": {
+                "light.entryway": "on",
+            },
+            "steps": [
+                {
+                    "action": f"{DOMAIN}.{SERVICE_NAME_OVERRIDE}",
+                    "target": "light.entryway",
+                    "data": {
+                        ATTR_LED_CONFIG: [
+                            {ATTR_COLOR: "green"},
+                        ],
+                    },
+                },
+                {
+                    "event": {
+                        "command": "unrelated",  # something we ignore
+                        "entity_id": "light.entryway",
+                    },
+                },
+            ],
+            "integration_overrides": {
+                Integration.Z2M: {
+                    "expected_cluster_commands": 3,  # 2 switches setup + normal expectation
+                },
+            },
+            "expected_states": {"switch.doors_open_notification": "off"},
+            "expected_timers": {
+                "notification|doors_open": False,
+                "switch|light.kitchen": False,
+            },
+            "expected_events": 0,
+            "expected_cluster_commands": 1,
         },
     ),
     Scenario(
@@ -1360,13 +1610,19 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                     },
                 },
             ],
+            "integration_overrides": {
+                Integration.Z2M: {
+                    "expected_events": 0,
+                    "expected_cluster_commands": 3,  # 2 switches setup + normal expectation
+                },
+            },
             "expected_states": {"switch.doors_open_notification": "off"},
             "expected_timers": {
                 "notification|doors_open": False,
                 "switch|light.kitchen": False,
             },
             "expected_events": 1,
-            "expected_zha_calls": 1,
+            "expected_cluster_commands": 1,
         },
     ),
     Scenario(
@@ -1390,9 +1646,16 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 "switch|light.kitchen": False,
             },
             "expected_events": 0,
-            "expected_zha_calls": 0,
+            "expected_cluster_commands": 0,
         },
     ),
+)
+@pytest.mark.parametrize(
+    "integration_domain",
+    [
+        Integration.ZHA,
+        Integration.Z2M,
+    ],
 )
 @scenario_stages(standard_config_entry=True)
 async def test_toggle_notifications(
@@ -1609,7 +1872,8 @@ _TOGGLE_NOTIFICATION_WITH_ACTIONS_CONFIGS = {
 }
 
 _TOGGLE_NOTIFICATION_WITH_ACTIONS_SNAPSHOTS = {
-    "configs": {
+    "configs": _true_dict
+    | {
         "doors_open": "entities",
         "windows_open": False,
     }
@@ -1617,7 +1881,7 @@ _TOGGLE_NOTIFICATION_WITH_ACTIONS_SNAPSHOTS = {
 
 _TOGGLE_NOTIFICATION_WITH_ACTIONS_BASE = {
     "expected_events": None,
-    "snapshots": _TOGGLE_NOTIFICATION_WITH_ACTIONS_SNAPSHOTS,
+    "snapshots": _true_dict | _TOGGLE_NOTIFICATION_WITH_ACTIONS_SNAPSHOTS,
 }
 
 
@@ -1754,14 +2018,15 @@ async def test_toggle_notification_with_actions(
 
 
 _DISMISSAL_FROM_SWITCH_SNAPSHOTS = {
-    "configs": {
+    "configs": _true_dict
+    | {
         "doors_open": False,
     },
     "events": False,
 }
 
 _DISMISSAL_FROM_SWITCH_BASE = {
-    "snapshots": _DISMISSAL_FROM_SWITCH_SNAPSHOTS,
+    "snapshots": _true_dict | _DISMISSAL_FROM_SWITCH_SNAPSHOTS,
 }
 
 
@@ -1774,7 +2039,7 @@ _DISMISSAL_FROM_SWITCH_BASE = {
             "steps": [{"event": {"command": "led_effect_complete_ALL_LEDS"}}],
             "expected_notification_state": "off",
             "expected_leds_on": [],
-            "expected_zha_calls": 0,
+            "expected_cluster_commands": 0,
         },
     ),
     Scenario(
@@ -1791,7 +2056,7 @@ _DISMISSAL_FROM_SWITCH_BASE = {
             "steps": [{"event": {"command": "led_effect_complete_ALL_LEDS"}}],
             "expected_notification_state": "off",
             "expected_leds_on": [],
-            "expected_zha_calls": 0,
+            "expected_cluster_commands": 0,
         },
     ),
     Scenario(
@@ -1805,7 +2070,7 @@ _DISMISSAL_FROM_SWITCH_BASE = {
             "steps": [{"event": {"command": "led_effect_complete_ALL_LEDS"}}],
             "expected_notification_state": "off",
             "expected_leds_on": [],
-            "expected_zha_calls": 0,
+            "expected_cluster_commands": 0,
         },
     ),
     Scenario(
@@ -1816,7 +2081,7 @@ _DISMISSAL_FROM_SWITCH_BASE = {
             "steps": [{"event": {"command": "led_effect_complete_ALL_LEDS"}}],
             "expected_notification_state": "off",
             "expected_leds_on": [],
-            "expected_zha_calls": 0,
+            "expected_cluster_commands": 0,
         },
     ),
     Scenario(
@@ -1827,7 +2092,7 @@ _DISMISSAL_FROM_SWITCH_BASE = {
             "steps": [{"event": {"command": "led_effect_complete_LED_1"}}],
             "expected_notification_state": "on",
             "expected_leds_on": [False] + [True] * 6,
-            "expected_zha_calls": 0,
+            "expected_cluster_commands": 0,
         },
     ),
     Scenario(
@@ -1838,7 +2103,7 @@ _DISMISSAL_FROM_SWITCH_BASE = {
             "steps": [{"event": {"command": "led_effect_complete_LED_7"}}],
             "expected_notification_state": "on",
             "expected_leds_on": [True],
-            "expected_zha_calls": 0,
+            "expected_cluster_commands": 0,
             "expected_log_messages": (
                 "could not clear switch config at index 6 on light.kitchen"
             ),
@@ -1859,7 +2124,7 @@ _DISMISSAL_FROM_SWITCH_BASE = {
                     "steps": [{"event": {"command": command}}],
                     "expected_notification_state": "off",
                     "expected_leds_on": [],
-                    "expected_zha_calls": 0,
+                    "expected_cluster_commands": 0,
                 },
             ),
             Scenario(
@@ -1878,7 +2143,7 @@ _DISMISSAL_FROM_SWITCH_BASE = {
                     "steps": [{"event": {"command": command}}],
                     "expected_notification_state": "on",
                     "expected_leds_on": [True],
-                    "expected_zha_calls": 1,
+                    "expected_cluster_commands": 1,
                 },
             ),
             Scenario(
@@ -1895,7 +2160,7 @@ _DISMISSAL_FROM_SWITCH_BASE = {
                     "steps": [{"event": {"command": command}}],
                     "expected_notification_state": "off",
                     "expected_leds_on": [],
-                    "expected_zha_calls": 0,
+                    "expected_cluster_commands": 0,
                 },
             ),
             Scenario(
@@ -1906,7 +2171,7 @@ _DISMISSAL_FROM_SWITCH_BASE = {
                     "steps": [{"event": {"command": command}}],
                     "expected_notification_state": "off",
                     "expected_leds_on": [],
-                    "expected_zha_calls": 0,
+                    "expected_cluster_commands": 0,
                 },
             ),
             Scenario(
@@ -1923,7 +2188,7 @@ _DISMISSAL_FROM_SWITCH_BASE = {
                     "expected_led_config_source": LEDConfigSource(
                         "doors_open", LEDConfigSourceType.NOTIFICATION
                     ),
-                    "expected_zha_calls": 0,
+                    "expected_cluster_commands": 0,
                 },
             ),
             Scenario(
@@ -1936,7 +2201,7 @@ _DISMISSAL_FROM_SWITCH_BASE = {
                     "expected_notification_state": "on",
                     "expected_leds_on": [True],
                     "expected_led_config_source": None,
-                    "expected_zha_calls": 0,
+                    "expected_cluster_commands": 0,
                     "expected_log_messages": (
                         "missing LED config and/or source for dismissal on switch light.kitchen; "
                         f"skipping processing ZHA event {command}"
@@ -1954,7 +2219,7 @@ _DISMISSAL_FROM_SWITCH_BASE = {
                     "steps": [{"event": {"command": command}}],
                     "expected_notification_state": "off",
                     "expected_leds_on": [],
-                    "expected_zha_calls": 1,
+                    "expected_cluster_commands": 1,
                 },
             ),
             Scenario(
@@ -1976,7 +2241,7 @@ _DISMISSAL_FROM_SWITCH_BASE = {
                     "steps": [{"event": {"command": command}}],
                     "expected_notification_state": "on",
                     "expected_leds_on": [True],
-                    "expected_zha_calls": 0,
+                    "expected_cluster_commands": 0,
                 },
             ),
             Scenario(
@@ -1991,7 +2256,7 @@ _DISMISSAL_FROM_SWITCH_BASE = {
                     "steps": [{"event": {"command": command}}],
                     "expected_notification_state": "on",
                     "expected_leds_on": [True],
-                    "expected_zha_calls": 0,
+                    "expected_cluster_commands": 0,
                 },
             ),
         ]
@@ -2072,6 +2337,78 @@ async def test_dismissal_from_switch(
     switch_info = orchestrator.switch_info(standard_switch.entity_id)
     assert switch_info.led_config == expected_led_config
     assert switch_info.led_config_source == expected_led_config_source
+
+
+@Scenario.parametrize(
+    Scenario(
+        "mqtt_wait_for_client_failure",
+        {
+            "integration_domain": Integration.Z2M,
+            "mqtt_wait_for_client_return_value": False,
+            "steps": [],
+            "snapshots": _false_dict,
+            "expected_log_messages": "MQTT integration is not available",
+        },
+    ),
+    Scenario(
+        "mqtt_debug_info_entities_failure",
+        {
+            "integration_domain": Integration.Z2M,
+            "mqtt_debug_info_entities": {},
+            "steps": [],
+            "snapshots": _false_dict,
+            "expected_log_messages": (
+                "failed to determine MQTT topic from internal HASS state for "
+                "light.kitchen. using default of zigbee2mqtt/Kitchen from "
+                "device name"
+            ),
+        },
+    ),
+    Scenario(
+        "mqtt_message_payload_topic_mismatch",
+        {
+            "integration_domain": Integration.Z2M,
+            "steps": [
+                {
+                    "action": f"{SWITCH_DOMAIN}.{SERVICE_TURN_ON}",
+                    "target": "switch.doors_open_notification",
+                },
+                {
+                    "event": {
+                        "topic": "zigbee2mqtt/Kitchen",
+                        "payload": {
+                            "action": "config_double",
+                        },
+                    }
+                },
+            ],
+            "snapshots": _false_dict,
+            "expected_states": {"switch.doors_open_notification": "on"},
+            "expected_events": 0,
+            "expected_cluster_commands": 1,
+        },
+    ),
+)
+@scenario_stages(standard_config_entry=True)
+async def test_z2m_scenario(
+    setup: ScenarioStageCallback,
+    steps_callback: ScenarioStageCallback,
+    assert_expectations: ScenarioStageCallback,
+    *,
+    hass: HomeAssistant,
+    mqtt: dict[str, Any],
+    mqtt_wait_for_client_return_value: bool | AbsentNone,
+    mqtt_debug_info_entities: dict[str, Any] | AbsentNone,
+    **kwargs: Any,
+):
+    if mqtt_wait_for_client_return_value != Scenario.ABSENT:
+        mqtt["wait_for_mqtt_client"].return_value = mqtt_wait_for_client_return_value
+    if mqtt_debug_info_entities != Scenario.ABSENT:
+        hass.data[DATA_MQTT].debug_info_entities = mqtt_debug_info_entities
+
+    await setup()
+    await steps_callback()
+    await assert_expectations()
 
 
 async def test_config_entries_linked_to_switch_device(
@@ -2200,6 +2537,7 @@ async def test_primary_config_entry_sensor_ownership(
 
 async def test_mismatched_priorities_generate_warning(
     hass: HomeAssistant,
+    switch: er.RegistryEntry,
     caplog: pytest.LogCaptureFixture,
 ) -> None:
     """Test that mismatched config priorities generate a warning."""

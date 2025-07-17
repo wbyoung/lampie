@@ -87,11 +87,15 @@
 # ---
 # name: test_restore_state[missing_stored_data][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': None,
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
     ),
@@ -99,7 +103,6 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': None,
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
@@ -107,11 +110,15 @@
 # ---
 # name: test_restore_state[no_restore_for_sensor.kitchen_effect_brightness][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': None,
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
     ),
@@ -119,7 +126,6 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': None,
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
@@ -127,11 +133,15 @@
 # ---
 # name: test_restore_state[no_restore_for_sensor.kitchen_effect_color][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': None,
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
     ),
@@ -139,7 +149,6 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': None,
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
@@ -147,11 +156,15 @@
 # ---
 # name: test_restore_state[no_restore_for_sensor.kitchen_effect_duration][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': None,
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
     ),
@@ -159,7 +172,6 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': None,
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
@@ -167,11 +179,15 @@
 # ---
 # name: test_restore_state[no_restore_for_sensor.kitchen_effect_type][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': None,
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
     ),
@@ -179,7 +195,6 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': None,
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
@@ -187,11 +202,15 @@
 # ---
 # name: test_restore_state[switch_info][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': None,
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
       dict({
@@ -205,7 +224,6 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': 'doors_open',
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
@@ -213,11 +231,15 @@
 # ---
 # name: test_restore_state[switch_info_for_override_service_call][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': None,
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
       dict({
@@ -231,7 +253,6 @@
       'type': <LEDConfigSourceType.SERVICE: 'service'>,
       'value': 'lampie.override',
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
@@ -239,11 +260,15 @@
 # ---
 # name: test_restore_state[switch_info_with_numeric_color][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': None,
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
       dict({
@@ -257,7 +282,6 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': 'doors_open',
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
