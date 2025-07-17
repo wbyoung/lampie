@@ -45,10 +45,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: LampieConfigEntry) -> bo
     _LOGGER.debug("setup %s with config:%s", entry.title, entry.data)
 
     if DOMAIN not in hass.data:
-        hass.data[DOMAIN] = LampieOrchestrator(hass)
+        orchestrator = LampieOrchestrator(hass)
+        hass.data[DOMAIN] = orchestrator
+
+        await orchestrator.setup()
 
     coordinator = LampieUpdateCoordinator(hass, entry)
-    orchestrator: LampieOrchestrator = hass.data[DOMAIN]
+    orchestrator = hass.data[DOMAIN]
     orchestrator.add_coordinator(coordinator)
     entry.runtime_data = LampieConfigEntryRuntimeData(
         orchestrator=orchestrator,

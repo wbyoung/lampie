@@ -6,20 +6,29 @@ from collections.abc import Awaitable, Callable, Sequence
 from contextlib import suppress
 from dataclasses import replace
 import datetime as dt
-from enum import IntEnum
+from enum import Enum, IntEnum, auto
 from functools import partial
 import logging
 import re
 from typing import TYPE_CHECKING, Any, Final, NamedTuple, Protocol, Unpack
 
+from homeassistant.components import mqtt
+from homeassistant.components.mqtt import DOMAIN as MQTT_DOMAIN
 from homeassistant.components.script import DOMAIN as SCRIPT_DOMAIN
+from homeassistant.components.select import DOMAIN as SELECT_DOMAIN
+from homeassistant.components.switch import DOMAIN as SWITCH_DOMAIN
 from homeassistant.core import CALLBACK_TYPE, Event, HomeAssistant, callback
-from homeassistant.helpers import entity_registry as er, event as evt
+from homeassistant.helpers import (
+    device_registry as dr,
+    entity_registry as er,
+    event as evt,
+)
 from homeassistant.helpers.device import (
     async_device_info_to_link_from_entity,
     async_entity_id_to_device_id,
 )
 from homeassistant.util import dt as dt_util
+from homeassistant.util.json import json_loads_object
 
 from .const import (
     CONF_END_ACTION,
@@ -33,6 +42,7 @@ from .types import (
     DeviceId,
     Effect,
     ExpirationInfo,
+    Integration,
     LampieNotificationInfo,
     LampieNotificationOptionsDict,
     LampieSwitchInfo,
@@ -42,17 +52,25 @@ from .types import (
     LEDConfigSourceType,
     Slug,
     SwitchId,
+    Z2MSwitchInfo,
+    ZHASwitchInfo,
 )
 
 if TYPE_CHECKING:
     from .coordinator import LampieUpdateCoordinator
 
 type ZHAEventData = dict[str, Any]
+type MQTTDeviceName = str
 
 _LOGGER = logging.getLogger(__name__)
 
 ZHA_DOMAIN: Final = "zha"
 ALREADY_EXPIRED: Final = 0
+
+SWITCH_INTEGRATIONS = {
+    ZHA_DOMAIN: Integration.ZHA,
+    MQTT_DOMAIN: Integration.Z2M,
+}
 
 FIRMWARE_SECONDS_MAX = dt.timedelta(seconds=60).total_seconds()
 FIRMWARE_MINUTES_MAX = dt.timedelta(minutes=60).total_seconds()
@@ -86,10 +104,25 @@ PHYSICAL_DISMISSAL_COMMANDS = {
     "button_6_double",
 }
 
+Z2M_COMMAND_MAP = {
+    "config_double": "button_3_double",
+}
+
 
 class _LEDMode(IntEnum):
     ALL = 1
     INDIVIDUAL = 3
+
+
+class _SwitchKeyType(Enum):
+    DEVICE_ID = auto()
+    MQTT_ID = auto()  # id stored in DeviceInfo.identifiers tuple
+    MQTT_NAME = auto()  # name from device's attributes
+
+
+class _SwitchKey[T](NamedTuple):
+    type: _SwitchKeyType
+    identifier: T
 
 
 class _StartScriptResult(NamedTuple):
@@ -100,6 +133,10 @@ class _StartScriptResult(NamedTuple):
 class _EndScriptResult(NamedTuple):
     block_dismissal: bool
     block_next: bool
+
+
+class _UnknownIntegrationError(Exception):
+    pass
 
 
 class _LampieUnmanagedSwitchCoordinator:
@@ -130,7 +167,8 @@ class LampieOrchestrator:
         self._coordinators: dict[Slug, LampieUpdateCoordinator] = {}
         self._notifications: dict[Slug, LampieNotificationInfo] = {}
         self._switches: dict[SwitchId, LampieSwitchInfo] = {}
-        self._device_switches: dict[DeviceId, SwitchId] = {}
+        self._switch_ids: dict[_SwitchKey[DeviceId | MQTTDeviceName], SwitchId] = {}
+        self._cancel_mqtt_listener: CALLBACK_TYPE | None = None
         self._cancel_zha_listener: CALLBACK_TYPE = hass.bus.async_listen(
             "zha_event",
             self._handle_zha_event,
@@ -145,9 +183,20 @@ class LampieOrchestrator:
         self._coordinators.pop(coordinator.slug)
         self._update_references()
 
+    async def setup(self) -> None:
+        self._cancel_mqtt_listener = await mqtt.async_subscribe(
+            self._hass,
+            "zigbee2mqtt/+",
+            self._handle_z2m_message,
+        )
+
     def teardown(self) -> bool:
         if len(self._coordinators) == 0:
             self._cancel_zha_listener()
+
+            if self._cancel_mqtt_listener:
+                self._cancel_mqtt_listener()
+
             for key, expiration in (
                 *((key, info.expiration) for key, info in self._notifications.items()),
                 *((key, info.expiration) for key, info in self._switches.items()),
@@ -159,32 +208,116 @@ class LampieOrchestrator:
     def switch_info(self, switch_id: SwitchId) -> LampieSwitchInfo:
         if switch_id not in self._switches:
             entity_registry = er.async_get(self._hass)
+            device_registry = dr.async_get(self._hass)
             device_id = async_entity_id_to_device_id(self._hass, switch_id)
+            device = device_registry.async_get(device_id)
+            integration = self._switch_integration(device) if device else None
             entity_entries = er.async_entries_for_device(entity_registry, device_id)
-            local_protetction_id = None
-            disable_clear_notification_id = None
+
+            if not integration:
+                raise _UnknownIntegrationError
+
+            integration_info: ZHASwitchInfo | Z2MSwitchInfo | None = None
+
+            if integration == Integration.ZHA:
+                zha_info = integration_info = ZHASwitchInfo()
+            if integration == Integration.Z2M:
+                z2m_info = integration_info = Z2MSwitchInfo()
 
             _LOGGER.debug(
                 "searching %s related entries: %s",
                 switch_id,
-                [(entry.unique_id, entry.translation_key) for entry in entity_entries],
+                [
+                    (
+                        entry.domain,
+                        entry.platform,
+                        entry.unique_id,
+                        entry.translation_key,
+                    )
+                    for entry in entity_entries
+                ],
             )
 
             for entity_entry in entity_entries:
-                if entity_entry.translation_key == "local_protection":
-                    local_protetction_id = entity_entry.entity_id
                 if (
-                    entity_entry.translation_key
-                    == "disable_clear_notifications_double_tap"
+                    integration == Integration.ZHA
+                    and entity_entry.platform == ZHA_DOMAIN
                 ):
-                    disable_clear_notification_id = entity_entry.entity_id
+                    if (
+                        entity_entry.domain == SWITCH_DOMAIN
+                        and entity_entry.translation_key == "local_protection"
+                    ):
+                        zha_info = integration_info = replace(
+                            zha_info, local_protetction_id=entity_entry.entity_id
+                        )
+                        _LOGGER.debug(
+                            "found ZHA local protection entity: %s",
+                            zha_info.local_protetction_id,
+                        )
+                    if entity_entry.domain == SWITCH_DOMAIN and (
+                        entity_entry.translation_key
+                        == "disable_clear_notifications_double_tap"
+                    ):
+                        zha_info = integration_info = replace(
+                            zha_info,
+                            disable_clear_notification_id=entity_entry.entity_id,
+                        )
+                        _LOGGER.debug(
+                            "found ZHA disable clear notification entity: %s",
+                            zha_info.disable_clear_notification_id,
+                        )
 
-            self._device_switches[device_id] = switch_id
+                if (
+                    integration == Integration.Z2M
+                    and entity_entry.platform == MQTT_DOMAIN
+                ):
+                    if (
+                        entity_entry.domain == SELECT_DOMAIN
+                        and (unique_id_parts := entity_entry.unique_id.split("_"))
+                        and len(unique_id_parts) >= 2
+                        and unique_id_parts[1] == "localProtection"
+                    ):
+                        z2m_info = integration_info = replace(
+                            z2m_info, local_protetction_id=entity_entry.entity_id
+                        )
+                        _LOGGER.debug(
+                            "found Z2M local protection entity: %s",
+                            z2m_info.local_protetction_id,
+                        )
+
+                    if (
+                        entity_entry.domain == SELECT_DOMAIN
+                        and (unique_id_parts := entity_entry.unique_id.split("_"))
+                        and len(unique_id_parts) >= 2
+                        and unique_id_parts[1] == "doubleTapClearNotifications"
+                    ):
+                        z2m_info = integration_info = replace(
+                            z2m_info, clear_notification_id=entity_entry.entity_id
+                        )
+                        _LOGGER.debug(
+                            "found Z2M clear notification entity: %s",
+                            z2m_info.clear_notification_id,
+                        )
+
+            self._switch_ids[_SwitchKey(_SwitchKeyType.DEVICE_ID, device_id)] = (
+                switch_id
+            )
+
+            if mqtt_device_id := self._mqtt_device_id(device.identifiers):
+                self._switch_ids[_SwitchKey(_SwitchKeyType.MQTT_ID, mqtt_device_id)] = (
+                    switch_id
+                )
+
+            if mqtt_device_name := self._mqtt_device_name(device):
+                self._switch_ids[
+                    _SwitchKey(_SwitchKeyType.MQTT_NAME, mqtt_device_name)
+                ] = switch_id
+
             self._switches[switch_id] = LampieSwitchInfo(
+                integration=integration,
+                integration_info=integration_info,
                 led_config=(),
                 led_config_source=LEDConfigSource(None),
-                local_protetction_id=local_protetction_id,
-                disable_clear_notification_id=disable_clear_notification_id,
             )
         return self._switches[switch_id]
 
@@ -282,6 +415,7 @@ class LampieOrchestrator:
                 or start_action_response.led_config
                 or coordinator.led_config,
                 partial(self._async_handle_notification_expired, slug),
+                has_expiration_messaging=self._any_has_expiration_messaging(switches),
                 log_context=slug,
             ),
         )
@@ -390,6 +524,9 @@ class LampieOrchestrator:
                 from_state.expiration,
                 led_config or (),
                 partial(self._async_handle_switch_override_expired, switch_id),
+                has_expiration_messaging=self._any_has_expiration_messaging(
+                    [switch_id]
+                ),
                 log_context=f"{led_config_source}",
             ),
         )
@@ -675,11 +812,11 @@ class LampieOrchestrator:
             TRACE, "issue_switch_commands: %s; %s, %s", switch_id, led_mode, led_config
         )
 
-        from_params = [self._switch_command_led_params(led) for led in from_config]
+        from_params = [
+            self._switch_command_led_params(led, switch_id) for led in from_config
+        ]
         device_info = async_device_info_to_link_from_entity(self._hass, switch_id)
-        id_tuple = next(iter(device_info["identifiers"]))
         updated_leds = []
-        ieee = id_tuple[1]
 
         # actually apply the desired changes either for the full LED bar or for
         # individual lights within the bar. only apply changes when needed to
@@ -687,7 +824,7 @@ class LampieOrchestrator:
         # no changes need to be applied if the changes were via the switch
         # firmware since the switch will already have cleared the notification.
         for idx, led in enumerate(led_config):
-            params = self._switch_command_led_params(led)
+            params = self._switch_command_led_params(led, switch_id)
 
             with suppress(IndexError):
                 if params == from_params[idx]:
@@ -699,20 +836,11 @@ class LampieOrchestrator:
                 updated_leds.append(str(idx))
 
             _LOGGER.log(TRACE, "update LED %s command: %r", idx, params)
-            await self._hass.services.async_call(
-                ZHA_DOMAIN,
-                "issue_zigbee_cluster_command",
-                {
-                    "ieee": ieee,
-                    "endpoint_id": 1,
-                    "cluster_id": 64561,
-                    "cluster_type": "in",
-                    "command": int(led_mode),
-                    "command_type": "server",
-                    "params": params,
-                    "manufacturer": 4655,
-                },
-                blocking=True,
+            await self._dispatch_service_command(
+                switch_id=switch_id,
+                device_info=device_info,
+                led_mode=led_mode,
+                params=params,
             )
 
         _LOGGER.debug(
@@ -721,9 +849,85 @@ class LampieOrchestrator:
             "all" if led_mode == _LEDMode.ALL else ", ".join(updated_leds),
         )
 
-    @classmethod
-    def _switch_command_led_params(cls, led: LEDConfig) -> dict[str, Any]:
-        firmware_duration = cls._firmware_duration(led.duration)
+    async def _dispatch_service_command(
+        self,
+        *,
+        switch_id: SwitchId,
+        device_info: dr.DeviceInfo,
+        led_mode: _LEDMode,
+        params: dict[str, Any],
+    ) -> None:
+        switch_info = self.switch_info(switch_id)
+        service_command = {
+            Integration.ZHA: self._zha_service_command,
+            Integration.Z2M: self._z2m_service_command,
+        }[switch_info.integration]
+
+        await service_command(
+            device_info=device_info,
+            led_mode=led_mode,
+            params=params,
+        )
+
+    async def _zha_service_command(
+        self,
+        *,
+        device_info: dr.DeviceInfo,
+        led_mode: _LEDMode,
+        params: dict[str, Any],
+    ) -> None:
+        id_tuple = next(iter(device_info["identifiers"]))
+        ieee = id_tuple[1]
+
+        _LOGGER.log(TRACE, "zha.issue_zigbee_cluster_command: %s", led_mode)
+        await self._hass.services.async_call(
+            ZHA_DOMAIN,
+            "issue_zigbee_cluster_command",
+            {
+                "ieee": ieee,
+                "endpoint_id": 1,
+                "cluster_id": 64561,
+                "cluster_type": "in",
+                "command": int(led_mode),
+                "command_type": "server",
+                "params": params,
+                "manufacturer": 4655,
+            },
+            blocking=True,
+        )
+
+    async def _z2m_service_command(
+        self,
+        *,
+        device_info: dr.DeviceInfo,
+        led_mode: _LEDMode,
+        params: dict[str, Any],
+    ) -> None:
+        command = (
+            "individual_led_effect" if led_mode == _LEDMode.INDIVIDUAL else "led_effect"
+        )
+        device_id = self._mqtt_device_id(device_info["identifiers"])
+        topic = f"zigbee2mqtt/{device_id}/set"
+
+        _LOGGER.log(TRACE, "mqtt.publish: %s", topic)
+        await self._hass.services.async_call(
+            MQTT_DOMAIN,
+            "publish",
+            {
+                "topic": topic,
+                "payload": {command: params},
+            },
+            blocking=True,
+        )
+
+    def _switch_command_led_params(
+        self, led: LEDConfig, switch_id: SwitchId
+    ) -> dict[str, Any]:
+        firmware_duration = (
+            self._firmware_duration(led.duration)
+            if self._any_has_expiration_messaging([switch_id])
+            else None
+        )
 
         return {
             "led_color": int(led.color),
@@ -736,8 +940,87 @@ class LampieOrchestrator:
             else firmware_duration,
         }
 
-    @classmethod
-    def _firmware_duration(cls, seconds: int | None) -> int | None:
+    def _local_protection_enabled(self, switch_id: SwitchId) -> bool:
+        switch_info = self.switch_info(switch_id)
+        integration = switch_info.integration
+        integration_info = switch_info.integration_info
+
+        assert integration_info is not None, (
+            f"missing integration info for switch {switch_id}"
+        )
+
+        def _zha() -> bool:
+            zha_info: ZHASwitchInfo = integration_info
+
+            return bool(
+                local_protetction_id := zha_info.local_protetction_id
+            ) and self._hass.states.is_state(local_protetction_id, "on")
+
+        def _z2m() -> bool:
+            z2m_info: Z2MSwitchInfo = integration_info
+
+            return (
+                bool(local_protetction_id := z2m_info.local_protetction_id)
+                and (state := self._hass.states.get(local_protetction_id))
+                and state.lower() in {"enabled", "enabled (default)"}
+            )
+
+        return {
+            Integration.ZHA: _zha,
+            Integration.Z2M: _z2m,
+        }[integration]()
+
+    def _double_tap_clear_notifications_disabled(self, switch_id: SwitchId) -> bool:
+        switch_info = self.switch_info(switch_id)
+        integration = switch_info.integration
+        integration_info = switch_info.integration_info
+
+        assert integration_info is not None, (
+            f"missing integration info for switch {switch_id}"
+        )
+
+        def _zha() -> bool:
+            zha_info: ZHASwitchInfo = integration_info
+
+            return bool(
+                disable_clear_notification_id := zha_info.disable_clear_notification_id
+            ) and self._hass.states.is_state(disable_clear_notification_id, "on")
+
+        def _z2m() -> bool:
+            z2m_info: Z2MSwitchInfo = integration_info
+
+            return (
+                bool(clear_notification_id := z2m_info.clear_notification_id)
+                and (state := self._hass.states.get(clear_notification_id))
+                and state.lower() == "disabled"
+            )
+
+        return {
+            Integration.ZHA: _zha,
+            Integration.Z2M: _z2m,
+        }[integration]()
+
+    def _any_has_expiration_messaging(self, switches: Sequence[SwitchId]) -> bool:
+        """Check if any switch via an integration that sends expiration events.
+
+        All Inovelli Blue series switches send Zigbee messages for notifications
+        expiring (when local protection is not enabled). However, integrations
+        currently handle them differently:
+            ZHA: Processes these and turns them into
+                `led_effect_complete_{ALL|LED_1-7}` commands.
+            Z2M: Ignores these messages.
+
+        Returns:
+            A boolean indicating if any of the switches are part of such an
+                integration.
+        """
+        return any(
+            self.switch_info(switch_id).integration == Integration.ZHA
+            for switch_id in switches
+        )
+
+    @staticmethod
+    def _firmware_duration(seconds: int | None) -> int | None:
         """Convert a timeframe to a duration supported by the switch firmware.
 
         Args:
@@ -762,17 +1045,60 @@ class LampieOrchestrator:
         self,
         event_data: ZHAEventData,
     ) -> bool:
+        switch_key = _SwitchKey(_SwitchKeyType.DEVICE_ID, event_data["device_id"])
         return (
-            event_data["device_id"] in self._device_switches
+            switch_key in self._switch_ids
             and event_data["command"] in DISMISSAL_COMMANDS
         )
 
     @callback
     async def _handle_zha_event(self, event: Event[ZHAEventData]) -> None:
-        hass = self._hass
-        command = event.data["command"]
         device_id = event.data["device_id"]
-        switch_id = self._device_switches[device_id]
+        switch_key = _SwitchKey(_SwitchKeyType.DEVICE_ID, device_id)
+        switch_id = self._switch_ids[switch_key]
+        await self._handle_generic_event(
+            command=event.data["command"],
+            switch_id=switch_id,
+            integration=Integration.ZHA,
+        )
+
+    @callback
+    async def _handle_z2m_message(self, message: mqtt.ReceiveMessage) -> None:
+        _LOGGER.log(TRACE, "handling mqtt message: %s", message)
+
+        command_path_base, mqtt_device_identifier = message.topic.split("/", 1)
+        switch_keys = [
+            _SwitchKey(_SwitchKeyType.MQTT_ID, mqtt_device_identifier),
+            _SwitchKey(_SwitchKeyType.MQTT_NAME, mqtt_device_identifier),
+        ]
+        switch_id = next(
+            (
+                match
+                for switch_key in switch_keys
+                if (match := self._switch_ids.get(switch_key))
+            ),
+            None,
+        )
+
+        if command_path_base == "zigbee2mqtt" and switch_id is not None:
+            payload = json_loads_object(message.payload)
+            action = payload.get("action")
+            command = Z2M_COMMAND_MAP.get(action)
+
+            if command:
+                await self._handle_generic_event(
+                    command=command,
+                    switch_id=switch_id,
+                    integration=Integration.Z2M,
+                )
+
+    async def _handle_generic_event(
+        self,
+        *,
+        command: str,
+        switch_id: SwitchId,
+        integration: Integration,
+    ) -> None:
         from_state = self.switch_info(switch_id)
         led_config_source = from_state.led_config_source
         led_config = [*from_state.led_config]
@@ -783,14 +1109,17 @@ class LampieOrchestrator:
         if not led_config or not led_config_source:
             _LOGGER.warning(
                 "missing LED config and/or source for dismissal on switch %s; "
-                "skipping processing ZHA event %s",
+                "skipping processing %s event %s",
                 switch_id,
+                str(integration).upper(),
                 command,
                 stack_info=True,
             )
             return
 
-        _LOGGER.debug("processing ZHA event %s on %s", command, switch_id)
+        _LOGGER.debug(
+            "processing %s event %s on %s", str(integration).upper(), command, switch_id
+        )
 
         if match := re.search(r"_LED_(\d+)$", command):
             index = int(match[1]) - 1
@@ -814,18 +1143,9 @@ class LampieOrchestrator:
             all_clear = True
 
         if all_clear and command in CONFIGURABLE_COMMANDS:
-            switch_info = self.switch_info(switch_id)
-            local_protection = (
-                switch_info.local_protetction_id
-                and hass.states.is_state(
-                    switch_info and switch_info.local_protetction_id, "on"
-                )
-            )
-            disable_clear_notification = (
-                switch_info.disable_clear_notification_id
-                and hass.states.is_state(
-                    switch_info.disable_clear_notification_id, "on"
-                )
+            local_protection = self._local_protection_enabled(switch_id)
+            disable_clear_notification = self._double_tap_clear_notifications_disabled(
+                switch_id
             )
 
             is_valid_dismissal = not disable_clear_notification
@@ -999,6 +1319,9 @@ class LampieOrchestrator:
                     led_config,
                     handle_expired,
                     is_starting=False,
+                    has_expiration_messaging=self._any_has_expiration_messaging(
+                        switches
+                    ),
                     log_context=f"partial-expiry {log_context}",
                 ),
             )
@@ -1025,6 +1348,7 @@ class LampieOrchestrator:
         callback: _ExpirationHandler,
         *,
         is_starting: bool = True,
+        has_expiration_messaging: bool,
         log_context: str,
     ) -> ExpirationInfo:
         started_at = expiration.started_at
@@ -1041,7 +1365,10 @@ class LampieOrchestrator:
             for item in led_config
             if item.duration is not None
             and item.duration != ALREADY_EXPIRED
-            and self._firmware_duration(item.duration) is None
+            and (
+                not has_expiration_messaging
+                or self._firmware_duration(item.duration) is None
+            )
         ]
         duration: int | None = min(durations) if durations else None
 
@@ -1099,8 +1426,17 @@ class LampieOrchestrator:
             )
 
             for switch_id in switch_ids:
+                try:
+                    switch_info = self.switch_info(switch_id)
+                except _UnknownIntegrationError:
+                    _LOGGER.exception(
+                        "ignoring switch %s: could not to a valid integration",
+                        switch_id,
+                    )
+                    continue
+
                 priorities = switch_priorities.get(switch_id) or [slug]
-                expected = [*self.switch_info(switch_id).priorities]
+                expected = [*switch_info.priorities]
 
                 if switch_id in processed_switches and expected != priorities:
                     _LOGGER.warning(
@@ -1118,12 +1454,35 @@ class LampieOrchestrator:
                     continue
 
                 self._switches[switch_id] = replace(
-                    self.switch_info(switch_id),
+                    switch_info,
                     priorities=tuple(priorities),
                 )
                 processed_switches.add(switch_id)
 
             processed_slugs.append(slug)
+
+    @classmethod
+    def _switch_integration(cls, device: dr.DeviceEntry) -> Integration | None:
+        id_tuple = next(iter(device.identifiers))
+        domain = id_tuple[0]
+        return SWITCH_INTEGRATIONS.get(domain)
+
+    @classmethod
+    def _mqtt_device_name(cls, device: dr.DeviceEntry) -> str | None:
+        return (
+            device.name if cls._switch_integration(device) == Integration.Z2M else None
+        )
+
+    @classmethod
+    def _mqtt_device_id(cls, identifiers: set[tuple[str, str]]) -> str | None:
+        id_tuple = next(iter(identifiers))
+
+        if id_tuple[0] != MQTT_DOMAIN:
+            return None
+
+        identifier: str = id_tuple[1]
+
+        return identifier.split("_", 1)[1]
 
 
 def _all_clear(led_config: Sequence[LEDConfig]) -> bool:
