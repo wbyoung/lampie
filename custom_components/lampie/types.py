@@ -245,6 +245,13 @@ class InvalidColor(Exception):
     index: int | None = None
 
 
+class Integration(StrEnum):
+    """Switch integration type."""
+
+    ZHA = auto()
+    Z2M = auto()
+
+
 @dataclass(frozen=True)
 class ExpirationInfo:
     """Storage of expiration info."""
@@ -272,13 +279,30 @@ class LampieNotificationOptionsDict(TypedDict):
 
 
 @dataclass(frozen=True)
+class ZHASwitchInfo:
+    """ZHA switch info data class."""
+
+    local_protection_id: EntityId | None = None
+    disable_clear_notification_id: EntityId | None = None
+
+
+@dataclass(frozen=True)
+class Z2MSwitchInfo:
+    """Z2M switch info data class."""
+
+    full_topic: str
+    local_protection_enabled: bool | None = None
+    double_tap_clear_notifications_disabled: bool | None = None
+
+
+@dataclass(frozen=True)
 class LampieSwitchInfo:
     """Lampie switch data class."""
 
     led_config: tuple[LEDConfig, ...]
     led_config_source: LEDConfigSource
-    local_protection_id: EntityId | None = None
-    disable_clear_notification_id: EntityId | None = None
+    integration_info: Any
+    integration: Integration = Integration.ZHA
     priorities: tuple[Slug, ...] = field(default_factory=tuple)
     expiration: ExpirationInfo = field(default_factory=ExpirationInfo)
 
@@ -288,8 +312,7 @@ class LampieSwitchOptionsDict(TypedDict):
 
     led_config: NotRequired[tuple[LEDConfig, ...]]
     led_config_source: NotRequired[LEDConfigSource]
-    local_protection_id: NotRequired[EntityId | None]
-    disable_clear_notification_id: NotRequired[EntityId | None]
+    integration_info: NotRequired[Any | None]
     priorities: NotRequired[tuple[Slug, ...]]
     expiration: NotRequired[ExpirationInfo]
 
