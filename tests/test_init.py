@@ -745,8 +745,10 @@ async def test_toggle_notifications(
         },
     )
 
+    switches = {}
+
     for entity_id, state in (initial_states or {}).items():
-        add_mock_switch(hass, entity_id)
+        switches[entity_id] = add_mock_switch(hass, entity_id)
         hass.states.async_set(entity_id, state)
 
     assert await async_setup_component(hass, "script", {"script": scripts})
@@ -786,11 +788,15 @@ async def test_toggle_notifications(
                     blocking=True,
                 )
             elif "event" in step:
+                event_data = step["event"]
+                entity_id = event_data.pop("entity_id", None)
+                device = switches.get(entity_id)
+                device_id = device.id if device else switch.device_id
                 hass.bus.async_fire(
                     "zha_event",
                     {
-                        "device_id": switch.device_id,
-                        **step["event"],
+                        "device_id": device_id,
+                        **event_data,
                     },
                 )
             elif "delay" in step:
@@ -832,6 +838,10 @@ async def test_toggle_notifications(
     assert service_calls == snapshot(
         name="service_calls", matcher=any_device_id_matcher
     )
+
+    for switch_id in switches:
+        switch_info = orchestrator.switch_info(switch_id)
+        assert switch_info == snapshot(name=f"swtich_info:{switch_id}")
 
     for entity in entity_registry.entities.get_entries_for_config_entry_id(
         config_entry.entry_id

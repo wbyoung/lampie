@@ -3239,6 +3239,26 @@
     ),
   })
 # ---
+# name: test_toggle_notifications[doors_open_multiple_switches_dismissed][swtich_info:light.entryway]
+  dict({
+    'disable_clear_notification_id': None,
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'led_config': tuple(
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': None,
+    }),
+    'local_protetction_id': None,
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
 # name: test_toggle_notifications[doors_open_multiple_switches_dismissed][zha_cluster_commands]
   list([
     ServiceCallSnapshot({
@@ -4137,6 +4157,31 @@
     'local_protetction_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
+    ),
+  })
+# ---
+# name: test_toggle_notifications[entryway_override][swtich_info:light.entryway]
+  dict({
+    'disable_clear_notification_id': None,
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'led_config': tuple(
+      dict({
+        'brightness': 100.0,
+        'color': <Color.GREEN: 90>,
+        'duration': None,
+        'effect': <Effect.SOLID: 1>,
+      }),
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.SERVICE: 'service'>,
+      'value': 'lampie.override',
+    }),
+    'local_protetction_id': None,
+    'priorities': tuple(
     ),
   })
 # ---
