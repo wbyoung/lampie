@@ -714,6 +714,59 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
             "expected_zha_calls": 1,
         },
     ),
+    Scenario(
+        "entryway_override_expired",
+        {
+            "configs": {},
+            "initial_states": {
+                "light.entryway": "on",
+            },
+            "steps": [
+                {
+                    "action": f"{DOMAIN}.{SERVICE_NAME_OVERRIDE}",
+                    "target": "light.entryway",
+                    "data": {
+                        ATTR_LED_CONFIG: [
+                            {ATTR_COLOR: "green"},
+                        ],
+                    },
+                },
+                {
+                    "event": {
+                        "command": "led_effect_complete_ALL_LEDS",
+                        "entity_id": "light.entryway",
+                    },
+                },
+            ],
+            "expected_notification_state": "off",
+            "expected_notifiation_timer": False,
+            "expected_switch_timer": False,
+            "expected_events": 0,
+            "expected_zha_calls": 1,
+        },
+    ),
+    Scenario(
+        "entryway_no_override_dismissed",
+        {
+            "configs": {},
+            "initial_states": {
+                "light.entryway": "on",
+            },
+            "steps": [
+                {
+                    "event": {
+                        "command": "button_3_double",
+                        "entity_id": "light.entryway",
+                    },
+                },
+            ],
+            "expected_notification_state": "off",
+            "expected_notifiation_timer": False,
+            "expected_switch_timer": False,
+            "expected_events": 0,
+            "expected_zha_calls": 0,
+        },
+    ),
 )
 async def test_toggle_notifications(
     hass: HomeAssistant,
@@ -839,8 +892,11 @@ async def test_toggle_notifications(
         name="service_calls", matcher=any_device_id_matcher
     )
 
+    # assert switch info against internal state to avoid creating the switch
+    # info: this allows some test cases to assert that the orchestrator never
+    # tries to track anything about the switch.
     for switch_id in switches:
-        switch_info = orchestrator.switch_info(switch_id)
+        switch_info = orchestrator._switches.get(switch_id)
         assert switch_info == snapshot(name=f"swtich_info:{switch_id}")
 
     for entity in entity_registry.entities.get_entries_for_config_entry_id(

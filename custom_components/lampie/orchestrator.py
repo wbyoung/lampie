@@ -158,8 +158,26 @@ class LampieOrchestrator:
 
     def switch_info(self, switch_id: SwitchId) -> LampieSwitchInfo:
         if switch_id not in self._switches:
+            entity_registry = er.async_get(self._hass)
+            device_id = async_entity_id_to_device_id(self._hass, switch_id)
+            entity_entries = er.async_entries_for_device(entity_registry, device_id)
+            local_protetction_id = None
+            disable_clear_notification_id = None
+
+            for entity_entry in entity_entries:
+                if entity_entry.unique_id.endswith("-local_protection"):
+                    local_protetction_id = entity_entry.entity_id
+                if entity_entry.unique_id.endswith(
+                    "-disable_clear_notifications_double_tap"
+                ):
+                    disable_clear_notification_id = entity_entry.entity_id
+
+            self._device_switches[device_id] = switch_id
             self._switches[switch_id] = LampieSwitchInfo(
-                led_config=(), led_config_source=LEDConfigSource(None)
+                led_config=(),
+                led_config_source=LEDConfigSource(None),
+                local_protetction_id=local_protetction_id,
+                disable_clear_notification_id=disable_clear_notification_id,
             )
         return self._switches[switch_id]
 
@@ -730,12 +748,15 @@ class LampieOrchestrator:
             return 120 + seconds // 3600
         return None
 
-    @staticmethod
     @callback
     def _filter_zha_events(
+        self,
         event_data: ZHAEventData,
     ) -> bool:
-        return event_data["command"] in DISMISSAL_COMMANDS
+        return (
+            event_data["device_id"] in self._device_switches
+            and event_data["command"] in DISMISSAL_COMMANDS
+        )
 
     @callback
     async def _handle_zha_event(self, event: Event[ZHAEventData]) -> None:
@@ -1057,10 +1078,6 @@ class LampieOrchestrator:
         return expiration
 
     def _update_references(self) -> None:
-        self._device_switches.clear()
-
-        hass = self._hass
-        entity_registry = er.async_get(hass)
         processed_slugs: list[Slug] = []
         processed_switches: set[SwitchId] = set()
 
@@ -1073,10 +1090,8 @@ class LampieOrchestrator:
             )
 
             for switch_id in switch_ids:
-                device_id = async_entity_id_to_device_id(hass, switch_id)
                 priorities = switch_priorities.get(switch_id) or [slug]
                 expected = [*self.switch_info(switch_id).priorities]
-                entity_entries = er.async_entries_for_device(entity_registry, device_id)
 
                 if switch_id in processed_switches and expected != priorities:
                     _LOGGER.warning(
@@ -1093,23 +1108,9 @@ class LampieOrchestrator:
                 if switch_id in processed_switches:
                     continue
 
-                local_protetction_id = None
-                disable_clear_notification_id = None
-
-                for entity_entry in entity_entries:
-                    if entity_entry.unique_id.endswith("-local_protection"):
-                        local_protetction_id = entity_entry.entity_id
-                    if entity_entry.unique_id.endswith(
-                        "-disable_clear_notifications_double_tap"
-                    ):
-                        disable_clear_notification_id = entity_entry.entity_id
-
-                self._device_switches[device_id] = switch_id
                 self._switches[switch_id] = replace(
                     self.switch_info(switch_id),
                     priorities=tuple(priorities),
-                    local_protetction_id=local_protetction_id,
-                    disable_clear_notification_id=disable_clear_notification_id,
                 )
                 processed_switches.add(switch_id)
 

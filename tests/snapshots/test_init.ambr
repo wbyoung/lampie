@@ -4037,6 +4037,132 @@
     }),
   ])
 # ---
+# name: test_toggle_notifications[entryway_no_override_dismissed][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'led_config_override': None,
+    'notification_on': False,
+  })
+# ---
+# name: test_toggle_notifications[entryway_no_override_dismissed][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:timer',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_toggle_notifications[entryway_no_override_dismissed][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_toggle_notifications[entryway_no_override_dismissed][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_toggle_notifications[entryway_no_override_dismissed][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:lightning-bolt',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_toggle_notifications[entryway_no_override_dismissed][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_toggle_notifications[entryway_no_override_dismissed][service_calls]
+  list([
+  ])
+# ---
+# name: test_toggle_notifications[entryway_no_override_dismissed][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_toggle_notifications[entryway_no_override_dismissed][switch_info]
+  dict({
+    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'led_config': tuple(
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': None,
+    }),
+    'local_protetction_id': 'switch.kitchen_local_protection',
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
+# name: test_toggle_notifications[entryway_no_override_dismissed][swtich_info:light.entryway]
+  None
+# ---
 # name: test_toggle_notifications[entryway_override][notification_info]
   dict({
     'expiration': ExpirationInfoSnapshot({
@@ -4162,7 +4288,7 @@
 # ---
 # name: test_toggle_notifications[entryway_override][swtich_info:light.entryway]
   dict({
-    'disable_clear_notification_id': None,
+    'disable_clear_notification_id': 'switch.entryway_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
@@ -4180,12 +4306,186 @@
       'type': <LEDConfigSourceType.SERVICE: 'service'>,
       'value': 'lampie.override',
     }),
-    'local_protetction_id': None,
+    'local_protetction_id': 'switch.entryway_local_protection',
     'priorities': tuple(
     ),
   })
 # ---
 # name: test_toggle_notifications[entryway_override][zha_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'cluster_id': 64561,
+        'cluster_type': 'in',
+        'command': 1,
+        'command_type': 'server',
+        'endpoint_id': 1,
+        'ieee': 'mock-ieee:entryway',
+        'manufacturer': 4655,
+        'params': dict({
+          'led_color': 90,
+          'led_duration': 255,
+          'led_effect': 1,
+          'led_level': 100,
+        }),
+      }),
+      'domain': 'zha',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'issue_zigbee_cluster_command',
+    }),
+  ])
+# ---
+# name: test_toggle_notifications[entryway_override_expired][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'led_config_override': None,
+    'notification_on': False,
+  })
+# ---
+# name: test_toggle_notifications[entryway_override_expired][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:timer',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_toggle_notifications[entryway_override_expired][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_toggle_notifications[entryway_override_expired][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_toggle_notifications[entryway_override_expired][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:lightning-bolt',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_toggle_notifications[entryway_override_expired][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_toggle_notifications[entryway_override_expired][service_calls]
+  list([
+  ])
+# ---
+# name: test_toggle_notifications[entryway_override_expired][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_toggle_notifications[entryway_override_expired][switch_info]
+  dict({
+    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'led_config': tuple(
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': None,
+    }),
+    'local_protetction_id': 'switch.kitchen_local_protection',
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
+# name: test_toggle_notifications[entryway_override_expired][swtich_info:light.entryway]
+  dict({
+    'disable_clear_notification_id': 'switch.entryway_disable_config_2x_tap_to_clear_notifications',
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'led_config': tuple(
+      dict({
+        'brightness': 100.0,
+        'color': <Color.GREEN: 90>,
+        'duration': None,
+        'effect': <Effect.SOLID: 1>,
+      }),
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.SERVICE: 'service'>,
+      'value': 'lampie.override',
+    }),
+    'local_protetction_id': 'switch.entryway_local_protection',
+    'priorities': tuple(
+    ),
+  })
+# ---
+# name: test_toggle_notifications[entryway_override_expired][zha_cluster_commands]
   list([
     ServiceCallSnapshot({
       'context': <ANY>,
