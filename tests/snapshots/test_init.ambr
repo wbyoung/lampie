@@ -7849,6 +7849,754 @@
     }),
   ])
 # ---
+# name: test_toggle_notifications[zwave-doors_open_5m1s_duration_unexpired][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': <ANY>,
+      'expires_at': HAFakeDatetime(2025, 5, 20, 3, 56, 33, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+      'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'led_config_override': None,
+    'notification_on': True,
+  })
+# ---
+# name: test_toggle_notifications[zwave-doors_open_5m1s_duration_unexpired][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '100.0',
+  })
+# ---
+# name: test_toggle_notifications[zwave-doors_open_5m1s_duration_unexpired][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'red',
+  })
+# ---
+# name: test_toggle_notifications[zwave-doors_open_5m1s_duration_unexpired][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '301',
+  })
+# ---
+# name: test_toggle_notifications[zwave-doors_open_5m1s_duration_unexpired][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:star-four-points-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'open_close',
+  })
+# ---
+# name: test_toggle_notifications[zwave-doors_open_5m1s_duration_unexpired][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'doors_open',
+  })
+# ---
+# name: test_toggle_notifications[zwave-doors_open_5m1s_duration_unexpired][service_calls]
+  list([
+  ])
+# ---
+# name: test_toggle_notifications[zwave-doors_open_5m1s_duration_unexpired][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'expires_at': '2025-05-20T03:56:33.003245-07:00',
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+      'started_at': '2025-05-20T03:51:32.003245-07:00',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'on',
+  })
+# ---
+# name: test_toggle_notifications[zwave-doors_open_5m1s_duration_unexpired][switch_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'integration': <Integration.ZWAVE: 'zwave'>,
+    'integration_info': dict({
+    }),
+    'led_config': tuple(
+      dict({
+        'brightness': 100.0,
+        'color': <Color.RED: 0>,
+        'duration': 301,
+        'effect': <Effect.OPEN_CLOSE: 6>,
+      }),
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': 'doors_open',
+    }),
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
+# name: test_toggle_notifications[zwave-doors_open_5m1s_duration_unexpired][zwave_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'device_id': <ANY>,
+        'parameter': 99,
+        'value': 100689151,
+      }),
+      'domain': 'zwave_js',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'bulk_set_partial_config_parameters',
+    }),
+  ])
+# ---
+# name: test_toggle_notifications[zwave-doors_open_various_firmware_durations_expired][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': <ANY>,
+      'expires_at': HAFakeDatetime(2025, 5, 20, 3, 52, 2, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+      'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'led_config_override': None,
+    'notification_on': True,
+  })
+# ---
+# name: test_toggle_notifications[zwave-doors_open_various_firmware_durations_expired][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'individual': list([
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+      ]),
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '100.0',
+  })
+# ---
+# name: test_toggle_notifications[zwave-doors_open_various_firmware_durations_expired][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+      'individual': list([
+        'blue',
+        'blue',
+        'blue',
+        'blue',
+        'blue',
+        'blue',
+        'blue',
+      ]),
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'blue',
+  })
+# ---
+# name: test_toggle_notifications[zwave-doors_open_various_firmware_durations_expired][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'individual': list([
+        30,
+        300,
+        7200,
+        30,
+        7200,
+        300,
+        30,
+      ]),
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '7200',
+  })
+# ---
+# name: test_toggle_notifications[zwave-doors_open_various_firmware_durations_expired][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:star-four-points-box',
+      'individual': list([
+        'solid',
+        'solid',
+        'solid',
+        'solid',
+        'solid',
+        'solid',
+        'solid',
+      ]),
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'solid',
+  })
+# ---
+# name: test_toggle_notifications[zwave-doors_open_various_firmware_durations_expired][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'doors_open',
+  })
+# ---
+# name: test_toggle_notifications[zwave-doors_open_various_firmware_durations_expired][service_calls]
+  list([
+  ])
+# ---
+# name: test_toggle_notifications[zwave-doors_open_various_firmware_durations_expired][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'expires_at': '2025-05-20T03:52:02.003245-07:00',
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+      'started_at': '2025-05-20T03:51:32.003245-07:00',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'on',
+  })
+# ---
+# name: test_toggle_notifications[zwave-doors_open_various_firmware_durations_expired][switch_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'integration': <Integration.ZWAVE: 'zwave'>,
+    'integration_info': dict({
+    }),
+    'led_config': tuple(
+      dict({
+        'brightness': 100.0,
+        'color': <Color.BLUE: 170>,
+        'duration': 30,
+        'effect': <Effect.SOLID: 1>,
+      }),
+      dict({
+        'brightness': 100.0,
+        'color': <Color.BLUE: 170>,
+        'duration': 300,
+        'effect': <Effect.SOLID: 1>,
+      }),
+      dict({
+        'brightness': 100.0,
+        'color': <Color.BLUE: 170>,
+        'duration': 7200,
+        'effect': <Effect.SOLID: 1>,
+      }),
+      dict({
+        'brightness': 100.0,
+        'color': <Color.BLUE: 170>,
+        'duration': 30,
+        'effect': <Effect.SOLID: 1>,
+      }),
+      dict({
+        'brightness': 100.0,
+        'color': <Color.BLUE: 170>,
+        'duration': 7200,
+        'effect': <Effect.SOLID: 1>,
+      }),
+      dict({
+        'brightness': 100.0,
+        'color': <Color.BLUE: 170>,
+        'duration': 300,
+        'effect': <Effect.SOLID: 1>,
+      }),
+      dict({
+        'brightness': 100.0,
+        'color': <Color.BLUE: 170>,
+        'duration': 30,
+        'effect': <Effect.SOLID: 1>,
+      }),
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': 'doors_open',
+    }),
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
+# name: test_toggle_notifications[zwave-doors_open_various_firmware_durations_expired][zwave_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'device_id': <ANY>,
+        'parameter': 64,
+        'value': 27944191,
+      }),
+      'domain': 'zwave_js',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'bulk_set_partial_config_parameters',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'device_id': <ANY>,
+        'parameter': 69,
+        'value': 27944191,
+      }),
+      'domain': 'zwave_js',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'bulk_set_partial_config_parameters',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'device_id': <ANY>,
+        'parameter': 74,
+        'value': 27944191,
+      }),
+      'domain': 'zwave_js',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'bulk_set_partial_config_parameters',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'device_id': <ANY>,
+        'parameter': 79,
+        'value': 27944191,
+      }),
+      'domain': 'zwave_js',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'bulk_set_partial_config_parameters',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'device_id': <ANY>,
+        'parameter': 84,
+        'value': 27944191,
+      }),
+      'domain': 'zwave_js',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'bulk_set_partial_config_parameters',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'device_id': <ANY>,
+        'parameter': 89,
+        'value': 27944191,
+      }),
+      'domain': 'zwave_js',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'bulk_set_partial_config_parameters',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'device_id': <ANY>,
+        'parameter': 94,
+        'value': 27944191,
+      }),
+      'domain': 'zwave_js',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'bulk_set_partial_config_parameters',
+    }),
+  ])
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_5m1s_duration_unexpired][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': <ANY>,
+      'expires_at': HAFakeDatetime(2025, 5, 20, 3, 56, 33, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+      'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'led_config_override': None,
+    'notification_on': True,
+  })
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_5m1s_duration_unexpired][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '100.0',
+  })
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_5m1s_duration_unexpired][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'red',
+  })
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_5m1s_duration_unexpired][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '301',
+  })
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_5m1s_duration_unexpired][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:star-four-points-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'open_close',
+  })
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_5m1s_duration_unexpired][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'doors_open',
+  })
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_5m1s_duration_unexpired][service_calls]
+  list([
+  ])
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_5m1s_duration_unexpired][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'expires_at': '2025-05-20T03:56:33.003245-07:00',
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+      'started_at': '2025-05-20T03:51:32.003245-07:00',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'on',
+  })
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_5m1s_duration_unexpired][switch_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'integration': <Integration.ZWAVE: 'zwave'>,
+    'integration_info': dict({
+    }),
+    'led_config': tuple(
+      dict({
+        'brightness': 100.0,
+        'color': <Color.RED: 0>,
+        'duration': 301,
+        'effect': <Effect.OPEN_CLOSE: 6>,
+      }),
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': 'doors_open',
+    }),
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_5m1s_duration_unexpired][zwave_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'device_id': <ANY>,
+        'parameter': 24,
+        'value': 50268672,
+      }),
+      'domain': 'zwave_js',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'bulk_set_partial_config_parameters',
+    }),
+  ])
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_various_firmware_durations_expired][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': <ANY>,
+      'expires_at': HAFakeDatetime(2025, 5, 20, 3, 52, 2, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+      'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'led_config_override': None,
+    'notification_on': True,
+  })
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_various_firmware_durations_expired][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'individual': list([
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+      ]),
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '100.0',
+  })
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_various_firmware_durations_expired][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+      'individual': list([
+        'blue',
+        'blue',
+        'blue',
+        'blue',
+        'blue',
+        'blue',
+        'blue',
+      ]),
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'blue',
+  })
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_various_firmware_durations_expired][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'individual': list([
+        30,
+        300,
+        7200,
+        30,
+        7200,
+        300,
+        30,
+      ]),
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '7200',
+  })
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_various_firmware_durations_expired][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:star-four-points-box',
+      'individual': list([
+        'solid',
+        'solid',
+        'solid',
+        'solid',
+        'solid',
+        'solid',
+        'solid',
+      ]),
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'solid',
+  })
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_various_firmware_durations_expired][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'doors_open',
+  })
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_various_firmware_durations_expired][service_calls]
+  list([
+  ])
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_various_firmware_durations_expired][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'expires_at': '2025-05-20T03:52:02.003245-07:00',
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+      'started_at': '2025-05-20T03:51:32.003245-07:00',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'on',
+  })
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_various_firmware_durations_expired][switch_info]
+  None
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_various_firmware_durations_expired][zwave_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'device_id': <ANY>,
+        'parameter': 25,
+        'value': 33491626,
+      }),
+      'domain': 'zwave_js',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'bulk_set_partial_config_parameters',
+    }),
+  ])
+# ---
 # name: test_toggle_notifications_with_shared_switches[both_on][sensor.entryway_effect_brightness]
   StateSnapshot({
     'attributes': ReadOnlyDict({
