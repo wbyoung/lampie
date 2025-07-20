@@ -65,11 +65,22 @@ def add_mock_switch(
     integration_domain = {
         Integration.ZHA: "zha",
         Integration.Z2M: "mqtt",
+        Integration.ZWAVE: "zwave_js",
     }[integration]
 
     identifiers = {
         Integration.ZHA: ("zha", f"mock-ieee:{object_id}"),
         Integration.Z2M: ("mqtt", f"mock-z2m-device-name_{object_id}"),
+        Integration.ZWAVE: (
+            "zwave_js",
+            f"mock-zwave-driver-controller-id_mock-node-{object_id}",
+        ),
+    }[integration]
+
+    model = {
+        Integration.ZHA: "VZM31-SN",
+        Integration.Z2M: "VZM31-SN",
+        Integration.ZWAVE: "VZW31-SN",
     }[integration]
 
     device_registry = dr.async_get(hass)
@@ -84,7 +95,10 @@ def add_mock_switch(
         name=mock_config_entry.title,
         config_entry_id=mock_config_entry.entry_id,
         identifiers={identifiers},
-        **(device_attrs or {}),
+        **{
+            "model": model,
+            **(device_attrs or {}),
+        },
     )
     switch = entity_registry.async_get_or_create(
         domain,

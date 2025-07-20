@@ -226,6 +226,7 @@ class Integration(StrEnum):
 
     ZHA = auto()
     Z2M = auto()
+    ZWAVE = auto()
 
 
 @dataclass(frozen=True)

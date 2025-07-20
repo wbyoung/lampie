@@ -1,5 +1,6 @@
 """Test component setup."""
 
+from dataclasses import dataclass
 import datetime as dt
 import logging
 from typing import Any
@@ -98,6 +99,17 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+@dataclass
+class _IntegrationConfig:
+    integration: Integration
+    model: str | None = None
+
+    def __str__(self):
+        if self.model:
+            return f"{self.integration}-{self.model.lower()}"
+        return self.integration
+
+
 @Scenario.parametrize(
     Scenario(
         "doors_open_10s_duration_expired",
@@ -114,6 +126,11 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
             ],
             "integration_overrides": {
                 Integration.Z2M: {  # command unsupported for Z2M
+                    "expected_notification_state": "on",
+                    "expected_notifiation_timer": True,
+                    "expected_events": 0,
+                },
+                Integration.ZWAVE: {  # command unsupported for ZWAVE
                     "expected_notification_state": "on",
                     "expected_notifiation_timer": True,
                     "expected_events": 0,
@@ -160,6 +177,26 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                     "expected_notification_state": "on",
                     "expected_notifiation_timer": True,
                     "expected_events": 0,
+                },
+                Integration.ZWAVE: {  # command unsupported for ZWAVE
+                    "expected_notification_state": "on",
+                    "expected_notifiation_timer": True,
+                    "expected_events": 0,
+                },
+                (Integration.ZWAVE, "LZW36"): {  # command unsupported for ZWAVE
+                    "configs": {
+                        "doors_open": {
+                            CONF_SWITCH_ENTITIES: [
+                                # use this case to also test combo switch and
+                                # target the fan LED instead of the light LED.
+                                "fan.kitchen",
+                            ],
+                        },
+                    },
+                    "expected_notification_state": "on",
+                    "expected_notifiation_timer": True,
+                    "expected_events": 0,
+                    "expected_cluster_commands": 1,  # only one LED to use
                 },
             },
             "perform_snapshots": True,
@@ -237,6 +274,11 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 },
                 {"delay": dt.timedelta(minutes=5, seconds=2)},
             ],
+            "integration_overrides": {
+                (Integration.ZWAVE, "LZW36"): {
+                    "expected_cluster_commands": 1,  # only one LED to use
+                },
+            },
             "expected_notification_state": "on",
             "expected_notifiation_timer": True,
             "expected_switch_timer": False,
@@ -268,6 +310,11 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 {"delay": dt.timedelta(minutes=5, seconds=2)},
                 {"delay": dt.timedelta(minutes=5, seconds=1)},
             ],
+            "integration_overrides": {
+                (Integration.ZWAVE, "LZW36"): {
+                    "expected_cluster_commands": 2,  # only one LED to use
+                },
+            },
             "expected_notification_state": "off",
             "expected_notifiation_timer": False,
             "expected_switch_timer": False,
@@ -682,6 +729,11 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 },
                 {"delay": dt.timedelta(minutes=5, seconds=2)},
             ],
+            "integration_overrides": {
+                (Integration.ZWAVE, "LZW36"): {
+                    "expected_cluster_commands": 1,  # only one LED to use
+                },
+            },
             "expected_notification_state": "off",
             "expected_notifiation_timer": False,
             "expected_switch_timer": True,
@@ -712,6 +764,11 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 {"delay": dt.timedelta(minutes=5, seconds=2)},
                 {"delay": dt.timedelta(minutes=5, seconds=1)},
             ],
+            "integration_overrides": {
+                (Integration.ZWAVE, "LZW36"): {
+                    "expected_cluster_commands": 2,  # only one LED to use
+                },
+            },
             "expected_notification_state": "off",
             "expected_notifiation_timer": False,
             "expected_switch_timer": False,
@@ -829,6 +886,12 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                     # that the switch info remains with the override info since
                     # the command is ignored.
                 },
+                Integration.ZWAVE: {
+                    # command unsupported for ZWAVE, but no hard coded
+                    # expectations change, so this is also snapshotted to ensure
+                    # that the switch info remains with the override info since
+                    # the command is ignored.
+                },
             },
             "perform_snapshots": True,
             "expected_notification_state": "off",
@@ -862,19 +925,21 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
     ),
 )
 @pytest.mark.parametrize(
-    "integration_domain",
+    "integration_config",
     [
-        Integration.ZHA,
-        Integration.Z2M,
+        _IntegrationConfig(Integration.ZHA),
+        _IntegrationConfig(Integration.Z2M),
+        _IntegrationConfig(Integration.ZWAVE),
+        _IntegrationConfig(Integration.ZWAVE, "LZW36"),
     ],
+    ids=str,
 )
 async def test_toggle_notifications(
     hass: HomeAssistant,
     mqtt_subscribe: AsyncMock,
-    integration_domain: Integration,
-    integration_overrides: dict[str, Any],
+    integration_config: _IntegrationConfig,
+    integration_overrides: dict[str | tuple[Integration, str | None], Any],
     config_entry: MockConfigEntry,
-    switch: er.RegistryEntry,
     now: MockNow,
     configs: dict[str, dict[str, Any]],
     initial_states: dict[str, str],
@@ -893,10 +958,24 @@ async def test_toggle_notifications(
 ) -> None:
     """Test turning on and off a notification."""
 
+    integration_domain = integration_config.integration
+
     # apply overrides to test inputs
     if integration_overrides and (
-        overrides := integration_overrides.get(integration_domain)
+        overrides := (
+            integration_overrides.get((integration_domain, integration_config.model))
+            or integration_overrides.get(integration_domain)
+        )
     ):
+        if "configs" in overrides:
+            configs_override = overrides["configs"]
+            configs = {
+                key: {
+                    **configs.get(key, {}),
+                    **configs_override.get(key, {}),
+                }
+                for key in {*configs, *configs_override}
+            }
         if "perform_snapshots" in overrides:
             perform_snapshots = overrides["perform_snapshots"]
         if "expected_notification_state" in overrides:
@@ -914,6 +993,23 @@ async def test_toggle_notifications(
     if perform_snapshots == Scenario.ABSENT:
         perform_snapshots = integration_domain == Integration.ZHA
 
+    # configure the main switch these scenarios target (from the main config
+    # entry info). these details usually follow the setup in `conftest.py`, but
+    # will deviate a bit from time to time based on the scenario (hence why
+    # why they're configured here).
+    switch_attrs = {"manufacturer": "Inovelli"}
+
+    if integration_config.model:
+        switch_attrs["model"] = integration_config.model
+
+    switch = add_mock_switch(
+        hass,
+        configs.get("doors_open", {}).get(CONF_SWITCH_ENTITIES, ["light.kitchen"])[0],
+        switch_attrs,
+        integration=integration_domain,
+    )
+
+    # configure additional switches from the `initial_states` input.
     switches = {}
 
     for entity_id, state in (initial_states or {}).items():
@@ -924,6 +1020,8 @@ async def test_toggle_notifications(
 
     await setup_integration(hass, config_entry)
 
+    # begin setting up the config entry and various components/parts of HASS
+    # needed to get through the steps from the scenario.
     hass.config_entries.async_update_entry(
         config_entry,
         data={
@@ -938,10 +1036,14 @@ async def test_toggle_notifications(
         hass, "zha", "issue_zigbee_cluster_command"
     )
     mqtt_publish_commands = async_mock_service(hass, "mqtt", "publish")
+    zwave_cluster_commands = async_mock_service(
+        hass, "zwave_js", "bulk_set_partial_config_parameters"
+    )
 
     cluster_commands = {
         Integration.ZHA: zha_cluster_commands,
         Integration.Z2M: mqtt_publish_commands,
+        Integration.ZWAVE: zwave_cluster_commands,
     }[integration_domain]
 
     async_call = hass.services.async_call
@@ -1020,6 +1122,27 @@ async def test_toggle_notifications(
                         timestamp=dt_util.utcnow(),
                     )
                 )
+            elif "event" in step and integration_domain == Integration.ZWAVE:
+                event_data = {**step["event"]}
+                entity_id = event_data.pop("entity_id", None)
+                command = event_data.pop("command")
+                device = switches.get(entity_id)
+                device_id = device.id if device else switch.device_id
+
+                unsupported_press = ("001", "KeyPressed")
+                property_key_name, value = {
+                    "button_3_double": ("003", "KeyPressed2x"),
+                }.get(command) or unsupported_press
+
+                hass.bus.async_fire(
+                    "zwave_js_value_notification",
+                    {
+                        "device_id": device_id,
+                        "property_key_name": property_key_name,
+                        "value": value,
+                        **event_data,
+                    },
+                )
             elif "delay" in step:
                 now._tick(step["delay"].total_seconds())
             await hass.async_block_till_done()
@@ -1033,6 +1156,7 @@ async def test_toggle_notifications(
             not in {
                 ("zha", "issue_zigbee_cluster_command"),
                 ("mqtt", "publish"),
+                ("zwave_js", "bulk_set_partial_config_parameters"),
             }
         ]
 
@@ -1046,7 +1170,8 @@ async def test_toggle_notifications(
 
         if expected_cluster_commands:
             assert cluster_commands == snapshot(
-                name=f"{integration_domain}_cluster_commands"
+                name=f"{integration_domain}_cluster_commands",
+                matcher=any_device_id_matcher,
             )
 
         if expected_events:

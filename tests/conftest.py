@@ -114,7 +114,7 @@ def mock_switch(
     return add_mock_switch(
         hass,
         "light.kitchen",
-        {"manufacturer": "Inovelli", "model": "VZM31-SN"},
+        {"manufacturer": "Inovelli"},
         integration=integration_domain,
     )
 
