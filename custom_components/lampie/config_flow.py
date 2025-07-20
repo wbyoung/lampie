@@ -395,7 +395,7 @@ class LampieFlowCoordinator:
         with suppress(ValueError):
             color = user_input[CONF_COLOR] = int(color)
         try:
-            Color.color_number(color)
+            Color.parse_or_validate_in_range(color)
         except InvalidColor as e:
             errors[CONF_COLOR] = f"invalid_color_{e.reason}"
             description_placeholders["color"] = str(color)

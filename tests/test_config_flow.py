@@ -178,6 +178,40 @@ FLOW_SCENARIOS = {
             }
         },
     },
+    "valid_led_config_abbreviated": {
+        "user_input": {
+            CONF_NAME: "Medicine",
+            CONF_COLOR: "",
+            CONF_SWITCH_ENTITIES: ["light.dining_room"],
+            SECTION_ADVANCED_OPTIONS: {
+                CONF_LED_CONFIG: [
+                    "red",
+                    "orange",
+                    "white",
+                    250,
+                    20,
+                    255,
+                    0,
+                ]
+            },
+        },
+        "priority_inputs": [],
+        "expected_result": {
+            "data": {
+                CONF_NAME: "Medicine",
+                CONF_SWITCH_ENTITIES: ["light.dining_room"],
+                CONF_LED_CONFIG: [
+                    "red",
+                    "orange",
+                    "white",
+                    250,
+                    20,
+                    255,
+                    0,
+                ],
+            }
+        },
+    },
     "missing_color": {
         "user_input": {
             CONF_NAME: "Medicine",
