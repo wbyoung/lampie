@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 import datetime as dt
 from enum import Flag
 from typing import Any
@@ -41,6 +42,17 @@ class MockNow:
         async_fire_time_changed(self.hass)
 
 
+@dataclass
+class IntegrationConfig:
+    integration: Integration
+    model: str | None = None
+
+    def __str__(self):
+        if self.model:
+            return f"{self.integration}-{self.model.lower()}"
+        return self.integration
+
+
 async def setup_integration(hass: HomeAssistant, config_entry: MockConfigEntry) -> None:
     """Set up the component."""
     config_entry.add_to_hass(hass)
@@ -73,11 +85,23 @@ def add_mock_switch(
     integration_domain = {
         Integration.ZHA: "zha",
         Integration.Z2M: "mqtt",
+        Integration.ZWAVE: "zwave_js",
     }[integration]
 
     identifiers = {
         Integration.ZHA: ("zha", f"mock-ieee:{object_id}"),
         Integration.Z2M: ("mqtt", f"{MOCK_Z2M_DEVICE_ID}_{object_id}"),
+        Integration.ZWAVE: (
+            "zwave_js",
+            f"mock-zwave-driver-controller-id_mock-node-{object_id}",
+        ),
+    }[integration]
+
+    model_key = "model_id" if integration == Integration.Z2M else "model"
+    model = {
+        Integration.ZHA: "VZM31-SN",
+        Integration.Z2M: "VZM31-SN",
+        Integration.ZWAVE: "VZW31-SN",
     }[integration]
 
     device_registry = dr.async_get(hass)
@@ -92,7 +116,10 @@ def add_mock_switch(
         name=mock_config_entry.title,
         config_entry_id=mock_config_entry.entry_id,
         identifiers={identifiers},
-        **(device_attrs or {}),
+        **{
+            model_key: model,
+            **(device_attrs or {}),
+        },
     )
     switch = entity_registry.async_get_or_create(
         domain,

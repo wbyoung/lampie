@@ -58,6 +58,7 @@ from . import (
     _ANY,
     ANY,
     AbsentNone,
+    IntegrationConfig,
     MockNow,
     add_mock_switch,
     setup_added_integration,
@@ -137,7 +138,8 @@ def mock_snapshots() -> dict[str, Any]:
 
 async def _setup(
     hass: HomeAssistant,
-    integration_domain: Integration,
+    integration_config: IntegrationConfig,
+    integration_overrides: dict[str | tuple[Integration, str | None], Any],
     configs: dict[str, dict[str, Any]],
     initial_states: dict[str, str],
     scripts: dict[str, Any],
@@ -146,16 +148,41 @@ async def _setup(
     """Scenario stage helper function for setup.
 
     Args:
+        integration_config: The integration setup for the tests being run.
+        integration_overrides: Overrides to apply to configs.
+            Mappings are merged & other values are simply replaced.
         configs: Mapping of config entry slug to config entry data.
         initial_states: Mapping of entity ID to state value.
         scripts: A set of scripts to setup with the scripts integration.
 
         hass: Injected (do not configure in scenarios).
-        integration_domain: The domain for the tests being run.
         kwargs: Catchall for additional injected values.
     """
     configs = configs or {}  # ensure AbsentNone is converted to dict
     initial_states = initial_states or {}
+    integration_domain = integration_config.integration
+
+    # apply overrides to test inputs
+    if (
+        integration_overrides
+        and (
+            overrides := (
+                integration_overrides.get(
+                    (integration_domain, integration_config.model)
+                )
+                or integration_overrides.get(integration_domain)
+            )
+        )
+        and "configs" in overrides
+    ):
+        configs_override = overrides["configs"]
+        configs = {
+            key: {
+                **configs.get(key, {}),
+                **configs_override.get(key, {}),
+            }
+            for key in {*configs, *configs_override}
+        }
 
     # mock out services that send commands to the cluster right away since it's
     # possible that these will be used during integration setup (i.e. Z2M makes
@@ -165,11 +192,21 @@ async def _setup(
         hass, "zha", "issue_zigbee_cluster_command"
     )
     mqtt_publish_commands = async_mock_service(hass, "mqtt", "publish")
+    zwave_cluster_commands = async_mock_service(
+        hass, "zwave_js", "bulk_set_partial_config_parameters"
+    )
 
     cluster_commands = {
         Integration.ZHA: zha_cluster_commands,
         Integration.Z2M: mqtt_publish_commands,
+        Integration.ZWAVE: zwave_cluster_commands,
     }[integration_domain]
+
+    # configure switch attributes for switches that will be added.
+    switch_attrs = {"manufacturer": "Inovelli"}
+
+    if integration_config.model:
+        switch_attrs["model"] = integration_config.model
 
     # register the any additional switches needed from config entries.
     for switch_id in {
@@ -177,12 +214,14 @@ async def _setup(
         for config in configs.values()
         for switch_id in config.get(CONF_SWITCH_ENTITIES, [])
     }:
-        add_mock_switch(hass, switch_id, integration=integration_domain)
+        add_mock_switch(hass, switch_id, switch_attrs, integration=integration_domain)
 
     # register the any additional switches needed from `initial_states`.
     for entity_id in initial_states:
         if entity_id.startswith("light."):
-            add_mock_switch(hass, entity_id, integration=integration_domain)
+            add_mock_switch(
+                hass, entity_id, switch_attrs, integration=integration_domain
+            )
 
     # setup initial states
     for entity_id, state in initial_states.items():
@@ -225,6 +264,7 @@ async def _setup(
         assert await async_setup_component(hass, "script", {"script": scripts})
 
     return {
+        "configs": configs,
         "_cluster_commands": cluster_commands,
     }
 
@@ -232,7 +272,7 @@ async def _setup(
 async def _steps(
     hass: HomeAssistant,
     mqtt_subscribe: AsyncMock,
-    integration_domain: Integration,
+    integration_config: IntegrationConfig,
     now: MockNow,
     steps: list[dict[str, Any]],
     device_registry: dr.DeviceRegistry,
@@ -246,12 +286,13 @@ async def _steps(
 
         hass: Injected (do not configure in scenarios).
         mqtt_subscribe: The mock for MQTT subscriptions.
-        integration_domain: The domain for the tests being run.
+        integration_config: The integration setup for the tests being run.
         now: Injected (do not configure in scenarios).
         device_registry: Injected (do not configure in scenarios).
         entity_registry: Injected (do not configure in scenarios).
         kwargs: Catchall for additional injected values.
     """
+    integration_domain = integration_config.integration
     standard_switch: er.RegistryEntry | None = kwargs.get("switch")
     async_call = hass.services.async_call
     events: list[Event] = []
@@ -309,6 +350,7 @@ async def _steps(
             not in {
                 ("zha", "issue_zigbee_cluster_command"),
                 ("mqtt", "publish"),
+                ("zwave_js", "bulk_set_partial_config_parameters"),
             }
         ]
 
@@ -337,6 +379,7 @@ def _step_device_config(
     return {
         Integration.ZHA: _step_zha_device_config,
         Integration.Z2M: _step_z2m_device_config,
+        Integration.ZWAVE: _step_zwave_device_config,
     }[integration_domain](step=step, hass=hass)
 
 
@@ -407,6 +450,19 @@ def _step_z2m_device_config(
     }
 
 
+def _step_zwave_device_config(
+    *,
+    step: dict[str, Any],
+    hass: HomeAssistant,
+) -> None:
+    """Scenario stage helper function for device config step.
+
+    Args:
+        step: A step for configuring the target device.
+        hass: Home Assistant instance.
+    """
+
+
 async def _step_action(
     *,
     step: dict[str, Any],
@@ -454,6 +510,7 @@ async def _step_event(
     await {
         Integration.ZHA: _step_zha_event,
         Integration.Z2M: _step_z2m_event,
+        Integration.ZWAVE: _step_zwave_event,
     }[integration_domain](
         step=step,
         hass=hass,
@@ -572,10 +629,54 @@ async def _step_z2m_event(
     )
 
 
+async def _step_zwave_event(  # noqa: RUF029
+    *,
+    step: dict[str, Any],
+    hass: HomeAssistant,
+    standard_switch: er.RegistryEntry,
+    device_registry: dr.DeviceRegistry,
+    entity_registry: er.EntityRegistry,
+    **kwargs: Any,
+) -> None:
+    """Scenario stage helper function for a step that simulates an event.
+
+    Args:
+        step: A step for configuring the target device.
+        hass: Home Assistant instance.
+        standard_switch: Switch for the stanadr config entry.
+        device_registry: The device registry.
+        entity_registry: The entity registry.
+        kwargs: Additional values (allowing variation between integrations).
+    """
+    event_data = {**step["event"]}
+    command = event_data.pop("command")
+    entity_id = event_data.pop("entity_id", None)
+    device_id = standard_switch.device_id if standard_switch is not None else None
+
+    # if supplied, get the device related to the entity_id instead
+    if entity_id is not None:
+        device_id = entity_registry.async_get(entity_id).device_id
+
+    unsupported_press = ("001", "KeyPressed")
+    property_key_name, value = {
+        "button_3_double": ("003", "KeyPressed2x"),
+    }.get(command) or unsupported_press
+
+    hass.bus.async_fire(
+        "zwave_js_value_notification",
+        {
+            "device_id": device_id,
+            "property_key_name": property_key_name,
+            "value": value,
+            **event_data,
+        },
+    )
+
+
 async def _assert_expectations(  # noqa: RUF029
     hass: HomeAssistant,
-    integration_domain: Integration,
-    integration_overrides: dict[str, Any],
+    integration_config: IntegrationConfig,
+    integration_overrides: dict[str | tuple[Integration, str | None], Any],
     configs: dict[str, dict[str, Any]],
     initial_states: dict[str, str],
     _cluster_commands: list[Any],
@@ -597,14 +698,15 @@ async def _assert_expectations(  # noqa: RUF029
 
     Args:
         configs: See `_setup`.
-        integration_domain: The domain for the tests being run.
+        integration_config: The integration setup for the tests being run.
         integration_overrides: Overrides to apply to expectations/snapshots.
             Mappings are merged & other values are simply replaced.
         initial_states: See `_setup`.
         expected_states: Mapping of entity ID to state value.
         expected_timers: Mapping of `notification|slug` or `switch|entity_id` to
             boolean value indicating if there should be a timer setup in the
-            orchestrator.
+            orchestrator. Since this is merged with the standard value, you can
+            use `None` as a value to have it removed.
         expected_events: Number of expected events that Lampie emits (or ANY to
             simply snapshot).
         expected_service_calls: Number of expected service calls that Lampie
@@ -641,14 +743,24 @@ async def _assert_expectations(  # noqa: RUF029
     # ensure AbsentNone is converted to dict
     configs = configs or {}
     expected_states = expected_states or {}
+    integration_overrides = integration_overrides or {}
 
     # apply overrides to test inputs
-    overrides = (integration_overrides or {}).get(integration_domain, {})
+    integration_domain = integration_config.integration
+    overrides = integration_overrides.get(
+        (integration_domain, integration_config.model)
+    ) or integration_overrides.get(integration_domain, {})
 
     if "expected_states" in overrides:
         expected_states = {**expected_states, **overrides["expected_states"]}
     if "expected_timers" in overrides:
-        expected_timers = {**expected_timers, **overrides["expected_timers"]}
+        expected_timers = {
+            key: value
+            for key, value in (
+                {**expected_timers, **overrides["expected_timers"]}
+            ).items()
+            if value is not None
+        }
     if "expected_events" in overrides:
         expected_events = overrides["expected_events"]
     if "expected_service_calls" in overrides:
@@ -695,7 +807,12 @@ async def _assert_expectations(  # noqa: RUF029
         and snapshot_configs["doors_open"] in {True, "standard_info"}
     ):
         notification_info = orchestrator.notification_info("doors_open")
-        switch_info = orchestrator.switch_info(standard_switch.entity_id)
+        switch_info = (
+            orchestrator.switch_info(standard_switch.entity_id)
+            if standard_switch.entity_id
+            in standard_config_entry.data[CONF_SWITCH_ENTITIES]
+            else None
+        )
 
         assert notification_info == snapshot(name="notification_info")
         assert switch_info == snapshot(name="switch_info")
@@ -705,12 +822,14 @@ async def _assert_expectations(  # noqa: RUF029
 
     if expected_service_calls and snapshot_service_calls:
         assert _service_calls == snapshot(
-            name="service_calls", matcher=any_device_id_matcher
+            name="service_calls",
+            matcher=any_device_id_matcher,
         )
 
     if expected_cluster_commands and snapshot_cluster_commands:
         assert _cluster_commands == snapshot(
-            name=f"{integration_domain}_cluster_commands"
+            name=f"{integration_domain}_cluster_commands",
+            matcher=any_device_id_matcher,
         )
 
     # assert switch info against internal state to avoid creating the switch
@@ -815,6 +934,15 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 },
                 {"event": {"command": "led_effect_complete_ALL_LEDS"}},
             ],
+            "integration_overrides": {
+                Integration.ZWAVE: {  # command unsupported for ZWAVE
+                    "expected_states": {"switch.doors_open_notification": "on"},
+                    "expected_timers": {
+                        "notification|doors_open": True,
+                    },
+                    "expected_events": 0,
+                },
+            },
             "expected_states": {"switch.doors_open_notification": "off"},
             "expected_timers": {
                 "notification|doors_open": False,
@@ -853,6 +981,34 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 {"event": {"command": "led_effect_complete_LED_3"}},
                 {"event": {"command": "led_effect_complete_LED_5"}},
             ],
+            "integration_overrides": {
+                Integration.ZWAVE: {  # command unsupported for ZWAVE
+                    "expected_states": {"switch.doors_open_notification": "on"},
+                    "expected_timers": {
+                        "notification|doors_open": True,
+                    },
+                    "expected_events": 0,
+                },
+                (Integration.ZWAVE, "LZW36"): {  # command unsupported for ZWAVE
+                    "configs": {
+                        "doors_open": {
+                            CONF_SWITCH_ENTITIES: [
+                                # use this case to also test combo switch and
+                                # target the fan LED instead of the light LED.
+                                "fan.kitchen",
+                            ],
+                        },
+                    },
+                    "expected_states": {"switch.doors_open_notification": "on"},
+                    "expected_timers": {
+                        "notification|doors_open": True,
+                        "switch|fan.kitchen": False,
+                        "switch|light.kitchen": None,
+                    },
+                    "expected_events": 0,
+                    "expected_cluster_commands": 1,  # only one LED to use
+                },
+            },
             "snapshots": _true_dict,
             "expected_states": {"switch.doors_open_notification": "off"},
             "expected_timers": {
@@ -934,6 +1090,11 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 },
                 {"delay": dt.timedelta(minutes=5, seconds=2)},
             ],
+            "integration_overrides": {
+                (Integration.ZWAVE, "LZW36"): {
+                    "expected_cluster_commands": 1,  # only one LED to use
+                },
+            },
             "expected_states": {"switch.doors_open_notification": "on"},
             "expected_timers": {
                 "notification|doors_open": True,
@@ -967,6 +1128,11 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 {"delay": dt.timedelta(minutes=5, seconds=2)},
                 {"delay": dt.timedelta(minutes=5, seconds=1)},
             ],
+            "integration_overrides": {
+                (Integration.ZWAVE, "LZW36"): {
+                    "expected_cluster_commands": 2,  # only one LED to use
+                },
+            },
             "expected_states": {"switch.doors_open_notification": "off"},
             "expected_timers": {
                 "notification|doors_open": False,
@@ -1022,6 +1188,11 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
                 },
                 {"event": {"command": "button_3_double"}},
             ],
+            "integration_overrides": {
+                Integration.ZWAVE: {  # local protection & 2x tap flag unsupported for ZWAVE
+                    "expected_cluster_commands": 1,
+                },
+            },
             "expected_states": {"switch.doors_open_notification": "off"},
             "expected_timers": {
                 "notification|doors_open": False,
@@ -1147,10 +1318,12 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
     ),
 )
 @pytest.mark.parametrize(
-    "integration_domain",
+    "integration_config",
     [
-        Integration.ZHA,
-        Integration.Z2M,
+        IntegrationConfig(Integration.ZHA),
+        IntegrationConfig(Integration.Z2M),
+        IntegrationConfig(Integration.ZWAVE),
+        IntegrationConfig(Integration.ZWAVE, "LZW36"),
     ],
 )
 @scenario_stages(standard_config_entry=True)
@@ -1329,10 +1502,12 @@ async def test_single_config_entry(
     ),
 )
 @pytest.mark.parametrize(
-    "integration_domain",
+    "integration_config",
     [
-        Integration.ZHA,
-        Integration.Z2M,
+        IntegrationConfig(Integration.ZHA),
+        IntegrationConfig(Integration.Z2M),
+        IntegrationConfig(Integration.ZWAVE),
+        IntegrationConfig(Integration.ZWAVE, "LZW36"),
     ],
 )
 @scenario_stages(standard_config_entry=True)
@@ -1471,10 +1646,12 @@ async def test_switch_override(
     ),
 )
 @pytest.mark.parametrize(
-    "integration_domain",
+    "integration_config",
     [
-        Integration.ZHA,
-        Integration.Z2M,
+        IntegrationConfig(Integration.ZHA),
+        IntegrationConfig(Integration.Z2M),
+        IntegrationConfig(Integration.ZWAVE),
+        IntegrationConfig(Integration.ZWAVE, "LZW36"),
     ],
 )
 @scenario_stages(standard_config_entry=True)
@@ -1537,6 +1714,11 @@ async def test_enable_notification_with_switch_override(
                 },
                 {"delay": dt.timedelta(minutes=5, seconds=2)},
             ],
+            "integration_overrides": {
+                (Integration.ZWAVE, "LZW36"): {
+                    "expected_cluster_commands": 1,  # only one LED to use
+                },
+            },
             "expected_states": {"switch.doors_open_notification": "off"},
             "expected_timers": {
                 "notification|doors_open": False,
@@ -1569,6 +1751,11 @@ async def test_enable_notification_with_switch_override(
                 {"delay": dt.timedelta(minutes=5, seconds=2)},
                 {"delay": dt.timedelta(minutes=5, seconds=1)},
             ],
+            "integration_overrides": {
+                (Integration.ZWAVE, "LZW36"): {
+                    "expected_cluster_commands": 2,  # only one LED to use
+                },
+            },
             "expected_states": {"switch.doors_open_notification": "off"},
             "expected_timers": {
                 "notification|doors_open": False,
@@ -1580,10 +1767,12 @@ async def test_enable_notification_with_switch_override(
     ),
 )
 @pytest.mark.parametrize(
-    "integration_domain",
+    "integration_config",
     [
-        Integration.ZHA,
-        Integration.Z2M,
+        IntegrationConfig(Integration.ZHA),
+        IntegrationConfig(Integration.Z2M),
+        IntegrationConfig(Integration.ZWAVE),
+        IntegrationConfig(Integration.ZWAVE, "LZW36"),
     ],
 )
 @scenario_stages(standard_config_entry=True)
@@ -1697,6 +1886,9 @@ async def test_switch_override_with_duration_expired(
                 Integration.Z2M: {
                     "expected_cluster_commands": 3,  # 2 switches setup + normal expectation
                 },
+                Integration.ZWAVE: {  # command unsupported for ZWAVE
+                    "expected_events": 0,
+                },
             },
             "expected_states": {"switch.doors_open_notification": "off"},
             "expected_timers": {
@@ -1733,11 +1925,14 @@ async def test_switch_override_with_duration_expired(
     ),
 )
 @pytest.mark.parametrize(
-    "integration_domain",
+    "integration_config",
     [
-        Integration.ZHA,
-        Integration.Z2M,
+        IntegrationConfig(Integration.ZHA),
+        IntegrationConfig(Integration.Z2M),
+        IntegrationConfig(Integration.ZWAVE),
+        IntegrationConfig(Integration.ZWAVE, "LZW36"),
     ],
+    ids=str,
 )
 @scenario_stages(standard_config_entry=True)
 async def test_switch_override_on_unrelated_switch(
@@ -2502,7 +2697,7 @@ async def test_dismissal_from_switch(
     Scenario(
         "mqtt_wait_for_client_failure",
         {
-            "integration_domain": Integration.Z2M,
+            "integration_config": IntegrationConfig(Integration.Z2M),
             "mqtt_wait_for_client_return_value": False,
             "steps": [],
             "snapshots": _false_dict,
@@ -2512,7 +2707,7 @@ async def test_dismissal_from_switch(
     Scenario(
         "mqtt_debug_info_entities_failure",
         {
-            "integration_domain": Integration.Z2M,
+            "integration_config": IntegrationConfig(Integration.Z2M),
             "mqtt_debug_info_entities": {},
             "steps": [],
             "snapshots": _false_dict,
@@ -2526,7 +2721,7 @@ async def test_dismissal_from_switch(
     Scenario(
         "mqtt_message_payload_topic_mismatch",
         {
-            "integration_domain": Integration.Z2M,
+            "integration_config": IntegrationConfig(Integration.Z2M),
             "steps": [
                 {
                     "action": f"{SWITCH_DOMAIN}.{SERVICE_TURN_ON}",
