@@ -226,6 +226,7 @@ class Integration(StrEnum):
 
     ZHA = auto()
     Z2M = auto()
+    ZWAVE = auto()
 
 
 @dataclass(frozen=True)
@@ -269,6 +270,11 @@ class Z2MSwitchInfo:
     full_topic: str
     local_protection_enabled: bool | None = None
     double_tap_clear_notifications_disabled: bool | None = None
+
+
+@dataclass(frozen=True)
+class ZWaveSwitchInfo:
+    """ZWave switch info data class."""
 
 
 @dataclass(frozen=True)
