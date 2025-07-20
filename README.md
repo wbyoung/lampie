@@ -26,7 +26,7 @@ What it can do:
 - **Even more**  
   There are some more goodies in to docs below. Enjoy!
 
-_Note: currently this is limited to Blue switches using ZHA or Zigbee2MQTT, but other Inovelli switches will be added in the future._
+_Note: currently this is limited to Blue switches using ZHA or Zigbee2MQTT and Red switches using Z-Wave JS, but other Inovelli switches will be added in the future._
 
 **Configure notifications** for multiple switches easily:
 
@@ -272,6 +272,19 @@ Restore state functionality is provided via a subset of entities:
 - [`sensor.<switch_id>_notification`](#sensorswitch_id_notification)
 
 If you disable these entities, it is possible that various other entities may not be restored after restarting Home Assistant.
+
+##### Z-Wave
+
+Only the Red series switches are supported by this integration as the Black series switches do not have a concept of notifications.
+
+Some of the older Red series switches only have a single LED or have a subset of available effects. Lampie will do the following for these switches:
+
+- If an unsupported effect is used, it will choose something similar
+- If [individual LEDs](#full-led-configuration) are used on a switch with just one LED, the first LED settings will be used
+
+Unlike the Blue series switches under ZHA, there is no way to receive events for when a notification expires (it only supports, for instance, when the config button is dobule pressed `property_key_name="003"` and `value="KeyPressed2x"`). This may be supported in the firmware and not yet available for end user consumption.
+
+This integration therefore handles notification expiration itself for switches configured with Z-Wave. This may change unexpectedly in the future—if and when it is possible, Lampie will change to sending durations to the firmware.
 
 ## More Screenshots
 
