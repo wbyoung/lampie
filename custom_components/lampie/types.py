@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
+from contextlib import suppress
 from dataclasses import dataclass, field
 import datetime as dt
 from enum import Enum, IntEnum, StrEnum, auto
@@ -67,8 +68,8 @@ class Color(IntEnum):
         return color
 
     @staticmethod
-    def color_number(value: str | int) -> Color | int:
-        """Get a number in the valid color range.
+    def parse_or_validate_in_range(value: str | int) -> Color | int:
+        """Get a color or number in the valid color range.
 
         Validate an input value and convert to a number that's in the valid
         color range.
@@ -80,6 +81,9 @@ class Color(IntEnum):
             InvalidColor: If the color is invalid because it is not a valid
                 name, is not in range, or is the wrong type.
         """
+        with suppress(ValueError, TypeError):
+            value = int(value)
+
         if isinstance(value, str):
             return Color.parse(value)
         if isinstance(value, int):
@@ -153,9 +157,7 @@ class LEDConfig:
             config = {CONF_COLOR: str(config)}
 
         color = config.get(CONF_COLOR, Color.BLUE.name)
-        color = (
-            Color.parse(color) if isinstance(color, str) else Color.color_number(color)
-        )
+        color = Color.parse_or_validate_in_range(color)
         brightness: float = config.get(CONF_BRIGTNESS, 100.0)
         effect: Effect = getattr(
             Effect, config.get(CONF_EFFECT, Effect.SOLID.name).upper()
