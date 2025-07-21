@@ -365,8 +365,9 @@ class LampieOrchestrator:
     async def override_switch(
         self,
         switch_id: SwitchId,
-        source: LEDConfigSource,
-        config: tuple[LEDConfig, ...],
+        *,
+        led_config_source: LEDConfigSource,
+        led_config: tuple[LEDConfig, ...] | None,
     ) -> None:
         """Entrypoint for services to override & update a switch.
 
@@ -374,23 +375,24 @@ class LampieOrchestrator:
         to show the specified configuration.
         """
         from_state = self.switch_info(switch_id)
+        is_reset = led_config is None
 
         self.store_switch_info(
             switch_id,
-            led_config_source=source,
-            led_config=config,
             expiration=self._schedule_fallback_expiration(
                 from_state.expiration,
-                config,
+                led_config or (),
                 partial(self._async_handle_switch_override_expired, switch_id),
-                log_context=f"{source}",
+                log_context=f"{led_config_source}",
             ),
         )
 
-        await self._transition_switch(
+        await self._switch_apply_notification_or_override(
             switch_id,
-            from_config=from_state.led_config,
-            to_config=config,
+            led_config_source=led_config_source,
+            led_config=led_config,
+            exclude={LEDConfigSourceType.SERVICE} if is_reset else set(),
+            log_context="override-switch",
         )
 
     async def _switch_apply_notification_or_override(

@@ -531,6 +531,39 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
         },
     ),
     Scenario(
+        "doors_open_on,kitchen_override_leds_reset",
+        {
+            "configs": {},
+            "steps": [
+                {
+                    "action": f"{SWITCH_DOMAIN}.{SERVICE_TURN_ON}",
+                    "target": "switch.doors_open_notification",
+                },
+                {
+                    "action": f"{DOMAIN}.{SERVICE_NAME_OVERRIDE}",
+                    "target": "light.kitchen",
+                    "data": {
+                        ATTR_LED_CONFIG: [
+                            {ATTR_COLOR: "green"},
+                        ],
+                    },
+                },
+                {
+                    "action": f"{DOMAIN}.{SERVICE_NAME_OVERRIDE}",
+                    "target": "light.kitchen",
+                    "data": {
+                        ATTR_LED_CONFIG: None,
+                    },
+                },
+            ],
+            "expected_notification_state": "on",
+            "expected_notifiation_timer": False,
+            "expected_switch_timer": False,
+            "expected_events": 0,
+            "expected_zha_calls": 3,
+        },
+    ),
+    Scenario(
         "doors_open_on,kitchen_override_leds_dismissed",
         {
             "configs": {},

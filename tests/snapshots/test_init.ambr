@@ -3735,6 +3735,205 @@
     }),
   ])
 # ---
+# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_reset][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'led_config_override': None,
+    'notification_on': True,
+  })
+# ---
+# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_reset][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:timer',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '100.0',
+  })
+# ---
+# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_reset][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'red',
+  })
+# ---
+# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_reset][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_reset][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:lightning-bolt',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'open_close',
+  })
+# ---
+# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_reset][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'doors_open',
+  })
+# ---
+# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_reset][service_calls]
+  list([
+  ])
+# ---
+# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_reset][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'on',
+  })
+# ---
+# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_reset][switch_info]
+  dict({
+    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'led_config': tuple(
+      dict({
+        'brightness': 100.0,
+        'color': <Color.RED: 0>,
+        'duration': None,
+        'effect': <Effect.OPEN_CLOSE: 6>,
+      }),
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': 'doors_open',
+    }),
+    'local_protetction_id': 'switch.kitchen_local_protection',
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
+# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_reset][zha_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'cluster_id': 64561,
+        'cluster_type': 'in',
+        'command': 1,
+        'command_type': 'server',
+        'endpoint_id': 1,
+        'ieee': 'mock-ieee:kitchen',
+        'manufacturer': 4655,
+        'params': dict({
+          'led_color': 0,
+          'led_duration': 255,
+          'led_effect': 6,
+          'led_level': 100,
+        }),
+      }),
+      'domain': 'zha',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'issue_zigbee_cluster_command',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'cluster_id': 64561,
+        'cluster_type': 'in',
+        'command': 1,
+        'command_type': 'server',
+        'endpoint_id': 1,
+        'ieee': 'mock-ieee:kitchen',
+        'manufacturer': 4655,
+        'params': dict({
+          'led_color': 90,
+          'led_duration': 255,
+          'led_effect': 1,
+          'led_level': 100,
+        }),
+      }),
+      'domain': 'zha',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'issue_zigbee_cluster_command',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'cluster_id': 64561,
+        'cluster_type': 'in',
+        'command': 1,
+        'command_type': 'server',
+        'endpoint_id': 1,
+        'ieee': 'mock-ieee:kitchen',
+        'manufacturer': 4655,
+        'params': dict({
+          'led_color': 0,
+          'led_duration': 255,
+          'led_effect': 6,
+          'led_level': 100,
+        }),
+      }),
+      'domain': 'zha',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'issue_zigbee_cluster_command',
+    }),
+  ])
+# ---
 # name: test_toggle_notifications[doors_open_various_firmware_durations_expired][events]
   list([
     EventSnapshot({

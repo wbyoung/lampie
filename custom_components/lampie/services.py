@@ -108,7 +108,6 @@ async def _override(
     led_config_source = LEDConfigSource(name, LEDConfigSourceType.SERVICE)
 
     if led_config is None:  # none indicates a reset
-        led_config = ()
         led_config_source = LEDConfigSource(None)
     elif not led_config:  # convert empty led config to clear config
         led_config = (LEDConfig(Color.BLUE, Effect.CLEAR),)
@@ -118,8 +117,8 @@ async def _override(
     for switch_id in switch_ids:
         await orchestrator.override_switch(  # waiting in loop to avoid flooding the network
             switch_id,
-            led_config_source,
-            led_config,
+            led_config_source=led_config_source,
+            led_config=led_config,
         )
 
 
