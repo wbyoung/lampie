@@ -3645,6 +3645,726 @@
     }),
   ])
 # ---
+# name: test_enable_notification_with_switch_override[integration_config4-doors_open_on,kitchen_override_leds_5m1s_duration_expired][events]
+  list([
+    EventSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'entity_id': 'light.kitchen',
+        'override': 'lampie.override',
+      }),
+      'event_type': 'lampie.expired',
+      'id': <ANY>,
+      'origin': 'LOCAL',
+      'time_fired': <ANY>,
+    }),
+  ])
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-doors_open_on,kitchen_override_leds_5m1s_duration_expired][matter_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'brightness_pct': 100,
+        'entity_id': 'light.kitchen_effect',
+        'hs_color': list([
+          0.0,
+          100,
+        ]),
+      }),
+      'domain': 'light',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'turn_on',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'brightness_pct': 100,
+        'entity_id': 'light.kitchen_effect',
+        'hs_color': list([
+          127.1,
+          100,
+        ]),
+      }),
+      'domain': 'light',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'turn_on',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'brightness_pct': 100,
+        'entity_id': 'light.kitchen_effect',
+        'hs_color': list([
+          0.0,
+          100,
+        ]),
+      }),
+      'domain': 'light',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'turn_on',
+    }),
+  ])
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-doors_open_on,kitchen_override_leds_5m1s_duration_expired][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'led_config_override': None,
+    'notification_on': True,
+  })
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-doors_open_on,kitchen_override_leds_5m1s_duration_expired][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '100.0',
+  })
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-doors_open_on,kitchen_override_leds_5m1s_duration_expired][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'red',
+  })
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-doors_open_on,kitchen_override_leds_5m1s_duration_expired][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-doors_open_on,kitchen_override_leds_5m1s_duration_expired][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:star-four-points-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'open_close',
+  })
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-doors_open_on,kitchen_override_leds_5m1s_duration_expired][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'doors_open',
+  })
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-doors_open_on,kitchen_override_leds_5m1s_duration_expired][service_calls]
+  list([
+  ])
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-doors_open_on,kitchen_override_leds_5m1s_duration_expired][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'on',
+  })
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-doors_open_on,kitchen_override_leds_5m1s_duration_expired][switch_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'integration': <Integration.MATTER: 'matter'>,
+    'integration_info': dict({
+      'effect_id': 'light.kitchen_effect',
+    }),
+    'led_config': tuple(
+      dict({
+        'brightness': 100.0,
+        'color': <Color.RED: 0>,
+        'duration': None,
+        'effect': <Effect.OPEN_CLOSE: 6>,
+      }),
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': 'doors_open',
+    }),
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-doors_open_on,kitchen_override_leds_dismissed][events]
+  list([
+    EventSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'entity_id': 'light.kitchen',
+        'override': 'lampie.override',
+      }),
+      'event_type': 'lampie.dismissed',
+      'id': <ANY>,
+      'origin': 'LOCAL',
+      'time_fired': <ANY>,
+    }),
+  ])
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-doors_open_on,kitchen_override_leds_dismissed][matter_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'brightness_pct': 100,
+        'entity_id': 'light.kitchen_effect',
+        'hs_color': list([
+          0.0,
+          100,
+        ]),
+      }),
+      'domain': 'light',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'turn_on',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'brightness_pct': 100,
+        'entity_id': 'light.kitchen_effect',
+        'hs_color': list([
+          127.1,
+          100,
+        ]),
+      }),
+      'domain': 'light',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'turn_on',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'brightness_pct': 100,
+        'entity_id': 'light.kitchen_effect',
+        'hs_color': list([
+          0.0,
+          100,
+        ]),
+      }),
+      'domain': 'light',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'turn_on',
+    }),
+  ])
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-doors_open_on,kitchen_override_leds_dismissed][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'led_config_override': None,
+    'notification_on': True,
+  })
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-doors_open_on,kitchen_override_leds_dismissed][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '100.0',
+  })
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-doors_open_on,kitchen_override_leds_dismissed][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'red',
+  })
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-doors_open_on,kitchen_override_leds_dismissed][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-doors_open_on,kitchen_override_leds_dismissed][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:star-four-points-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'open_close',
+  })
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-doors_open_on,kitchen_override_leds_dismissed][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'doors_open',
+  })
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-doors_open_on,kitchen_override_leds_dismissed][service_calls]
+  list([
+  ])
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-doors_open_on,kitchen_override_leds_dismissed][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'on',
+  })
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-doors_open_on,kitchen_override_leds_dismissed][switch_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'integration': <Integration.MATTER: 'matter'>,
+    'integration_info': dict({
+      'effect_id': 'light.kitchen_effect',
+    }),
+    'led_config': tuple(
+      dict({
+        'brightness': 100.0,
+        'color': <Color.RED: 0>,
+        'duration': None,
+        'effect': <Effect.OPEN_CLOSE: 6>,
+      }),
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': 'doors_open',
+    }),
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-doors_open_on,kitchen_override_leds_reset][matter_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'brightness_pct': 100,
+        'entity_id': 'light.kitchen_effect',
+        'hs_color': list([
+          0.0,
+          100,
+        ]),
+      }),
+      'domain': 'light',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'turn_on',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'brightness_pct': 100,
+        'entity_id': 'light.kitchen_effect',
+        'hs_color': list([
+          127.1,
+          100,
+        ]),
+      }),
+      'domain': 'light',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'turn_on',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'brightness_pct': 100,
+        'entity_id': 'light.kitchen_effect',
+        'hs_color': list([
+          0.0,
+          100,
+        ]),
+      }),
+      'domain': 'light',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'turn_on',
+    }),
+  ])
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-doors_open_on,kitchen_override_leds_reset][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'led_config_override': None,
+    'notification_on': True,
+  })
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-doors_open_on,kitchen_override_leds_reset][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '100.0',
+  })
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-doors_open_on,kitchen_override_leds_reset][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'red',
+  })
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-doors_open_on,kitchen_override_leds_reset][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-doors_open_on,kitchen_override_leds_reset][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:star-four-points-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'open_close',
+  })
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-doors_open_on,kitchen_override_leds_reset][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'doors_open',
+  })
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-doors_open_on,kitchen_override_leds_reset][service_calls]
+  list([
+  ])
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-doors_open_on,kitchen_override_leds_reset][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'on',
+  })
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-doors_open_on,kitchen_override_leds_reset][switch_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'integration': <Integration.MATTER: 'matter'>,
+    'integration_info': dict({
+      'effect_id': 'light.kitchen_effect',
+    }),
+    'led_config': tuple(
+      dict({
+        'brightness': 100.0,
+        'color': <Color.RED: 0>,
+        'duration': None,
+        'effect': <Effect.OPEN_CLOSE: 6>,
+      }),
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': 'doors_open',
+    }),
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-kitchen_override,doors_open_on][matter_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'brightness_pct': 100,
+        'entity_id': 'light.kitchen_effect',
+        'hs_color': list([
+          127.1,
+          100,
+        ]),
+      }),
+      'domain': 'light',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'turn_on',
+    }),
+  ])
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-kitchen_override,doors_open_on][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'led_config_override': None,
+    'notification_on': True,
+  })
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-kitchen_override,doors_open_on][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '100.0',
+  })
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-kitchen_override,doors_open_on][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'green',
+  })
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-kitchen_override,doors_open_on][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-kitchen_override,doors_open_on][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:star-four-points-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'solid',
+  })
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-kitchen_override,doors_open_on][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'lampie.override',
+  })
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-kitchen_override,doors_open_on][service_calls]
+  list([
+  ])
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-kitchen_override,doors_open_on][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'on',
+  })
+# ---
+# name: test_enable_notification_with_switch_override[integration_config4-kitchen_override,doors_open_on][switch_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'integration': <Integration.MATTER: 'matter'>,
+    'integration_info': dict({
+      'effect_id': 'light.kitchen_effect',
+    }),
+    'led_config': tuple(
+      dict({
+        'brightness': 100.0,
+        'color': <Color.GREEN: 90>,
+        'duration': None,
+        'effect': <Effect.SOLID: 1>,
+      }),
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.OVERRIDE: 'override'>,
+      'value': 'lampie.override',
+    }),
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
 # name: test_single_config_entry[integration_config0-doors_open_10s_duration_expired][events]
   list([
     EventSnapshot({
@@ -7682,6 +8402,382 @@
     }),
   ])
 # ---
+# name: test_single_config_entry[integration_config4-doors_open_5m1s_duration_unexpired][matter_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'brightness_pct': 100,
+        'entity_id': 'light.kitchen_effect',
+        'hs_color': list([
+          0.0,
+          100,
+        ]),
+      }),
+      'domain': 'light',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'turn_on',
+    }),
+  ])
+# ---
+# name: test_single_config_entry[integration_config4-doors_open_5m1s_duration_unexpired][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': <ANY>,
+      'expires_at': HAFakeDatetime(2025, 5, 20, 3, 56, 33, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+      'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'led_config_override': None,
+    'notification_on': True,
+  })
+# ---
+# name: test_single_config_entry[integration_config4-doors_open_5m1s_duration_unexpired][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '100.0',
+  })
+# ---
+# name: test_single_config_entry[integration_config4-doors_open_5m1s_duration_unexpired][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'red',
+  })
+# ---
+# name: test_single_config_entry[integration_config4-doors_open_5m1s_duration_unexpired][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '301',
+  })
+# ---
+# name: test_single_config_entry[integration_config4-doors_open_5m1s_duration_unexpired][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:star-four-points-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'open_close',
+  })
+# ---
+# name: test_single_config_entry[integration_config4-doors_open_5m1s_duration_unexpired][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'doors_open',
+  })
+# ---
+# name: test_single_config_entry[integration_config4-doors_open_5m1s_duration_unexpired][service_calls]
+  list([
+  ])
+# ---
+# name: test_single_config_entry[integration_config4-doors_open_5m1s_duration_unexpired][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'expires_at': '2025-05-20T03:56:33.003245-07:00',
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+      'started_at': '2025-05-20T03:51:32.003245-07:00',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'on',
+  })
+# ---
+# name: test_single_config_entry[integration_config4-doors_open_5m1s_duration_unexpired][switch_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'integration': <Integration.MATTER: 'matter'>,
+    'integration_info': dict({
+      'effect_id': 'light.kitchen_effect',
+    }),
+    'led_config': tuple(
+      dict({
+        'brightness': 100.0,
+        'color': <Color.RED: 0>,
+        'duration': 301,
+        'effect': <Effect.OPEN_CLOSE: 6>,
+      }),
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': 'doors_open',
+    }),
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
+# name: test_single_config_entry[integration_config4-doors_open_various_firmware_durations_expired][matter_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'brightness_pct': 100,
+        'entity_id': 'light.kitchen_effect',
+        'hs_color': list([
+          240.0,
+          100,
+        ]),
+      }),
+      'domain': 'light',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'turn_on',
+    }),
+  ])
+# ---
+# name: test_single_config_entry[integration_config4-doors_open_various_firmware_durations_expired][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': <ANY>,
+      'expires_at': HAFakeDatetime(2025, 5, 20, 3, 52, 2, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+      'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'led_config_override': None,
+    'notification_on': True,
+  })
+# ---
+# name: test_single_config_entry[integration_config4-doors_open_various_firmware_durations_expired][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'individual': list([
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+      ]),
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '100.0',
+  })
+# ---
+# name: test_single_config_entry[integration_config4-doors_open_various_firmware_durations_expired][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+      'individual': list([
+        'blue',
+        'blue',
+        'blue',
+        'blue',
+        'blue',
+        'blue',
+        'blue',
+      ]),
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'blue',
+  })
+# ---
+# name: test_single_config_entry[integration_config4-doors_open_various_firmware_durations_expired][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'individual': list([
+        30,
+        300,
+        7200,
+        30,
+        7200,
+        300,
+        30,
+      ]),
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '7200',
+  })
+# ---
+# name: test_single_config_entry[integration_config4-doors_open_various_firmware_durations_expired][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:star-four-points-box',
+      'individual': list([
+        'solid',
+        'solid',
+        'solid',
+        'solid',
+        'solid',
+        'solid',
+        'solid',
+      ]),
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'solid',
+  })
+# ---
+# name: test_single_config_entry[integration_config4-doors_open_various_firmware_durations_expired][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'doors_open',
+  })
+# ---
+# name: test_single_config_entry[integration_config4-doors_open_various_firmware_durations_expired][service_calls]
+  list([
+  ])
+# ---
+# name: test_single_config_entry[integration_config4-doors_open_various_firmware_durations_expired][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'expires_at': '2025-05-20T03:52:02.003245-07:00',
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+      'started_at': '2025-05-20T03:51:32.003245-07:00',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'on',
+  })
+# ---
+# name: test_single_config_entry[integration_config4-doors_open_various_firmware_durations_expired][switch_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'integration': <Integration.MATTER: 'matter'>,
+    'integration_info': dict({
+      'effect_id': 'light.kitchen_effect',
+    }),
+    'led_config': tuple(
+      dict({
+        'brightness': 100.0,
+        'color': <Color.BLUE: 170>,
+        'duration': 30,
+        'effect': <Effect.SOLID: 1>,
+      }),
+      dict({
+        'brightness': 100.0,
+        'color': <Color.BLUE: 170>,
+        'duration': 300,
+        'effect': <Effect.SOLID: 1>,
+      }),
+      dict({
+        'brightness': 100.0,
+        'color': <Color.BLUE: 170>,
+        'duration': 7200,
+        'effect': <Effect.SOLID: 1>,
+      }),
+      dict({
+        'brightness': 100.0,
+        'color': <Color.BLUE: 170>,
+        'duration': 30,
+        'effect': <Effect.SOLID: 1>,
+      }),
+      dict({
+        'brightness': 100.0,
+        'color': <Color.BLUE: 170>,
+        'duration': 7200,
+        'effect': <Effect.SOLID: 1>,
+      }),
+      dict({
+        'brightness': 100.0,
+        'color': <Color.BLUE: 170>,
+        'duration': 300,
+        'effect': <Effect.SOLID: 1>,
+      }),
+      dict({
+        'brightness': 100.0,
+        'color': <Color.BLUE: 170>,
+        'duration': 30,
+        'effect': <Effect.SOLID: 1>,
+      }),
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': 'doors_open',
+    }),
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
 # name: test_switch_override[integration_config0-kitchen_override_leds_5m1s_duration_dismissed][events]
   list([
     EventSnapshot({
@@ -11505,6 +12601,1581 @@
       'service': 'bulk_set_partial_config_parameters',
     }),
   ])
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_5m1s_duration_dismissed][events]
+  list([
+    EventSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'entity_id': 'light.kitchen',
+        'override': 'lampie.override',
+      }),
+      'event_type': 'lampie.dismissed',
+      'id': <ANY>,
+      'origin': 'LOCAL',
+      'time_fired': <ANY>,
+    }),
+  ])
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_5m1s_duration_dismissed][matter_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'brightness_pct': 100,
+        'entity_id': 'light.kitchen_effect',
+        'hs_color': list([
+          127.1,
+          100,
+        ]),
+      }),
+      'domain': 'light',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'turn_on',
+    }),
+  ])
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_5m1s_duration_dismissed][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'led_config_override': None,
+    'notification_on': False,
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_5m1s_duration_dismissed][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_5m1s_duration_dismissed][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_5m1s_duration_dismissed][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_5m1s_duration_dismissed][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:star-four-points-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_5m1s_duration_dismissed][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_5m1s_duration_dismissed][service_calls]
+  list([
+  ])
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_5m1s_duration_dismissed][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_5m1s_duration_dismissed][switch_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'integration': <Integration.MATTER: 'matter'>,
+    'integration_info': dict({
+      'effect_id': 'light.kitchen_effect',
+    }),
+    'led_config': tuple(
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': None,
+    }),
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_5m1s_duration_unexpired][matter_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'brightness_pct': 100,
+        'entity_id': 'light.kitchen_effect',
+        'hs_color': list([
+          127.1,
+          100,
+        ]),
+      }),
+      'domain': 'light',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'turn_on',
+    }),
+  ])
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_5m1s_duration_unexpired][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'led_config_override': None,
+    'notification_on': False,
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_5m1s_duration_unexpired][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '100.0',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_5m1s_duration_unexpired][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'green',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_5m1s_duration_unexpired][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'expires_at': '2025-05-20T03:56:33.003245-07:00',
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'started_at': '2025-05-20T03:51:32.003245-07:00',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '301.0',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_5m1s_duration_unexpired][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:star-four-points-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'solid',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_5m1s_duration_unexpired][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'lampie.override',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_5m1s_duration_unexpired][service_calls]
+  list([
+  ])
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_5m1s_duration_unexpired][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_5m1s_duration_unexpired][switch_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': <ANY>,
+      'expires_at': HAFakeDatetime(2025, 5, 20, 3, 56, 33, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+      'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'integration': <Integration.MATTER: 'matter'>,
+    'integration_info': dict({
+      'effect_id': 'light.kitchen_effect',
+    }),
+    'led_config': tuple(
+      dict({
+        'brightness': 100.0,
+        'color': <Color.GREEN: 90>,
+        'duration': 301.0,
+        'effect': <Effect.SOLID: 1>,
+      }),
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.OVERRIDE: 'override'>,
+      'value': 'lampie.override',
+    }),
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_clear][matter_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'brightness_pct': 100,
+        'entity_id': 'light.kitchen_effect',
+        'hs_color': list([
+          127.1,
+          100,
+        ]),
+      }),
+      'domain': 'light',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'turn_on',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'entity_id': 'light.kitchen_effect',
+      }),
+      'domain': 'light',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'turn_off',
+    }),
+  ])
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_clear][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'led_config_override': None,
+    'notification_on': False,
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_clear][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '100.0',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_clear][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'blue',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_clear][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_clear][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:star-four-points-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'clear',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_clear][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'lampie.override',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_clear][service_calls]
+  list([
+  ])
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_clear][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_clear][switch_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'integration': <Integration.MATTER: 'matter'>,
+    'integration_info': dict({
+      'effect_id': 'light.kitchen_effect',
+    }),
+    'led_config': tuple(
+      dict({
+        'brightness': 100.0,
+        'color': <Color.BLUE: 170>,
+        'duration': None,
+        'effect': <Effect.CLEAR: 255>,
+      }),
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.OVERRIDE: 'override'>,
+      'value': 'lampie.override',
+    }),
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_dismissed][events]
+  list([
+    EventSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'entity_id': 'light.kitchen',
+        'override': 'lampie.override',
+      }),
+      'event_type': 'lampie.dismissed',
+      'id': <ANY>,
+      'origin': 'LOCAL',
+      'time_fired': <ANY>,
+    }),
+  ])
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_dismissed][matter_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'brightness_pct': 100,
+        'entity_id': 'light.kitchen_effect',
+        'hs_color': list([
+          127.1,
+          100,
+        ]),
+      }),
+      'domain': 'light',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'turn_on',
+    }),
+  ])
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_dismissed][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'led_config_override': None,
+    'notification_on': False,
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_dismissed][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_dismissed][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_dismissed][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_dismissed][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:star-four-points-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_dismissed][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_dismissed][service_calls]
+  list([
+  ])
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_dismissed][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_dismissed][switch_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'integration': <Integration.MATTER: 'matter'>,
+    'integration_info': dict({
+      'effect_id': 'light.kitchen_effect',
+    }),
+    'led_config': tuple(
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': None,
+    }),
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_named][matter_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'brightness_pct': 100,
+        'entity_id': 'light.kitchen_effect',
+        'hs_color': list([
+          127.1,
+          100,
+        ]),
+      }),
+      'domain': 'light',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'turn_on',
+    }),
+  ])
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_named][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'led_config_override': None,
+    'notification_on': False,
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_named][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '100.0',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_named][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'green',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_named][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_named][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:star-four-points-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'solid',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_named][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'customized_name',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_named][service_calls]
+  list([
+  ])
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_named][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_named][switch_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'integration': <Integration.MATTER: 'matter'>,
+    'integration_info': dict({
+      'effect_id': 'light.kitchen_effect',
+    }),
+    'led_config': tuple(
+      dict({
+        'brightness': 100.0,
+        'color': <Color.GREEN: 90>,
+        'duration': None,
+        'effect': <Effect.SOLID: 1>,
+      }),
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.OVERRIDE: 'override'>,
+      'value': 'customized_name',
+    }),
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_reset][matter_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'brightness_pct': 100,
+        'entity_id': 'light.kitchen_effect',
+        'hs_color': list([
+          127.1,
+          100,
+        ]),
+      }),
+      'domain': 'light',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'turn_on',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'entity_id': 'light.kitchen_effect',
+      }),
+      'domain': 'light',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'turn_off',
+    }),
+  ])
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_reset][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'led_config_override': None,
+    'notification_on': False,
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_reset][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_reset][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_reset][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_reset][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:star-four-points-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_reset][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_reset][service_calls]
+  list([
+  ])
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_reset][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_switch_override[integration_config4-kitchen_override_leds_reset][switch_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'integration': <Integration.MATTER: 'matter'>,
+    'integration_info': dict({
+      'effect_id': 'light.kitchen_effect',
+    }),
+    'led_config': tuple(
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': None,
+    }),
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_no_override_dismissed][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'led_config_override': None,
+    'notification_on': False,
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_no_override_dismissed][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_no_override_dismissed][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_no_override_dismissed][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_no_override_dismissed][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:star-four-points-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_no_override_dismissed][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_no_override_dismissed][service_calls]
+  list([
+  ])
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_no_override_dismissed][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_no_override_dismissed][switch_info:light.entryway]
+  None
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_no_override_dismissed][switch_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'integration': <Integration.MATTER: 'matter'>,
+    'integration_info': dict({
+      'effect_id': 'light.kitchen_effect',
+    }),
+    'led_config': tuple(
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': None,
+    }),
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override][matter_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'brightness_pct': 100,
+        'entity_id': 'light.entryway_effect',
+        'hs_color': list([
+          127.1,
+          100,
+        ]),
+      }),
+      'domain': 'light',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'turn_on',
+    }),
+  ])
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'led_config_override': None,
+    'notification_on': False,
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:star-four-points-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override][service_calls]
+  list([
+  ])
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override][switch_info:light.entryway]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'integration': <Integration.MATTER: 'matter'>,
+    'integration_info': dict({
+      'effect_id': 'light.entryway_effect',
+    }),
+    'led_config': tuple(
+      dict({
+        'brightness': 100.0,
+        'color': <Color.GREEN: 90>,
+        'duration': None,
+        'effect': <Effect.SOLID: 1>,
+      }),
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.OVERRIDE: 'override'>,
+      'value': 'lampie.override',
+    }),
+    'priorities': tuple(
+    ),
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override][switch_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'integration': <Integration.MATTER: 'matter'>,
+    'integration_info': dict({
+      'effect_id': 'light.kitchen_effect',
+    }),
+    'led_config': tuple(
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': None,
+    }),
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override_expired][matter_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'brightness_pct': 100,
+        'entity_id': 'light.entryway_effect',
+        'hs_color': list([
+          127.1,
+          100,
+        ]),
+      }),
+      'domain': 'light',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'turn_on',
+    }),
+  ])
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override_expired][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'led_config_override': None,
+    'notification_on': False,
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override_expired][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override_expired][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override_expired][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override_expired][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:star-four-points-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override_expired][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override_expired][service_calls]
+  list([
+  ])
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override_expired][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override_expired][switch_info:light.entryway]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'integration': <Integration.MATTER: 'matter'>,
+    'integration_info': dict({
+      'effect_id': 'light.entryway_effect',
+    }),
+    'led_config': tuple(
+      dict({
+        'brightness': 100.0,
+        'color': <Color.GREEN: 90>,
+        'duration': None,
+        'effect': <Effect.SOLID: 1>,
+      }),
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.OVERRIDE: 'override'>,
+      'value': 'lampie.override',
+    }),
+    'priorities': tuple(
+    ),
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override_expired][switch_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'integration': <Integration.MATTER: 'matter'>,
+    'integration_info': dict({
+      'effect_id': 'light.kitchen_effect',
+    }),
+    'led_config': tuple(
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': None,
+    }),
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override_unrelated_command][matter_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'brightness_pct': 100,
+        'entity_id': 'light.entryway_effect',
+        'hs_color': list([
+          127.1,
+          100,
+        ]),
+      }),
+      'domain': 'light',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'turn_on',
+    }),
+  ])
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override_unrelated_command][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'led_config_override': None,
+    'notification_on': False,
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override_unrelated_command][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override_unrelated_command][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override_unrelated_command][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override_unrelated_command][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:star-four-points-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override_unrelated_command][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override_unrelated_command][service_calls]
+  list([
+  ])
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override_unrelated_command][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override_unrelated_command][switch_info:light.entryway]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'integration': <Integration.MATTER: 'matter'>,
+    'integration_info': dict({
+      'effect_id': 'light.entryway_effect',
+    }),
+    'led_config': tuple(
+      dict({
+        'brightness': 100.0,
+        'color': <Color.GREEN: 90>,
+        'duration': None,
+        'effect': <Effect.SOLID: 1>,
+      }),
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.OVERRIDE: 'override'>,
+      'value': 'lampie.override',
+    }),
+    'priorities': tuple(
+    ),
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[matter-entryway_override_unrelated_command][switch_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'integration': <Integration.MATTER: 'matter'>,
+    'integration_info': dict({
+      'effect_id': 'light.kitchen_effect',
+    }),
+    'led_config': tuple(
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': None,
+    }),
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
 # ---
 # name: test_switch_override_on_unrelated_switch[z2m-entryway_no_override_dismissed][notification_info]
   dict({
@@ -17398,6 +20069,568 @@
       'service': 'bulk_set_partial_config_parameters',
     }),
   ])
+# ---
+# name: test_switch_override_with_duration_expired[integration_config4-kitchen_override_leds_5m1s_duration_expired][events]
+  list([
+    EventSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'entity_id': 'light.kitchen',
+        'override': 'lampie.override',
+      }),
+      'event_type': 'lampie.expired',
+      'id': <ANY>,
+      'origin': 'LOCAL',
+      'time_fired': <ANY>,
+    }),
+  ])
+# ---
+# name: test_switch_override_with_duration_expired[integration_config4-kitchen_override_leds_5m1s_duration_expired][matter_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'brightness_pct': 100,
+        'entity_id': 'light.kitchen_effect',
+        'hs_color': list([
+          127.1,
+          100,
+        ]),
+      }),
+      'domain': 'light',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'turn_on',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'entity_id': 'light.kitchen_effect',
+      }),
+      'domain': 'light',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'turn_off',
+    }),
+  ])
+# ---
+# name: test_switch_override_with_duration_expired[integration_config4-kitchen_override_leds_5m1s_duration_expired][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'led_config_override': None,
+    'notification_on': False,
+  })
+# ---
+# name: test_switch_override_with_duration_expired[integration_config4-kitchen_override_leds_5m1s_duration_expired][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override_with_duration_expired[integration_config4-kitchen_override_leds_5m1s_duration_expired][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override_with_duration_expired[integration_config4-kitchen_override_leds_5m1s_duration_expired][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override_with_duration_expired[integration_config4-kitchen_override_leds_5m1s_duration_expired][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:star-four-points-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override_with_duration_expired[integration_config4-kitchen_override_leds_5m1s_duration_expired][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override_with_duration_expired[integration_config4-kitchen_override_leds_5m1s_duration_expired][service_calls]
+  list([
+  ])
+# ---
+# name: test_switch_override_with_duration_expired[integration_config4-kitchen_override_leds_5m1s_duration_expired][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_switch_override_with_duration_expired[integration_config4-kitchen_override_leds_5m1s_duration_expired][switch_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'integration': <Integration.MATTER: 'matter'>,
+    'integration_info': dict({
+      'effect_id': 'light.kitchen_effect',
+    }),
+    'led_config': tuple(
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': None,
+    }),
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
+# name: test_switch_override_with_duration_expired[integration_config4-kitchen_override_leds_mixed_specific_durations_expired][events]
+  list([
+    EventSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'entity_id': 'light.kitchen',
+        'override': 'lampie.override',
+      }),
+      'event_type': 'lampie.expired',
+      'id': <ANY>,
+      'origin': 'LOCAL',
+      'time_fired': <ANY>,
+    }),
+  ])
+# ---
+# name: test_switch_override_with_duration_expired[integration_config4-kitchen_override_leds_mixed_specific_durations_expired][matter_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'brightness_pct': 100,
+        'entity_id': 'light.kitchen_effect',
+        'hs_color': list([
+          0.0,
+          100,
+        ]),
+      }),
+      'domain': 'light',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'turn_on',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'entity_id': 'light.kitchen_effect',
+      }),
+      'domain': 'light',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'turn_off',
+    }),
+  ])
+# ---
+# name: test_switch_override_with_duration_expired[integration_config4-kitchen_override_leds_mixed_specific_durations_expired][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'led_config_override': None,
+    'notification_on': False,
+  })
+# ---
+# name: test_switch_override_with_duration_expired[integration_config4-kitchen_override_leds_mixed_specific_durations_expired][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override_with_duration_expired[integration_config4-kitchen_override_leds_mixed_specific_durations_expired][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override_with_duration_expired[integration_config4-kitchen_override_leds_mixed_specific_durations_expired][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override_with_duration_expired[integration_config4-kitchen_override_leds_mixed_specific_durations_expired][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:star-four-points-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override_with_duration_expired[integration_config4-kitchen_override_leds_mixed_specific_durations_expired][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_switch_override_with_duration_expired[integration_config4-kitchen_override_leds_mixed_specific_durations_expired][service_calls]
+  list([
+  ])
+# ---
+# name: test_switch_override_with_duration_expired[integration_config4-kitchen_override_leds_mixed_specific_durations_expired][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_switch_override_with_duration_expired[integration_config4-kitchen_override_leds_mixed_specific_durations_expired][switch_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'integration': <Integration.MATTER: 'matter'>,
+    'integration_info': dict({
+      'effect_id': 'light.kitchen_effect',
+    }),
+    'led_config': tuple(
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': None,
+    }),
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
+# name: test_switch_override_with_duration_expired[integration_config4-kitchen_override_leds_mixed_specific_durations_partially_expired][matter_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'brightness_pct': 100,
+        'entity_id': 'light.kitchen_effect',
+        'hs_color': list([
+          0.0,
+          100,
+        ]),
+      }),
+      'domain': 'light',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'turn_on',
+    }),
+  ])
+# ---
+# name: test_switch_override_with_duration_expired[integration_config4-kitchen_override_leds_mixed_specific_durations_partially_expired][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'led_config_override': None,
+    'notification_on': False,
+  })
+# ---
+# name: test_switch_override_with_duration_expired[integration_config4-kitchen_override_leds_mixed_specific_durations_partially_expired][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'individual': list([
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+      ]),
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '100.0',
+  })
+# ---
+# name: test_switch_override_with_duration_expired[integration_config4-kitchen_override_leds_mixed_specific_durations_partially_expired][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+      'individual': list([
+        'red',
+        'blue',
+        'white',
+        'red',
+        'blue',
+        'white',
+        0,
+      ]),
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'multi',
+  })
+# ---
+# name: test_switch_override_with_duration_expired[integration_config4-kitchen_override_leds_mixed_specific_durations_partially_expired][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'expires_at': '2025-05-20T04:01:33.003245-07:00',
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'individual': list([
+        601.0,
+        0,
+        601.0,
+        601.0,
+        0,
+        601.0,
+        601.0,
+      ]),
+      'started_at': '2025-05-20T03:51:32.003245-07:00',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '601.0',
+  })
+# ---
+# name: test_switch_override_with_duration_expired[integration_config4-kitchen_override_leds_mixed_specific_durations_partially_expired][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:star-four-points-box',
+      'individual': list([
+        'solid',
+        'clear',
+        'solid',
+        'solid',
+        'clear',
+        'solid',
+        'solid',
+      ]),
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'multi',
+  })
+# ---
+# name: test_switch_override_with_duration_expired[integration_config4-kitchen_override_leds_mixed_specific_durations_partially_expired][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'lampie.override',
+  })
+# ---
+# name: test_switch_override_with_duration_expired[integration_config4-kitchen_override_leds_mixed_specific_durations_partially_expired][service_calls]
+  list([
+  ])
+# ---
+# name: test_switch_override_with_duration_expired[integration_config4-kitchen_override_leds_mixed_specific_durations_partially_expired][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_switch_override_with_duration_expired[integration_config4-kitchen_override_leds_mixed_specific_durations_partially_expired][switch_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': <ANY>,
+      'expires_at': HAFakeDatetime(2025, 5, 20, 4, 1, 33, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+      'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'integration': <Integration.MATTER: 'matter'>,
+    'integration_info': dict({
+      'effect_id': 'light.kitchen_effect',
+    }),
+    'led_config': tuple(
+      dict({
+        'brightness': 100.0,
+        'color': <Color.RED: 0>,
+        'duration': 601.0,
+        'effect': <Effect.SOLID: 1>,
+      }),
+      dict({
+        'brightness': 100.0,
+        'color': <Color.BLUE: 170>,
+        'duration': 0,
+        'effect': <Effect.CLEAR: 255>,
+      }),
+      dict({
+        'brightness': 100.0,
+        'color': <Color.WHITE: 255>,
+        'duration': 601.0,
+        'effect': <Effect.SOLID: 1>,
+      }),
+      dict({
+        'brightness': 100.0,
+        'color': <Color.RED: 0>,
+        'duration': 601.0,
+        'effect': <Effect.SOLID: 1>,
+      }),
+      dict({
+        'brightness': 100.0,
+        'color': <Color.BLUE: 170>,
+        'duration': 0,
+        'effect': <Effect.CLEAR: 255>,
+      }),
+      dict({
+        'brightness': 100.0,
+        'color': <Color.WHITE: 255>,
+        'duration': 601.0,
+        'effect': <Effect.SOLID: 1>,
+      }),
+      dict({
+        'brightness': 100.0,
+        'color': 0,
+        'duration': 601.0,
+        'effect': <Effect.SOLID: 1>,
+      }),
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.OVERRIDE: 'override'>,
+      'value': 'lampie.override',
+    }),
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
 # ---
 # name: test_toggle_notification_with_actions[block_activation][sensor.kitchen_effect_brightness]
   StateSnapshot({

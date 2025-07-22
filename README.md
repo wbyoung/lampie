@@ -26,8 +26,6 @@ What it can do:
 - **Even more**  
   There are some more goodies in to docs below. Enjoy!
 
-_Note: currently this is limited to Blue switches using ZHA or Zigbee2MQTT and Red switches using Z-Wave JS, but other Inovelli switches will be added in the future._
-
 **Configure notifications** for multiple switches easily:
 
 <img width="300" alt="Image" src="https://github.com/user-attachments/assets/02f4888b-836c-4114-8a1d-bff66738087e" />
@@ -285,6 +283,17 @@ Some of the older Red series switches only have a single LED or have a subset of
 Unlike the Blue series switches under ZHA, there is no way to receive events for when a notification expires (it only supports, for instance, when the config button is dobule pressed `property_key_name="003"` and `value="KeyPressed2x"`). This may be supported in the firmware and not yet available for end user consumption.
 
 This integration therefore handles notification expiration itself for switches configured with Z-Wave. This may change unexpectedly in the future—if and when it is possible, Lampie will change to sending durations to the firmware.
+
+##### Matter
+
+White series switches only have a single LED and do not support effects. Lampie will do the following for these switches:
+
+- All will simply indicate to enable the notification (besides `CLEAR`)
+- If [individual LEDs](#full-led-configuration) are configured, the first LED settings will be used
+
+Unlike the Blue series switches under ZHA, there is no way to receive events for when a notification expires (it only supports, for instance, when the config button is dobule pressed via a state change on `event.<switch_id>_config` with `event_type="multi_press_2"`). This may be supported in the firmware and not yet available for end user consumption.
+
+This integration therefore handles notification expiration itself for switches configured with Matter. This may change unexpectedly in the future—if and when it is possible, Lampie will change to sending durations to the firmware.
 
 ## More Screenshots
 
