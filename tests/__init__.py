@@ -79,6 +79,7 @@ def add_mock_switch(
         ZHA_DOMAIN,
         f"{object_id}-local_protection",
         suggested_object_id=f"{object_id}_local_protection",
+        translation_key="local_protection",
         device_id=device_entry.id,
     )
     entity_registry.async_get_or_create(
@@ -86,6 +87,7 @@ def add_mock_switch(
         ZHA_DOMAIN,
         f"{object_id}-disable_clear_notifications_double_tap",
         suggested_object_id=f"{object_id}_disable_config_2x_tap_to_clear_notifications",
+        translation_key="disable_clear_notifications_double_tap",
         device_id=device_entry.id,
     )
     return switch
