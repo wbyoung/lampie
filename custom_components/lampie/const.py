@@ -35,6 +35,8 @@ INOVELLI_MODELS = {
     "LZW30-SN",  # red on/off switch
     "LZW31-SN",  # red dimmer
     "LZW36",  # red fan/light combo
+    "VTM31-SN",  # white dimmer (2-in-1 switch/dimmer)
+    "VTM35-SN",  # white fan
     "VZM30-SN",  # blue switch
     "VZM31-SN",  # blue 2-in-1 switch/dimmer
     "VZM35-SN",  # blue fan switch
