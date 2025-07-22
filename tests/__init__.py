@@ -66,6 +66,7 @@ def add_mock_switch(
         Integration.ZHA: "zha",
         Integration.Z2M: "mqtt",
         Integration.ZWAVE: "zwave_js",
+        Integration.MATTER: "matter",
     }[integration]
 
     identifiers = {
@@ -75,12 +76,14 @@ def add_mock_switch(
             "zwave_js",
             f"mock-zwave-driver-controller-id_mock-node-{object_id}",
         ),
+        Integration.MATTER: ("matter", f"mock:deviceid_{object_id}-nodeid"),
     }[integration]
 
     model = {
         Integration.ZHA: "VZM31-SN",
         Integration.Z2M: "VZM31-SN",
         Integration.ZWAVE: "VZW31-SN",
+        Integration.MATTER: "VTM31-SN",
     }[integration]
 
     device_registry = dr.async_get(hass)
@@ -123,6 +126,24 @@ def add_mock_switch(
             f"{object_id}-disable_clear_notifications_double_tap",
             suggested_object_id=f"{object_id}_disable_config_2x_tap_to_clear_notifications",
             translation_key="disable_clear_notifications_double_tap",
+            device_id=device_entry.id,
+        )
+
+    if integration_domain == Integration.MATTER:
+        entity_registry.async_get_or_create(
+            "event",
+            integration_domain,
+            f"{object_id}-config",
+            suggested_object_id=f"{object_id}_config",
+            translation_key="config",
+            device_id=device_entry.id,
+        )
+        entity_registry.async_get_or_create(
+            "light",
+            integration_domain,
+            f"{object_id}-effect",
+            suggested_object_id=f"{object_id}_effect",
+            translation_key="effect",
             device_id=device_entry.id,
         )
 

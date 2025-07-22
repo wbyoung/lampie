@@ -88,6 +88,7 @@
 # name: test_restore_state[missing_stored_data][switch_info]
   dict({
     'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+    'effect_id': None,
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
@@ -109,6 +110,7 @@
 # name: test_restore_state[no_restore_for_sensor.kitchen_effect_brightness][switch_info]
   dict({
     'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+    'effect_id': None,
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
@@ -130,6 +132,7 @@
 # name: test_restore_state[no_restore_for_sensor.kitchen_effect_color][switch_info]
   dict({
     'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+    'effect_id': None,
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
@@ -151,6 +154,7 @@
 # name: test_restore_state[no_restore_for_sensor.kitchen_effect_duration][switch_info]
   dict({
     'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+    'effect_id': None,
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
@@ -172,6 +176,7 @@
 # name: test_restore_state[no_restore_for_sensor.kitchen_effect_type][switch_info]
   dict({
     'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+    'effect_id': None,
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
@@ -193,6 +198,7 @@
 # name: test_restore_state[switch_info][switch_info]
   dict({
     'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+    'effect_id': None,
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
@@ -220,6 +226,7 @@
 # name: test_restore_state[switch_info_for_override_service_call][switch_info]
   dict({
     'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+    'effect_id': None,
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
@@ -247,6 +254,7 @@
 # name: test_restore_state[switch_info_with_numeric_color][switch_info]
   dict({
     'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+    'effect_id': None,
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,

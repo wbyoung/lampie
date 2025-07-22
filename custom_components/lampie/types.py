@@ -227,6 +227,7 @@ class Integration(StrEnum):
     ZHA = auto()
     Z2M = auto()
     ZWAVE = auto()
+    MATTER = auto()
 
 
 @dataclass(frozen=True)
@@ -261,6 +262,7 @@ class LampieSwitchInfo:
 
     led_config: tuple[LEDConfig, ...]
     led_config_source: LEDConfigSource
+    effect_id: EntityId | None = None
     local_protetction_id: EntityId | None = None
     disable_clear_notification_id: EntityId | None = None
     priorities: tuple[Slug, ...] = field(default_factory=tuple)
