@@ -164,11 +164,18 @@ class LampieOrchestrator:
             local_protetction_id = None
             disable_clear_notification_id = None
 
+            _LOGGER.debug(
+                "searching %s related entries: %s",
+                switch_id,
+                [(entry.unique_id, entry.translation_key) for entry in entity_entries],
+            )
+
             for entity_entry in entity_entries:
-                if entity_entry.unique_id.endswith("-local_protection"):
+                if entity_entry.translation_key == "local_protection":
                     local_protetction_id = entity_entry.entity_id
-                if entity_entry.unique_id.endswith(
-                    "-disable_clear_notifications_double_tap"
+                if (
+                    entity_entry.translation_key
+                    == "disable_clear_notifications_double_tap"
                 ):
                     disable_clear_notification_id = entity_entry.entity_id
 
