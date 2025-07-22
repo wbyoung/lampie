@@ -227,6 +227,7 @@ class Integration(StrEnum):
     ZHA = auto()
     Z2M = auto()
     ZWAVE = auto()
+    MATTER = auto()
 
 
 @dataclass(frozen=True)
@@ -275,6 +276,13 @@ class Z2MSwitchInfo:
 @dataclass(frozen=True)
 class ZWaveSwitchInfo:
     """ZWave switch info data class."""
+
+
+@dataclass(frozen=True)
+class MatterSwitchInfo:
+    """Matter switch info data class."""
+
+    effect_id: EntityId | None = None
 
 
 @dataclass(frozen=True)
