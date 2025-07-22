@@ -299,7 +299,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'brightness',
-    'unique_id': 'zha_mock-ieee:kitchen_light_kitchen_brightness',
+    'unique_id': 'zha_mock-ieee:kitchen_brightness',
     'unit_of_measurement': '%',
   })
 # ---
@@ -350,7 +350,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'color',
-    'unique_id': 'zha_mock-ieee:kitchen_light_kitchen_color',
+    'unique_id': 'zha_mock-ieee:kitchen_color',
     'unit_of_measurement': None,
   })
 # ---
@@ -401,7 +401,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'duration',
-    'unique_id': 'zha_mock-ieee:kitchen_light_kitchen_duration',
+    'unique_id': 'zha_mock-ieee:kitchen_duration',
     'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
   })
 # ---
@@ -452,7 +452,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'effect',
-    'unique_id': 'zha_mock-ieee:kitchen_light_kitchen_effect',
+    'unique_id': 'zha_mock-ieee:kitchen_effect',
     'unit_of_measurement': None,
   })
 # ---
@@ -501,7 +501,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'notification',
-    'unique_id': 'zha_mock-ieee:kitchen_light_kitchen_notification',
+    'unique_id': 'zha_mock-ieee:kitchen_notification',
     'unit_of_measurement': None,
   })
 # ---
@@ -555,7 +555,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'brightness',
-    'unique_id': 'zha_mock-ieee:kitchen_light_kitchen_brightness',
+    'unique_id': 'zha_mock-ieee:kitchen_brightness',
     'unit_of_measurement': '%',
   })
 # ---
@@ -615,7 +615,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'color',
-    'unique_id': 'zha_mock-ieee:kitchen_light_kitchen_color',
+    'unique_id': 'zha_mock-ieee:kitchen_color',
     'unit_of_measurement': None,
   })
 # ---
@@ -675,7 +675,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'duration',
-    'unique_id': 'zha_mock-ieee:kitchen_light_kitchen_duration',
+    'unique_id': 'zha_mock-ieee:kitchen_duration',
     'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
   })
 # ---
@@ -735,7 +735,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'effect',
-    'unique_id': 'zha_mock-ieee:kitchen_light_kitchen_effect',
+    'unique_id': 'zha_mock-ieee:kitchen_effect',
     'unit_of_measurement': None,
   })
 # ---
@@ -793,7 +793,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'notification',
-    'unique_id': 'zha_mock-ieee:kitchen_light_kitchen_notification',
+    'unique_id': 'zha_mock-ieee:kitchen_notification',
     'unit_of_measurement': None,
   })
 # ---
@@ -847,7 +847,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'brightness',
-    'unique_id': 'zha_mock-ieee:kitchen_light_kitchen_brightness',
+    'unique_id': 'zha_mock-ieee:kitchen_brightness',
     'unit_of_measurement': '%',
   })
 # ---
@@ -898,7 +898,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'color',
-    'unique_id': 'zha_mock-ieee:kitchen_light_kitchen_color',
+    'unique_id': 'zha_mock-ieee:kitchen_color',
     'unit_of_measurement': None,
   })
 # ---
@@ -949,7 +949,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'duration',
-    'unique_id': 'zha_mock-ieee:kitchen_light_kitchen_duration',
+    'unique_id': 'zha_mock-ieee:kitchen_duration',
     'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
   })
 # ---
@@ -1000,7 +1000,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'effect',
-    'unique_id': 'zha_mock-ieee:kitchen_light_kitchen_effect',
+    'unique_id': 'zha_mock-ieee:kitchen_effect',
     'unit_of_measurement': None,
   })
 # ---
@@ -1049,7 +1049,7 @@
     'suggested_object_id': None,
     'supported_features': 0,
     'translation_key': 'notification',
-    'unique_id': 'zha_mock-ieee:kitchen_light_kitchen_notification',
+    'unique_id': 'zha_mock-ieee:kitchen_notification',
     'unit_of_measurement': None,
   })
 # ---

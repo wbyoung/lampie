@@ -64,7 +64,7 @@ def add_mock_switch(
     device_entry = device_registry.async_get_or_create(
         name=mock_config_entry.title,
         config_entry_id=mock_config_entry.entry_id,
-        identifiers={(ZHA_DOMAIN, f"mock-ieee:{object_id}", domain, object_id)},
+        identifiers={(ZHA_DOMAIN, f"mock-ieee:{object_id}")},
         **(device_attrs or {}),
     )
     switch = entity_registry.async_get_or_create(

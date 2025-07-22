@@ -285,8 +285,6 @@
       tuple(
         'zha',
         'mock-ieee:kitchen',
-        'light',
-        'kitchen',
       ),
     }),
     'is_new': False,

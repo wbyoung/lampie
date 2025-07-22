@@ -14,8 +14,6 @@
           list([
             'zha',
             'mock-ieee:kitchen',
-            'light',
-            'kitchen',
           ]),
         ]),
         'labels': list([
