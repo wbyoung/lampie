@@ -5,7 +5,7 @@
     "@wbyoung"
   ],
   "config_flow": true,
-  "dependencies": [],
+  "dependencies": ["mqtt"],
   "documentation": "https://github.com/wbyoung/lampie",
   "homekit": {},
   "iot_class": "calculated",
