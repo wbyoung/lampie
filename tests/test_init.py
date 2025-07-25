@@ -50,7 +50,13 @@ from custom_components.lampie.types import (
     LEDConfigSourceType,
 )
 
-from . import MockNow, Scenario, add_mock_switch, setup_integration
+from . import (
+    MockNow,
+    Scenario,
+    add_mock_switch,
+    setup_added_integration,
+    setup_integration,
+)
 from .syrupy import any_device_id_matcher
 
 _LOGGER = logging.getLogger(__name__)
@@ -821,7 +827,7 @@ async def test_toggle_notifications(
     caplog: pytest.LogCaptureFixture,
 ) -> None:
     """Test turning on and off a notification."""
-    await setup_integration(hass, config_entry)
+    config_entry.add_to_hass(hass)
 
     hass.config_entries.async_update_entry(
         config_entry,
@@ -830,6 +836,8 @@ async def test_toggle_notifications(
             **(configs or {}).get("doors_open", {}),
         },
     )
+
+    await setup_added_integration(hass, config_entry)
 
     switches = {}
 
