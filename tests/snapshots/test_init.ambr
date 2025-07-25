@@ -4534,6 +4534,21 @@
     }),
   ])
 # ---
+# name: test_toggle_notifications[entryway_override_expired][events]
+  list([
+    EventSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'entity_id': 'light.entryway',
+        'override': 'lampie.override',
+      }),
+      'event_type': 'lampie.expired',
+      'id': <ANY>,
+      'origin': 'LOCAL',
+      'time_fired': <ANY>,
+    }),
+  ])
+# ---
 # name: test_toggle_notifications[entryway_override_expired][notification_info]
   dict({
     'expiration': ExpirationInfoSnapshot({
@@ -4663,19 +4678,13 @@
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
-      'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+      'started_at': None,
     }),
     'led_config': tuple(
-      dict({
-        'brightness': 100.0,
-        'color': <Color.GREEN: 90>,
-        'duration': None,
-        'effect': <Effect.SOLID: 1>,
-      }),
     ),
     'led_config_source': dict({
-      'type': <LEDConfigSourceType.SERVICE: 'service'>,
-      'value': 'lampie.override',
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': None,
     }),
     'local_protetction_id': 'switch.entryway_local_protection',
     'priorities': tuple(

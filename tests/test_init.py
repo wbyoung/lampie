@@ -1,7 +1,11 @@
 """Test component setup."""
 
+from collections.abc import Awaitable, Callable
 import datetime as dt
+import functools
+import inspect
 import logging
+import re
 from typing import Any
 from unittest.mock import patch
 
@@ -60,6 +64,95 @@ from . import (
 from .syrupy import any_device_id_matcher
 
 _LOGGER = logging.getLogger(__name__)
+
+type ScenarioStageKwargs = dict[str, Any]
+type ScenarioStageCallback = Callable[[], Awaitable[dict[str, Any] | None]]
+type ScenarioStageHandler = Callable[
+    [
+        ScenarioStageCallback,
+        ScenarioStageCallback,
+        ScenarioStageCallback,
+    ],
+    Awaitable[None],
+]
+
+
+def scenario_stages(
+    fn: ScenarioStageHandler | None = None, *, standard_config_entry: bool | None = None
+):
+    if fn is not None:
+        return _scenario_stages(fn, standard_config_entry=bool(standard_config_entry))
+    return functools.partial(
+        scenario_stages, standard_config_entry=standard_config_entry
+    )
+
+
+def _scenario_stages(
+    fn: ScenarioStageHandler,
+    *,
+    standard_config_entry: bool = False,
+):
+    async def _base_signature(
+        hass: HomeAssistant,
+        now: MockNow,
+        configs: dict[str, dict[str, Any]],
+        initial_states: dict[str, str],
+        scripts: dict[str, Any],
+        steps: list[dict[str, Any]],
+        expected_notification_state: str,
+        expected_notifiation_timer: bool,
+        expected_switch_timer: bool,
+        expected_events: int,
+        expected_zha_calls: int,
+        device_registry: dr.DeviceRegistry,
+        entity_registry: er.EntityRegistry,
+        snapshot: SnapshotAssertion,
+        caplog: pytest.LogCaptureFixture,
+    ):
+        pass
+
+    async def _standard_config_entry_signature(
+        config_entry: MockConfigEntry,
+        switch: er.RegistryEntry,
+    ):
+        pass
+
+    @functools.wraps(fn)
+    async def wrapper(**kwargs: Any) -> dict[str, Any]:
+        extra_kwargs: dict[str, Any] = {}
+
+        async def setup():
+            extra_kwargs.update(result := await _setup(**(kwargs | extra_kwargs)))
+            return result
+
+        async def steps_callback():
+            extra_kwargs.update(result := await _steps(**(kwargs | extra_kwargs)))
+            return result
+
+        async def assert_expectations():
+            extra_kwargs.update(
+                result := await _assert_expectations(**(kwargs | extra_kwargs))
+            )
+            return result
+
+        await fn(setup, steps_callback, assert_expectations)
+
+        return kwargs | extra_kwargs
+
+    wrapper_signature = inspect.signature(_base_signature)
+
+    if standard_config_entry:
+        wrapper_signature = wrapper_signature.replace(
+            parameters=[
+                *wrapper_signature.parameters.values(),
+                *inspect.signature(
+                    _standard_config_entry_signature
+                ).parameters.values(),
+            ]
+        )
+    wrapper.__signature__ = wrapper_signature  # type: ignore[attr-defined]
+
+    return wrapper
 
 
 async def test_async_setup(hass: HomeAssistant):
@@ -780,7 +873,7 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
             "expected_notification_state": "off",
             "expected_notifiation_timer": False,
             "expected_switch_timer": False,
-            "expected_events": 0,
+            "expected_events": 1,
             "expected_zha_calls": 1,
         },
     ),
@@ -807,10 +900,20 @@ def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
         },
     ),
 )
+@scenario_stages(standard_config_entry=True)
 async def test_toggle_notifications(
+    setup: ScenarioStageCallback,
+    steps: ScenarioStageCallback,
+    assert_expectations: ScenarioStageCallback,
+):
+    await setup()
+    await steps()
+    await assert_expectations()
+
+
+async def _setup(
     hass: HomeAssistant,
-    config_entry: MockConfigEntry,
-    switch: er.RegistryEntry,
+    config_entry: MockConfigEntry | None,
     now: MockNow,
     configs: dict[str, dict[str, Any]],
     initial_states: dict[str, str],
@@ -825,29 +928,63 @@ async def test_toggle_notifications(
     entity_registry: er.EntityRegistry,
     snapshot: SnapshotAssertion,
     caplog: pytest.LogCaptureFixture,
-) -> None:
+    **kwargs: Any,
+) -> dict[str, Any]:
     """Test turning on and off a notification."""
-    config_entry.add_to_hass(hass)
 
-    hass.config_entries.async_update_entry(
-        config_entry,
-        data={
-            **config_entry.data,
-            **(configs or {}).get("doors_open", {}),
-        },
-    )
+    if config_entry is not None:
+        config_entry.add_to_hass(hass)
 
-    await setup_added_integration(hass, config_entry)
+        hass.config_entries.async_update_entry(
+            config_entry,
+            data={
+                **config_entry.data,
+                **(configs or {}).get("doors_open", {}),
+            },
+        )
 
-    switches = {}
+        await setup_added_integration(hass, config_entry)
 
+    # register the any additional switches needed from `initial_states`.
     for entity_id, state in (initial_states or {}).items():
-        switches[entity_id] = add_mock_switch(hass, entity_id)
+        add_mock_switch(hass, entity_id)
         hass.states.async_set(entity_id, state)
 
-    assert await async_setup_component(hass, "script", {"script": scripts})
+    if scripts is not None:
+        assert await async_setup_component(hass, "script", {"script": scripts})
 
     cluster_commands = async_mock_service(hass, "zha", "issue_zigbee_cluster_command")
+
+    return {
+        "expected_notification_state": expected_notification_state,
+        "expected_notifiation_timer": expected_notifiation_timer,
+        "expected_switch_timer": expected_switch_timer,
+        "expected_events": expected_events,
+        "expected_zha_calls": expected_zha_calls,
+        "cluster_commands": cluster_commands,
+    }
+
+
+async def _steps(
+    hass: HomeAssistant,
+    config_entry: MockConfigEntry,
+    switch: er.RegistryEntry,
+    now: MockNow,
+    configs: dict[str, dict[str, Any]],
+    initial_states: dict[str, str],
+    scripts: dict[str, Any],
+    steps: list[dict[str, Any]],
+    cluster_commands: list[Any],
+    expected_notification_state: str,
+    expected_notifiation_timer: bool,
+    expected_switch_timer: bool,
+    expected_events: int,
+    expected_zha_calls: int,
+    device_registry: dr.DeviceRegistry,
+    entity_registry: er.EntityRegistry,
+    snapshot: SnapshotAssertion,
+    caplog: pytest.LogCaptureFixture,
+) -> dict[str, Any]:
     async_call = hass.services.async_call
     events: list[Event] = []
 
@@ -870,7 +1007,41 @@ async def test_toggle_notifications(
         for step in steps:
             _LOGGER.log(TRACE, "step %r", step)
 
+            # actions and events may be expanded by other config settings
+            step_actions = []
+            step_events = []
+
             if "action" in step:
+                step_actions.append(step)
+            elif "event" in step:
+                step_events.append(step)
+            elif "delay" in step:
+                now._tick(step["delay"].total_seconds())
+
+            if "device_config" in step:
+                device_config = step["device_config"]
+                target = device_config["target"]
+
+                if "local_protection" in device_config:
+                    local_protection_id = re.sub(
+                        r"light\.(.*)", r"switch.\1_local_protection", target
+                    )
+                    hass.states.async_set(
+                        local_protection_id, device_config["local_protection"]
+                    )
+
+                if "disable_clear_notification" in device_config:
+                    disable_clear_notification_id = re.sub(
+                        r"light\.(.*)",
+                        r"switch.\1_disable_config_2x_tap_to_clear_notifications",
+                        target,
+                    )
+                    hass.states.async_set(
+                        disable_clear_notification_id,
+                        device_config["disable_clear_notification"],
+                    )
+
+            for step in step_actions:
                 domain, service_name = step["action"].split(".")
                 args = {**step.get("data", {})}
                 if "target" in step:
@@ -881,11 +1052,16 @@ async def test_toggle_notifications(
                     args,
                     blocking=True,
                 )
-            elif "event" in step:
-                event_data = step["event"]
+
+            for step in step_events:
+                event_data = {**step["event"]}
                 entity_id = event_data.pop("entity_id", None)
-                device = switches.get(entity_id)
-                device_id = device.id if device else switch.device_id
+                device_id = switch.device_id
+
+                # if supplied, get the device related to the entity_id instead
+                if entity_id is not None:
+                    device_id = entity_registry.async_get(entity_id).device_id
+
                 hass.bus.async_fire(
                     "zha_event",
                     {
@@ -893,8 +1069,7 @@ async def test_toggle_notifications(
                         **event_data,
                     },
                 )
-            elif "delay" in step:
-                now._tick(step["delay"].total_seconds())
+
             await hass.async_block_till_done()
 
         # capture service calls to assert about start/end action invocations
@@ -905,45 +1080,77 @@ async def test_toggle_notifications(
             if (domain, service) != ("zha", "issue_zigbee_cluster_command")
         ]
 
-    assert (
-        hass.states.get("switch.doors_open_notification").state
-        == expected_notification_state
-    )
+    return {
+        "service_calls": service_calls,
+        "events": events,
+    }
 
+
+async def _assert_expectations(  # noqa: RUF029
+    hass: HomeAssistant,
+    config_entry: MockConfigEntry,
+    switch: er.RegistryEntry,
+    now: MockNow,
+    configs: dict[str, dict[str, Any]],
+    initial_states: dict[str, str],
+    scripts: dict[str, Any],
+    steps: list[dict[str, Any]],
+    cluster_commands: list[Any],
+    service_calls: list[Any],
+    events: list[Any],
+    expected_notification_state: str,
+    expected_notifiation_timer: bool,
+    expected_switch_timer: bool,
+    expected_events: int,
+    expected_zha_calls: int,
+    device_registry: dr.DeviceRegistry,
+    entity_registry: er.EntityRegistry,
+    snapshot: SnapshotAssertion,
+    caplog: pytest.LogCaptureFixture,
+) -> dict[str, Any]:
     orchestrator = config_entry.runtime_data.orchestrator
     notification_info = orchestrator.notification_info("doors_open")
     switch_info = orchestrator.switch_info(switch.entity_id)
 
     assert notification_info == snapshot(name="notification_info")
     assert switch_info == snapshot(name="switch_info")
-    assert (
-        bool(notification_info.expiration.cancel_listener) == expected_notifiation_timer
-    )
-    assert bool(switch_info.expiration.cancel_listener) == expected_switch_timer
 
     if expected_zha_calls:
         assert cluster_commands == snapshot(name="zha_cluster_commands")
-    assert len(cluster_commands) == expected_zha_calls
 
     if expected_events:
         assert events == snapshot(name="events")
-    assert len(events) == expected_events
 
     assert service_calls == snapshot(
         name="service_calls", matcher=any_device_id_matcher
     )
 
     # assert switch info against internal state to avoid creating the switch
-    # info: this allows some test cases to assert that the orchestrator never
-    # tries to track anything about the switch.
-    for switch_id in switches:
-        switch_info = orchestrator._switches.get(switch_id)
-        assert switch_info == snapshot(name=f"swtich_info:{switch_id}")
+    # info: this allows some test cases to assert that the orchestrator
+    # never tries to track anything about the switch.
+    for switch_id in initial_states or {}:
+        assert orchestrator._switches.get(switch_id) == snapshot(
+            name=f"swtich_info:{switch_id}"
+        )
 
     for entity in entity_registry.entities.get_entries_for_config_entry_id(
         config_entry.entry_id
     ):
         assert hass.states.get(entity.entity_id) == snapshot(name=entity.entity_id)
+
+    # make assertions from scenario input
+    assert (
+        hass.states.get("switch.doors_open_notification").state
+        == expected_notification_state
+    )
+    assert (
+        bool(notification_info.expiration.cancel_listener) == expected_notifiation_timer
+    )
+    assert bool(switch_info.expiration.cancel_listener) == expected_switch_timer
+    assert len(cluster_commands) == expected_zha_calls
+    assert len(events) == expected_events
+
+    return {}
 
 
 @Scenario.parametrize(
