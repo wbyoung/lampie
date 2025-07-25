@@ -20,6 +20,14 @@ ZHA_DOMAIN = "zha"
 MOCK_UTC_NOW = dt.datetime(2025, 5, 20, 10, 51, 32, 3245, tzinfo=dt.UTC)
 
 
+class _ANY:
+    def __repr__(self) -> str:
+        return "<ANY>"
+
+
+ANY = _ANY()
+
+
 class MockNow:
     def __init__(self, hass: HomeAssistant, freezer: FrozenDateTimeFactory):
         super().__init__()
