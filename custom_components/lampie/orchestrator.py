@@ -161,7 +161,7 @@ class LampieOrchestrator:
             entity_registry = er.async_get(self._hass)
             device_id = async_entity_id_to_device_id(self._hass, switch_id)
             entity_entries = er.async_entries_for_device(entity_registry, device_id)
-            local_protetction_id = None
+            local_protection_id = None
             disable_clear_notification_id = None
 
             _LOGGER.debug(
@@ -172,7 +172,7 @@ class LampieOrchestrator:
 
             for entity_entry in entity_entries:
                 if entity_entry.translation_key == "local_protection":
-                    local_protetction_id = entity_entry.entity_id
+                    local_protection_id = entity_entry.entity_id
                 if (
                     entity_entry.translation_key
                     == "disable_clear_notifications_double_tap"
@@ -183,7 +183,7 @@ class LampieOrchestrator:
             self._switches[switch_id] = LampieSwitchInfo(
                 led_config=(),
                 led_config_source=LEDConfigSource(None),
-                local_protetction_id=local_protetction_id,
+                local_protection_id=local_protection_id,
                 disable_clear_notification_id=disable_clear_notification_id,
             )
         return self._switches[switch_id]
@@ -815,11 +815,8 @@ class LampieOrchestrator:
 
         if all_clear and command in CONFIGURABLE_COMMANDS:
             switch_info = self.switch_info(switch_id)
-            local_protection = (
-                switch_info.local_protetction_id
-                and hass.states.is_state(
-                    switch_info and switch_info.local_protetction_id, "on"
-                )
+            local_protection = switch_info.local_protection_id and hass.states.is_state(
+                switch_info and switch_info.local_protection_id, "on"
             )
             disable_clear_notification = (
                 switch_info.disable_clear_notification_id

@@ -106,7 +106,7 @@
           'type': 'notification',
           'value': 'doors_open',
         }),
-        'local_protetction_id': 'switch.kitchen_local_protection',
+        'local_protection_id': 'switch.kitchen_local_protection',
         'priorities': list([
           'doors_open',
         ]),

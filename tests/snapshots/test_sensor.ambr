@@ -99,7 +99,7 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': None,
     }),
-    'local_protetction_id': 'switch.kitchen_local_protection',
+    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
@@ -119,7 +119,7 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': None,
     }),
-    'local_protetction_id': 'switch.kitchen_local_protection',
+    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
@@ -139,7 +139,7 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': None,
     }),
-    'local_protetction_id': 'switch.kitchen_local_protection',
+    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
@@ -159,7 +159,7 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': None,
     }),
-    'local_protetction_id': 'switch.kitchen_local_protection',
+    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
@@ -179,7 +179,7 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': None,
     }),
-    'local_protetction_id': 'switch.kitchen_local_protection',
+    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
@@ -205,7 +205,7 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': 'doors_open',
     }),
-    'local_protetction_id': 'switch.kitchen_local_protection',
+    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
@@ -231,7 +231,7 @@
       'type': <LEDConfigSourceType.SERVICE: 'service'>,
       'value': 'lampie.override',
     }),
-    'local_protetction_id': 'switch.kitchen_local_protection',
+    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
@@ -257,7 +257,7 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': 'doors_open',
     }),
-    'local_protetction_id': 'switch.kitchen_local_protection',
+    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),

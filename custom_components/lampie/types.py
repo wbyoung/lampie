@@ -253,7 +253,7 @@ class LampieSwitchInfo:
 
     led_config: tuple[LEDConfig, ...]
     led_config_source: LEDConfigSource
-    local_protetction_id: EntityId | None = None
+    local_protection_id: EntityId | None = None
     disable_clear_notification_id: EntityId | None = None
     priorities: tuple[Slug, ...] = field(default_factory=tuple)
     expiration: ExpirationInfo = field(default_factory=ExpirationInfo)
@@ -264,7 +264,7 @@ class LampieSwitchOptionsDict(TypedDict):
 
     led_config: NotRequired[tuple[LEDConfig, ...]]
     led_config_source: NotRequired[LEDConfigSource]
-    local_protetction_id: NotRequired[EntityId | None]
+    local_protection_id: NotRequired[EntityId | None]
     disable_clear_notification_id: NotRequired[EntityId | None]
     priorities: NotRequired[tuple[Slug, ...]]
     expiration: NotRequired[ExpirationInfo]
