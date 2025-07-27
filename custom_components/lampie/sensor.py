@@ -98,7 +98,7 @@ SENSOR_TYPES: tuple[SensorEntityDescription, ...] = (
         suggested_display_precision=0,
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
-        icon="mdi:timer",
+        icon="mdi:brightness-percent",
     ),
     LampieSensorDescription(
         key=ATTR_COLOR,
@@ -137,7 +137,7 @@ SENSOR_TYPES: tuple[SensorEntityDescription, ...] = (
         translation_key=ATTR_EFFECT,
         value_fn=_combined("effect", _unique),
         attrs_fn=lambda data: _multi(data, "effect"),
-        icon="mdi:lightning-bolt",
+        icon="mdi:star-four-points-box",
     ),
 )
 

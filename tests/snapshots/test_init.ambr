@@ -306,7 +306,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -352,7 +352,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -409,7 +409,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -455,7 +455,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -581,7 +581,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -627,7 +627,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -706,7 +706,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'individual': list([
         100.0,
         100.0,
@@ -779,7 +779,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
       'individual': list([
         'solid',
         'solid',
@@ -1061,7 +1061,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -1107,7 +1107,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -1224,7 +1224,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -1270,7 +1270,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -1387,7 +1387,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -1433,7 +1433,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -1572,7 +1572,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -1618,7 +1618,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -1753,7 +1753,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -1799,7 +1799,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -1910,7 +1910,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -1956,7 +1956,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -2067,7 +2067,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -2113,7 +2113,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -2252,7 +2252,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -2298,7 +2298,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -2701,7 +2701,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'individual': list([
         100.0,
         100.0,
@@ -2774,7 +2774,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
       'individual': list([
         'solid',
         'clear',
@@ -3129,7 +3129,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -3175,7 +3175,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -3357,7 +3357,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -3403,7 +3403,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -3571,7 +3571,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -3617,7 +3617,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -3748,7 +3748,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -3794,7 +3794,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -3961,7 +3961,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -4007,7 +4007,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -4249,7 +4249,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -4295,7 +4295,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -4375,7 +4375,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -4421,7 +4421,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -4564,7 +4564,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -4610,7 +4610,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -4732,7 +4732,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -4778,7 +4778,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -4902,7 +4902,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -4948,7 +4948,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -5066,7 +5066,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -5112,7 +5112,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -5237,7 +5237,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -5285,7 +5285,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -5394,7 +5394,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -5440,7 +5440,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -5586,7 +5586,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -5632,7 +5632,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -5750,7 +5750,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -5796,7 +5796,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -6199,7 +6199,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'individual': list([
         100.0,
         100.0,
@@ -6274,7 +6274,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
       'individual': list([
         'solid',
         'clear',
@@ -6613,7 +6613,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -6659,7 +6659,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -6768,7 +6768,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -6814,7 +6814,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -6928,7 +6928,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Entryway Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -6974,7 +6974,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Entryway Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.entryway_effect_type',
@@ -7002,7 +7002,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -7048,7 +7048,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -7174,7 +7174,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Entryway Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -7220,7 +7220,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Entryway Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.entryway_effect_type',
@@ -7248,7 +7248,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -7294,7 +7294,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -7442,7 +7442,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Entryway Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -7488,7 +7488,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Entryway Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.entryway_effect_type',
@@ -7516,7 +7516,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'individual': list([
         100.0,
         100.0,
@@ -7589,7 +7589,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
       'individual': list([
         'solid',
         'solid',
@@ -7907,7 +7907,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Entryway Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -7953,7 +7953,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Entryway Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.entryway_effect_type',
@@ -7981,7 +7981,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -8027,7 +8027,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -8175,7 +8175,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Entryway Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -8221,7 +8221,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Entryway Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.entryway_effect_type',
@@ -8249,7 +8249,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -8295,7 +8295,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -8399,7 +8399,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Dining room Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -8445,7 +8445,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Dining room Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.dining_room_effect_type',
@@ -8473,7 +8473,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Entryway Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -8519,7 +8519,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Entryway Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.entryway_effect_type',
@@ -8547,7 +8547,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -8593,7 +8593,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -8697,7 +8697,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Entryway Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -8743,7 +8743,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Entryway Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.entryway_effect_type',
@@ -8771,7 +8771,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:timer',
+      'icon': 'mdi:brightness-percent',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': '%',
     }),
@@ -8817,7 +8817,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:lightning-bolt',
+      'icon': 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',

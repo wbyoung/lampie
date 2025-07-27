@@ -38,7 +38,7 @@ The integration creates a **simple switch** to turn the notification on and off:
 
 And sensors on each of the switches to see the **current state of each switch**:
 
-<img width="300" alt="Image" src="https://github.com/user-attachments/assets/c36e008d-900f-4daa-9510-60171f6bd45d" />
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/fc29de87-be5c-47e7-ad35-e1cd126a45fa" />
 
 _Because sometimes one notification may have a [higher priority](#notification-priority) and override another._
 
