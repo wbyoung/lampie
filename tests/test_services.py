@@ -35,7 +35,7 @@ def test_has_services(
     assert hass.services.has_service(DOMAIN, SERVICE_NAME_OVERRIDE)
 
 
-@pytest.mark.usefixtures("init_integration")
+@pytest.mark.usefixtures("switch", "init_integration")
 @pytest.mark.parametrize(
     "attrs",
     [
