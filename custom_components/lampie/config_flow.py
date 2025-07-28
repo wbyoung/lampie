@@ -651,19 +651,19 @@ def _is_inovelli_switch(
     entity_registry: er.EntityRegistry,
     entity_id: str,
 ) -> bool:
-    """Check if entity_id should be included for dependent entities.
+    """Check if entity_id should be included for the list of switches.
 
-    Determine if an entity_id represents an entity with a `state_class` of
-    `total_increasing` and a `unit_of_measurement` of `km`.
+    Determine if an entity_id represents an Inovelli switch.
 
     Returns:
         A flag indicating if the entity should be included.
     """
+
     return bool(
         (entity := entity_registry.async_get(entity_id))
         and (device := device_registry.async_get(entity.device_id))
-        and (model := device.model)
-        and (model in INOVELLI_MODELS)
+        and ((model := device.model), (model_id := device.model_id))
+        and ((model in INOVELLI_MODELS) or (model_id in INOVELLI_MODELS))
     )
 
 

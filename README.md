@@ -26,7 +26,7 @@ What it can do:
 - **Even more**  
   There are some more goodies in to docs below. Enjoy!
 
-_Note: currently this is limited to Blue switches using ZHA, but ideally Z2M and other Inovelli switches will be added in the future._
+_Note: currently this is limited to Blue switches using ZHA or Zigbee2MQTT, but other Inovelli switches will be added in the future._
 
 **Configure notifications** for multiple switches easily:
 
@@ -271,6 +271,12 @@ Restore state functionality is provided via a subset of entities:
 - [`sensor.<switch_id>_notification`](#sensorswitch_id_notification)
 
 If you disable these entities, it is possible that various other entities may not be restored after restarting Home Assistant.
+
+##### Zigbee2MQTT
+
+While supported by the Blue switch firmware, Zigbee2MQTT does not yet provide events with an `action` for when a notification expires (it only supports, for instance, [`config_double`](https://www.zigbee2mqtt.io/devices/VZM35-SN.html#action-enum)).
+
+This integration therefore handles notification expiration itself for switches configured with Zigbee2MQTT. This may change unexpectedly in the future—if and when it is possible, Lampie will change to sending durations to the firmware.
 
 ## More Screenshots
 
