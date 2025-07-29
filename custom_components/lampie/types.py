@@ -97,26 +97,26 @@ class Effect(Enum):
     """Available effects."""
 
     OFF = 0
-    SOLID = 1
-    FAST_BLINK = 2
-    SLOW_BLINK = 3
-    PULSE = 4
-    CHASE = 5
-    OPEN_CLOSE = 6
-    SMALL_TO_BIG = 7
-    AURORA = 8
-    SLOW_FALLING = 9
-    MEDIUM_FALLING = 10
-    FAST_FALLING = 11
-    SLOW_RISING = 12
-    MEDIUM_RISING = 13
-    FAST_RISING = 14
-    MEDIUM_BLINK = 15
-    SLOW_CHASE = 16
-    FAST_CHASE = 17
-    FAST_SIREN = 18
-    SLOW_SIREN = 19
     CLEAR = 255
+    AURORA = 8
+    BLINK_FAST = 2
+    BLINK_MEDIUM = 15
+    BLINK_SLOW = 3
+    CHASE_SLOW = 16
+    CHASE = 5
+    CHASE_FAST = 17
+    FALLING_SLOW = 9
+    FALLING_MEDIUM = 10
+    FALLING_FAST = 11
+    OPEN_CLOSE = 6
+    PULSE = 4
+    RISING_SLOW = 12
+    RISING_MEDIUM = 13
+    RISING_FAST = 14
+    SIREN_FAST = 18
+    SIREN_SLOW = 19
+    SMALL_TO_BIG = 7
+    SOLID = 1
 
 
 @dataclass(frozen=True)
