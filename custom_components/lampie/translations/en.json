@@ -21,7 +21,7 @@
             "user": {
                 "data": {
                     "color": "Color, i.e. cyan or a number",
-                    "duration": "Duration in seconds, 'HH:MM' or 'HH:MM:SS'",
+                    "duration": "Duration: seconds, 'HH:MM:SS' or blank (no timeout).",
                     "effect": "Effect type",
                     "name": "Name of the nofitication",
                     "switches": "Switches to display notifications"
@@ -113,7 +113,7 @@
             "init": {
                 "data": {
                     "color": "Color, i.e. cyan or a number",
-                    "duration": "Duration in seconds, 'HH:MM' or 'HH:MM:SS'",
+                    "duration": "Duration: seconds, 'HH:MM:SS' or blank (no timeout).",
                     "effect": "Effect type",
                     "name": "Name of the nofitication",
                     "switches": "Switches to display notifications"
