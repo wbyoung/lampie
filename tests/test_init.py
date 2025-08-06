@@ -27,6 +27,7 @@ from pytest_homeassistant_custom_component.common import (
     async_mock_service,
 )
 from syrupy.assertion import SnapshotAssertion
+from syrupy.filters import props
 
 from custom_components.lampie.const import (
     ATTR_COLOR,
@@ -614,7 +615,13 @@ async def test_standard_setup(
 
     assert device is not None
     assert device.id == switch.device_id
-    assert device == snapshot(name="device")
+    assert device == snapshot(
+        name="device",
+        exclude=props(
+            # compat for HA DeviceRegistryEntrySnapshot <2025.8.0 and >=2025.8.0
+            "suggested_area",
+        ),
+    )
 
 
 def _response_script(name: str, response: dict[str, Any]) -> dict[str, Any]:
