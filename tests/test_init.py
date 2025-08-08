@@ -345,70 +345,19 @@ async def _steps(
         for step in steps:
             _LOGGER.log(TRACE, "step %r", step)
 
-            # actions and events may be expanded by other config settings
-            step_actions = []
-            step_events = []
-
-            if "action" in step:
-                step_actions.append(step)
+            if "device_config" in step:
+                _step_device_config(step=step, hass=hass)
+            elif "action" in step:
+                await _step_action(step=step, async_call=async_call)
             elif "event" in step:
-                step_events.append(step)
+                _step_event(
+                    step=step,
+                    hass=hass,
+                    standard_switch=standard_switch,
+                    entity_registry=entity_registry,
+                )
             elif "delay" in step:
                 now._tick(step["delay"].total_seconds())
-
-            if "device_config" in step:
-                device_config = step["device_config"]
-                target = device_config["target"]
-
-                if "local_protection" in device_config:
-                    local_protection_id = re.sub(
-                        r"light\.(.*)", r"switch.\1_local_protection", target
-                    )
-                    hass.states.async_set(
-                        local_protection_id, device_config["local_protection"]
-                    )
-
-                if "disable_clear_notification" in device_config:
-                    disable_clear_notification_id = re.sub(
-                        r"light\.(.*)",
-                        r"switch.\1_disable_config_2x_tap_to_clear_notifications",
-                        target,
-                    )
-                    hass.states.async_set(
-                        disable_clear_notification_id,
-                        device_config["disable_clear_notification"],
-                    )
-
-            for step in step_actions:
-                domain, service_name = step["action"].split(".")
-                args = {**step.get("data", {})}
-                if "target" in step:
-                    args[ATTR_ENTITY_ID] = step["target"]
-                await async_call(
-                    domain,
-                    service_name,
-                    args,
-                    blocking=True,
-                )
-
-            for step in step_events:
-                event_data = {**step["event"]}
-                entity_id = event_data.pop("entity_id", None)
-                device_id = (
-                    standard_switch.device_id if standard_switch is not None else None
-                )
-
-                # if supplied, get the device related to the entity_id instead
-                if entity_id is not None:
-                    device_id = entity_registry.async_get(entity_id).device_id
-
-                hass.bus.async_fire(
-                    "zha_event",
-                    {
-                        "device_id": device_id,
-                        **event_data,
-                    },
-                )
 
             await hass.async_block_till_done()
 
@@ -424,6 +373,93 @@ async def _steps(
         "_service_calls": service_calls,
         "_events": events,
     }
+
+
+def _step_device_config(
+    *,
+    step: dict[str, Any],
+    hass: HomeAssistant,
+) -> None:
+    """Scenario stage helper function for a device configuration step.
+
+    Args:
+        step: Details for configuring the target device.
+        hass: Home Assistant instance.
+    """
+    device_config = step["device_config"]
+    target = device_config["target"]
+
+    if "local_protection" in device_config:
+        local_protection_id = re.sub(
+            r"light\.(.*)", r"switch.\1_local_protection", target
+        )
+        hass.states.async_set(local_protection_id, device_config["local_protection"])
+
+    if "disable_clear_notification" in device_config:
+        disable_clear_notification_id = re.sub(
+            r"light\.(.*)",
+            r"switch.\1_disable_config_2x_tap_to_clear_notifications",
+            target,
+        )
+        hass.states.async_set(
+            disable_clear_notification_id,
+            device_config["disable_clear_notification"],
+        )
+
+
+async def _step_action(
+    *,
+    step: dict[str, Any],
+    async_call: Callable[..., Awaitable],
+) -> None:
+    """Scenario stage helper function for an action step.
+
+    Args:
+        step: Details for performing an action (a.k.a. service call).
+        async_call: Original, bound `hass.services.async_call` (not patched).
+    """
+    domain, service_name = step["action"].split(".")
+    args = {**step.get("data", {})}
+    if "target" in step:
+        args[ATTR_ENTITY_ID] = step["target"]
+    await async_call(
+        domain,
+        service_name,
+        args,
+        blocking=True,
+    )
+
+
+def _step_event(
+    *,
+    step: dict[str, Any],
+    hass: HomeAssistant,
+    standard_switch: er.RegistryEntry,
+    entity_registry: er.EntityRegistry,
+) -> None:
+    """Scenario stage helper function for a step that simulates an event.
+
+    Args:
+        step: A step for configuring the target device.
+        hass: Home Assistant instance.
+        standard_switch: Switch for the stanadr config entry.
+        entity_registry: The entity registry.
+    """
+    event_data = {**step["event"]}
+    entity_id = event_data.pop("entity_id", None)
+    device_id = standard_switch.device_id if standard_switch is not None else None
+
+    # if supplied, get the device related to the entity_id instead
+    if entity_id is not None:
+        device_id = entity_registry.async_get(entity_id).device_id
+
+    hass.bus.async_fire(
+        "zha_event",
+        {
+            "device_id": device_id,
+            **event_data,
+        },
+    )
 
 
 async def _assert_expectations(  # noqa: RUF029
