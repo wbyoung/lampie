@@ -312,10 +312,9 @@ async def _steps(
     entity_registry: er.EntityRegistry,
     **kwargs: Any,
 ) -> dict[str, Any]:
-    """Scenario stage helper function for setup.
+    """Scenario stage helper function for steps.
 
     Args:
-        scripts: A set of scripts to setup with the scripts integration.
         steps: A list of mappings.
 
         hass: Injected (do not configure in scenarios).
