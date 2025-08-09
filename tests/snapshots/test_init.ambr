@@ -1031,7 +1031,168 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[doors_open_10s_duration_expired][events]
+# name: test_toggle_notifications[z2m-doors_open_5m1s_duration_unexpired][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': <ANY>,
+      'expires_at': HAFakeDatetime(2025, 5, 20, 3, 56, 33, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+      'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'led_config_override': None,
+    'notification_on': True,
+  })
+# ---
+# name: test_toggle_notifications[z2m-doors_open_5m1s_duration_unexpired][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '100.0',
+  })
+# ---
+# name: test_toggle_notifications[z2m-doors_open_5m1s_duration_unexpired][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'red',
+  })
+# ---
+# name: test_toggle_notifications[z2m-doors_open_5m1s_duration_unexpired][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '301',
+  })
+# ---
+# name: test_toggle_notifications[z2m-doors_open_5m1s_duration_unexpired][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:star-four-points-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'open_close',
+  })
+# ---
+# name: test_toggle_notifications[z2m-doors_open_5m1s_duration_unexpired][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'doors_open',
+  })
+# ---
+# name: test_toggle_notifications[z2m-doors_open_5m1s_duration_unexpired][service_calls]
+  list([
+  ])
+# ---
+# name: test_toggle_notifications[z2m-doors_open_5m1s_duration_unexpired][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'expires_at': '2025-05-20T03:56:33.003245-07:00',
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+      'started_at': '2025-05-20T03:51:32.003245-07:00',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'on',
+  })
+# ---
+# name: test_toggle_notifications[z2m-doors_open_5m1s_duration_unexpired][switch_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'integration': <Integration.Z2M: 'z2m'>,
+    'integration_info': dict({
+      'double_tap_clear_notifications_disabled': None,
+      'full_topic': 'home/z2m/Kitchen',
+      'local_protection_enabled': None,
+    }),
+    'led_config': tuple(
+      dict({
+        'brightness': 100.0,
+        'color': <Color.RED: 0>,
+        'duration': 301,
+        'effect': <Effect.OPEN_CLOSE: 6>,
+      }),
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': 'doors_open',
+    }),
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
+# name: test_toggle_notifications[z2m-doors_open_5m1s_duration_unexpired][z2m_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'payload': '{"localProtection":"","doubleTapClearNotifications":""}',
+        'topic': 'home/z2m/Kitchen/get',
+      }),
+      'domain': 'mqtt',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'publish',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'payload': '{"led_effect":{"led_color":0,"led_effect":6,"led_level":100,"led_duration":255}}',
+        'topic': 'home/z2m/Kitchen/set',
+      }),
+      'domain': 'mqtt',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'publish',
+    }),
+  ])
+# ---
+# name: test_toggle_notifications[z2m-doors_open_various_firmware_durations_expired][events]
   list([
     EventSnapshot({
       'context': <ANY>,
@@ -1045,7 +1206,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[doors_open_10s_duration_expired][notification_info]
+# name: test_toggle_notifications[z2m-doors_open_various_firmware_durations_expired][notification_info]
   dict({
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
@@ -1056,7 +1217,7 @@
     'notification_on': False,
   })
 # ---
-# name: test_toggle_notifications[doors_open_10s_duration_expired][sensor.kitchen_effect_brightness]
+# name: test_toggle_notifications[z2m-doors_open_various_firmware_durations_expired][sensor.kitchen_effect_brightness]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
@@ -1072,7 +1233,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_10s_duration_expired][sensor.kitchen_effect_color]
+# name: test_toggle_notifications[z2m-doors_open_various_firmware_durations_expired][sensor.kitchen_effect_color]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect color',
@@ -1086,7 +1247,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_10s_duration_expired][sensor.kitchen_effect_duration]
+# name: test_toggle_notifications[z2m-doors_open_various_firmware_durations_expired][sensor.kitchen_effect_duration]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect duration',
@@ -1102,7 +1263,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_10s_duration_expired][sensor.kitchen_effect_type]
+# name: test_toggle_notifications[z2m-doors_open_various_firmware_durations_expired][sensor.kitchen_effect_type]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
@@ -1116,7 +1277,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_10s_duration_expired][sensor.kitchen_notification]
+# name: test_toggle_notifications[z2m-doors_open_various_firmware_durations_expired][sensor.kitchen_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Notification',
@@ -1130,11 +1291,11 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_10s_duration_expired][service_calls]
+# name: test_toggle_notifications[z2m-doors_open_various_firmware_durations_expired][service_calls]
   list([
   ])
 # ---
-# name: test_toggle_notifications[doors_open_10s_duration_expired][switch.doors_open_notification]
+# name: test_toggle_notifications[z2m-doors_open_various_firmware_durations_expired][switch.doors_open_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Doors Open Notification',
@@ -1148,13 +1309,18 @@
     'state': 'off',
   })
 # ---
-# name: test_toggle_notifications[doors_open_10s_duration_expired][switch_info]
+# name: test_toggle_notifications[z2m-doors_open_various_firmware_durations_expired][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': None,
+    }),
+    'integration': <Integration.Z2M: 'z2m'>,
+    'integration_info': dict({
+      'double_tap_clear_notifications_disabled': None,
+      'full_topic': 'home/z2m/Kitchen',
+      'local_protection_enabled': None,
     }),
     'led_config': tuple(
     ),
@@ -1162,13 +1328,244 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': None,
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
   })
 # ---
-# name: test_toggle_notifications[doors_open_10s_duration_expired][zha_cluster_commands]
+# name: test_toggle_notifications[z2m-doors_open_various_firmware_durations_expired][z2m_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'payload': '{"localProtection":"","doubleTapClearNotifications":""}',
+        'topic': 'home/z2m/Kitchen/get',
+      }),
+      'domain': 'mqtt',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'publish',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'payload': '{"individual_led_effect":{"led_color":170,"led_effect":1,"led_level":100,"led_duration":30,"led_number":0}}',
+        'topic': 'home/z2m/Kitchen/set',
+      }),
+      'domain': 'mqtt',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'publish',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'payload': '{"individual_led_effect":{"led_color":170,"led_effect":1,"led_level":100,"led_duration":65,"led_number":1}}',
+        'topic': 'home/z2m/Kitchen/set',
+      }),
+      'domain': 'mqtt',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'publish',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'payload': '{"individual_led_effect":{"led_color":170,"led_effect":1,"led_level":100,"led_duration":122,"led_number":2}}',
+        'topic': 'home/z2m/Kitchen/set',
+      }),
+      'domain': 'mqtt',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'publish',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'payload': '{"individual_led_effect":{"led_color":170,"led_effect":1,"led_level":100,"led_duration":30,"led_number":3}}',
+        'topic': 'home/z2m/Kitchen/set',
+      }),
+      'domain': 'mqtt',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'publish',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'payload': '{"individual_led_effect":{"led_color":170,"led_effect":1,"led_level":100,"led_duration":122,"led_number":4}}',
+        'topic': 'home/z2m/Kitchen/set',
+      }),
+      'domain': 'mqtt',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'publish',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'payload': '{"individual_led_effect":{"led_color":170,"led_effect":1,"led_level":100,"led_duration":65,"led_number":5}}',
+        'topic': 'home/z2m/Kitchen/set',
+      }),
+      'domain': 'mqtt',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'publish',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'payload': '{"individual_led_effect":{"led_color":170,"led_effect":1,"led_level":100,"led_duration":30,"led_number":6}}',
+        'topic': 'home/z2m/Kitchen/set',
+      }),
+      'domain': 'mqtt',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'publish',
+    }),
+  ])
+# ---
+# name: test_toggle_notifications[zha-doors_open_10s_duration_expired][events]
+  list([
+    EventSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'notification': 'doors_open',
+      }),
+      'event_type': 'lampie.expired',
+      'id': <ANY>,
+      'origin': 'LOCAL',
+      'time_fired': <ANY>,
+    }),
+  ])
+# ---
+# name: test_toggle_notifications[zha-doors_open_10s_duration_expired][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'led_config_override': None,
+    'notification_on': False,
+  })
+# ---
+# name: test_toggle_notifications[zha-doors_open_10s_duration_expired][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_toggle_notifications[zha-doors_open_10s_duration_expired][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_toggle_notifications[zha-doors_open_10s_duration_expired][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_toggle_notifications[zha-doors_open_10s_duration_expired][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:star-four-points-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_toggle_notifications[zha-doors_open_10s_duration_expired][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_toggle_notifications[zha-doors_open_10s_duration_expired][service_calls]
+  list([
+  ])
+# ---
+# name: test_toggle_notifications[zha-doors_open_10s_duration_expired][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_toggle_notifications[zha-doors_open_10s_duration_expired][switch_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
+    }),
+    'led_config': tuple(
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': None,
+    }),
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
+# name: test_toggle_notifications[zha-doors_open_10s_duration_expired][zha_cluster_commands]
   list([
     ServiceCallSnapshot({
       'context': <ANY>,
@@ -1194,7 +1591,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_dismissed][events]
+# name: test_toggle_notifications[zha-doors_open_5m1s_dismissed][events]
   list([
     EventSnapshot({
       'context': <ANY>,
@@ -1208,7 +1605,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_dismissed][notification_info]
+# name: test_toggle_notifications[zha-doors_open_5m1s_dismissed][notification_info]
   dict({
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
@@ -1219,7 +1616,7 @@
     'notification_on': False,
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_dismissed][sensor.kitchen_effect_brightness]
+# name: test_toggle_notifications[zha-doors_open_5m1s_dismissed][sensor.kitchen_effect_brightness]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
@@ -1235,7 +1632,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_dismissed][sensor.kitchen_effect_color]
+# name: test_toggle_notifications[zha-doors_open_5m1s_dismissed][sensor.kitchen_effect_color]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect color',
@@ -1249,7 +1646,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_dismissed][sensor.kitchen_effect_duration]
+# name: test_toggle_notifications[zha-doors_open_5m1s_dismissed][sensor.kitchen_effect_duration]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect duration',
@@ -1265,7 +1662,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_dismissed][sensor.kitchen_effect_type]
+# name: test_toggle_notifications[zha-doors_open_5m1s_dismissed][sensor.kitchen_effect_type]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
@@ -1279,7 +1676,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_dismissed][sensor.kitchen_notification]
+# name: test_toggle_notifications[zha-doors_open_5m1s_dismissed][sensor.kitchen_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Notification',
@@ -1293,11 +1690,11 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_dismissed][service_calls]
+# name: test_toggle_notifications[zha-doors_open_5m1s_dismissed][service_calls]
   list([
   ])
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_dismissed][switch.doors_open_notification]
+# name: test_toggle_notifications[zha-doors_open_5m1s_dismissed][switch.doors_open_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Doors Open Notification',
@@ -1311,13 +1708,17 @@
     'state': 'off',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_dismissed][switch_info]
+# name: test_toggle_notifications[zha-doors_open_5m1s_dismissed][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': None,
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
     ),
@@ -1325,13 +1726,12 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': None,
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_dismissed][zha_cluster_commands]
+# name: test_toggle_notifications[zha-doors_open_5m1s_dismissed][zha_cluster_commands]
   list([
     ServiceCallSnapshot({
       'context': <ANY>,
@@ -1357,21 +1757,21 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_duration_expired][events]
+# name: test_toggle_notifications[zha-doors_open_5m1s_dismissed_local_protection_and_2x_tap_dismissal_enabled][events]
   list([
     EventSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
         'notification': 'doors_open',
       }),
-      'event_type': 'lampie.expired',
+      'event_type': 'lampie.dismissed',
       'id': <ANY>,
       'origin': 'LOCAL',
       'time_fired': <ANY>,
     }),
   ])
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_duration_expired][notification_info]
+# name: test_toggle_notifications[zha-doors_open_5m1s_dismissed_local_protection_and_2x_tap_dismissal_enabled][notification_info]
   dict({
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
@@ -1382,7 +1782,7 @@
     'notification_on': False,
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_duration_expired][sensor.kitchen_effect_brightness]
+# name: test_toggle_notifications[zha-doors_open_5m1s_dismissed_local_protection_and_2x_tap_dismissal_enabled][sensor.kitchen_effect_brightness]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
@@ -1398,7 +1798,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_duration_expired][sensor.kitchen_effect_color]
+# name: test_toggle_notifications[zha-doors_open_5m1s_dismissed_local_protection_and_2x_tap_dismissal_enabled][sensor.kitchen_effect_color]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect color',
@@ -1412,7 +1812,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_duration_expired][sensor.kitchen_effect_duration]
+# name: test_toggle_notifications[zha-doors_open_5m1s_dismissed_local_protection_and_2x_tap_dismissal_enabled][sensor.kitchen_effect_duration]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect duration',
@@ -1428,7 +1828,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_duration_expired][sensor.kitchen_effect_type]
+# name: test_toggle_notifications[zha-doors_open_5m1s_dismissed_local_protection_and_2x_tap_dismissal_enabled][sensor.kitchen_effect_type]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
@@ -1442,7 +1842,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_duration_expired][sensor.kitchen_notification]
+# name: test_toggle_notifications[zha-doors_open_5m1s_dismissed_local_protection_and_2x_tap_dismissal_enabled][sensor.kitchen_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Notification',
@@ -1456,11 +1856,11 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_duration_expired][service_calls]
+# name: test_toggle_notifications[zha-doors_open_5m1s_dismissed_local_protection_and_2x_tap_dismissal_enabled][service_calls]
   list([
   ])
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_duration_expired][switch.doors_open_notification]
+# name: test_toggle_notifications[zha-doors_open_5m1s_dismissed_local_protection_and_2x_tap_dismissal_enabled][switch.doors_open_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Doors Open Notification',
@@ -1474,13 +1874,17 @@
     'state': 'off',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_duration_expired][switch_info]
+# name: test_toggle_notifications[zha-doors_open_5m1s_dismissed_local_protection_and_2x_tap_dismissal_enabled][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': None,
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
     ),
@@ -1488,13 +1892,12 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': None,
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_duration_expired][zha_cluster_commands]
+# name: test_toggle_notifications[zha-doors_open_5m1s_dismissed_local_protection_and_2x_tap_dismissal_enabled][zha_cluster_commands]
   list([
     ServiceCallSnapshot({
       'context': <ANY>,
@@ -1542,7 +1945,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_duration_expired_not_blocked_via_end_action][events]
+# name: test_toggle_notifications[zha-doors_open_5m1s_duration_expired][events]
   list([
     EventSnapshot({
       'context': <ANY>,
@@ -1556,7 +1959,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_duration_expired_not_blocked_via_end_action][notification_info]
+# name: test_toggle_notifications[zha-doors_open_5m1s_duration_expired][notification_info]
   dict({
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
@@ -1567,7 +1970,7 @@
     'notification_on': False,
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_duration_expired_not_blocked_via_end_action][sensor.kitchen_effect_brightness]
+# name: test_toggle_notifications[zha-doors_open_5m1s_duration_expired][sensor.kitchen_effect_brightness]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
@@ -1583,7 +1986,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_duration_expired_not_blocked_via_end_action][sensor.kitchen_effect_color]
+# name: test_toggle_notifications[zha-doors_open_5m1s_duration_expired][sensor.kitchen_effect_color]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect color',
@@ -1597,7 +2000,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_duration_expired_not_blocked_via_end_action][sensor.kitchen_effect_duration]
+# name: test_toggle_notifications[zha-doors_open_5m1s_duration_expired][sensor.kitchen_effect_duration]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect duration',
@@ -1613,7 +2016,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_duration_expired_not_blocked_via_end_action][sensor.kitchen_effect_type]
+# name: test_toggle_notifications[zha-doors_open_5m1s_duration_expired][sensor.kitchen_effect_type]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
@@ -1627,7 +2030,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_duration_expired_not_blocked_via_end_action][sensor.kitchen_notification]
+# name: test_toggle_notifications[zha-doors_open_5m1s_duration_expired][sensor.kitchen_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Notification',
@@ -1641,7 +2044,195 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_duration_expired_not_blocked_via_end_action][service_calls]
+# name: test_toggle_notifications[zha-doors_open_5m1s_duration_expired][service_calls]
+  list([
+  ])
+# ---
+# name: test_toggle_notifications[zha-doors_open_5m1s_duration_expired][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_toggle_notifications[zha-doors_open_5m1s_duration_expired][switch_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
+    }),
+    'led_config': tuple(
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': None,
+    }),
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
+# name: test_toggle_notifications[zha-doors_open_5m1s_duration_expired][zha_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'cluster_id': 64561,
+        'cluster_type': 'in',
+        'command': 1,
+        'command_type': 'server',
+        'endpoint_id': 1,
+        'ieee': 'mock-ieee:kitchen',
+        'manufacturer': 4655,
+        'params': dict({
+          'led_color': 0,
+          'led_duration': 255,
+          'led_effect': 6,
+          'led_level': 100,
+        }),
+      }),
+      'domain': 'zha',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'issue_zigbee_cluster_command',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'cluster_id': 64561,
+        'cluster_type': 'in',
+        'command': 1,
+        'command_type': 'server',
+        'endpoint_id': 1,
+        'ieee': 'mock-ieee:kitchen',
+        'manufacturer': 4655,
+        'params': dict({
+          'led_color': 170,
+          'led_duration': 255,
+          'led_effect': 255,
+          'led_level': 100,
+        }),
+      }),
+      'domain': 'zha',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'issue_zigbee_cluster_command',
+    }),
+  ])
+# ---
+# name: test_toggle_notifications[zha-doors_open_5m1s_duration_expired_not_blocked_via_end_action][events]
+  list([
+    EventSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'notification': 'doors_open',
+      }),
+      'event_type': 'lampie.expired',
+      'id': <ANY>,
+      'origin': 'LOCAL',
+      'time_fired': <ANY>,
+    }),
+  ])
+# ---
+# name: test_toggle_notifications[zha-doors_open_5m1s_duration_expired_not_blocked_via_end_action][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'led_config_override': None,
+    'notification_on': False,
+  })
+# ---
+# name: test_toggle_notifications[zha-doors_open_5m1s_duration_expired_not_blocked_via_end_action][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_toggle_notifications[zha-doors_open_5m1s_duration_expired_not_blocked_via_end_action][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_toggle_notifications[zha-doors_open_5m1s_duration_expired_not_blocked_via_end_action][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_toggle_notifications[zha-doors_open_5m1s_duration_expired_not_blocked_via_end_action][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:star-four-points-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_toggle_notifications[zha-doors_open_5m1s_duration_expired_not_blocked_via_end_action][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_toggle_notifications[zha-doors_open_5m1s_duration_expired_not_blocked_via_end_action][service_calls]
   list([
     tuple(
       'script',
@@ -1655,7 +2246,7 @@
     ),
   ])
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_duration_expired_not_blocked_via_end_action][switch.doors_open_notification]
+# name: test_toggle_notifications[zha-doors_open_5m1s_duration_expired_not_blocked_via_end_action][switch.doors_open_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Doors Open Notification',
@@ -1669,13 +2260,17 @@
     'state': 'off',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_duration_expired_not_blocked_via_end_action][switch_info]
+# name: test_toggle_notifications[zha-doors_open_5m1s_duration_expired_not_blocked_via_end_action][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': None,
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
     ),
@@ -1683,13 +2278,12 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': None,
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_duration_expired_not_blocked_via_end_action][zha_cluster_commands]
+# name: test_toggle_notifications[zha-doors_open_5m1s_duration_expired_not_blocked_via_end_action][zha_cluster_commands]
   list([
     ServiceCallSnapshot({
       'context': <ANY>,
@@ -1737,7 +2331,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_duration_unexpired][notification_info]
+# name: test_toggle_notifications[zha-doors_open_5m1s_duration_unexpired][notification_info]
   dict({
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': <ANY>,
@@ -1748,7 +2342,7 @@
     'notification_on': True,
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_duration_unexpired][sensor.kitchen_effect_brightness]
+# name: test_toggle_notifications[zha-doors_open_5m1s_duration_unexpired][sensor.kitchen_effect_brightness]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
@@ -1764,7 +2358,7 @@
     'state': '100.0',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_duration_unexpired][sensor.kitchen_effect_color]
+# name: test_toggle_notifications[zha-doors_open_5m1s_duration_unexpired][sensor.kitchen_effect_color]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect color',
@@ -1778,7 +2372,7 @@
     'state': 'red',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_duration_unexpired][sensor.kitchen_effect_duration]
+# name: test_toggle_notifications[zha-doors_open_5m1s_duration_unexpired][sensor.kitchen_effect_duration]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect duration',
@@ -1794,7 +2388,7 @@
     'state': '301',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_duration_unexpired][sensor.kitchen_effect_type]
+# name: test_toggle_notifications[zha-doors_open_5m1s_duration_unexpired][sensor.kitchen_effect_type]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
@@ -1808,7 +2402,7 @@
     'state': 'open_close',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_duration_unexpired][sensor.kitchen_notification]
+# name: test_toggle_notifications[zha-doors_open_5m1s_duration_unexpired][sensor.kitchen_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Notification',
@@ -1822,11 +2416,11 @@
     'state': 'doors_open',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_duration_unexpired][service_calls]
+# name: test_toggle_notifications[zha-doors_open_5m1s_duration_unexpired][service_calls]
   list([
   ])
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_duration_unexpired][switch.doors_open_notification]
+# name: test_toggle_notifications[zha-doors_open_5m1s_duration_unexpired][switch.doors_open_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'expires_at': '2025-05-20T03:56:33.003245-07:00',
@@ -1842,13 +2436,17 @@
     'state': 'on',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_duration_unexpired][switch_info]
+# name: test_toggle_notifications[zha-doors_open_5m1s_duration_unexpired][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': None,
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
       dict({
@@ -1862,13 +2460,12 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': 'doors_open',
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_duration_unexpired][zha_cluster_commands]
+# name: test_toggle_notifications[zha-doors_open_5m1s_duration_unexpired][zha_cluster_commands]
   list([
     ServiceCallSnapshot({
       'context': <ANY>,
@@ -1894,7 +2491,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_reactivated_and_unexpired][notification_info]
+# name: test_toggle_notifications[zha-doors_open_5m1s_reactivated_and_unexpired][notification_info]
   dict({
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': <ANY>,
@@ -1905,7 +2502,7 @@
     'notification_on': True,
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_reactivated_and_unexpired][sensor.kitchen_effect_brightness]
+# name: test_toggle_notifications[zha-doors_open_5m1s_reactivated_and_unexpired][sensor.kitchen_effect_brightness]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
@@ -1921,7 +2518,7 @@
     'state': '100.0',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_reactivated_and_unexpired][sensor.kitchen_effect_color]
+# name: test_toggle_notifications[zha-doors_open_5m1s_reactivated_and_unexpired][sensor.kitchen_effect_color]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect color',
@@ -1935,7 +2532,7 @@
     'state': 'red',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_reactivated_and_unexpired][sensor.kitchen_effect_duration]
+# name: test_toggle_notifications[zha-doors_open_5m1s_reactivated_and_unexpired][sensor.kitchen_effect_duration]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect duration',
@@ -1951,7 +2548,7 @@
     'state': '301',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_reactivated_and_unexpired][sensor.kitchen_effect_type]
+# name: test_toggle_notifications[zha-doors_open_5m1s_reactivated_and_unexpired][sensor.kitchen_effect_type]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
@@ -1965,7 +2562,7 @@
     'state': 'open_close',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_reactivated_and_unexpired][sensor.kitchen_notification]
+# name: test_toggle_notifications[zha-doors_open_5m1s_reactivated_and_unexpired][sensor.kitchen_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Notification',
@@ -1979,11 +2576,11 @@
     'state': 'doors_open',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_reactivated_and_unexpired][service_calls]
+# name: test_toggle_notifications[zha-doors_open_5m1s_reactivated_and_unexpired][service_calls]
   list([
   ])
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_reactivated_and_unexpired][switch.doors_open_notification]
+# name: test_toggle_notifications[zha-doors_open_5m1s_reactivated_and_unexpired][switch.doors_open_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'expires_at': '2025-05-20T03:56:33.003245-07:00',
@@ -1999,13 +2596,17 @@
     'state': 'on',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_reactivated_and_unexpired][switch_info]
+# name: test_toggle_notifications[zha-doors_open_5m1s_reactivated_and_unexpired][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': None,
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
       dict({
@@ -2019,13 +2620,12 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': 'doors_open',
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_reactivated_and_unexpired][zha_cluster_commands]
+# name: test_toggle_notifications[zha-doors_open_5m1s_reactivated_and_unexpired][zha_cluster_commands]
   list([
     ServiceCallSnapshot({
       'context': <ANY>,
@@ -2051,7 +2651,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_turned_off][notification_info]
+# name: test_toggle_notifications[zha-doors_open_5m1s_turned_off][notification_info]
   dict({
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
@@ -2062,7 +2662,7 @@
     'notification_on': False,
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_turned_off][sensor.kitchen_effect_brightness]
+# name: test_toggle_notifications[zha-doors_open_5m1s_turned_off][sensor.kitchen_effect_brightness]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
@@ -2078,7 +2678,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_turned_off][sensor.kitchen_effect_color]
+# name: test_toggle_notifications[zha-doors_open_5m1s_turned_off][sensor.kitchen_effect_color]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect color',
@@ -2092,7 +2692,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_turned_off][sensor.kitchen_effect_duration]
+# name: test_toggle_notifications[zha-doors_open_5m1s_turned_off][sensor.kitchen_effect_duration]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect duration',
@@ -2108,7 +2708,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_turned_off][sensor.kitchen_effect_type]
+# name: test_toggle_notifications[zha-doors_open_5m1s_turned_off][sensor.kitchen_effect_type]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
@@ -2122,7 +2722,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_turned_off][sensor.kitchen_notification]
+# name: test_toggle_notifications[zha-doors_open_5m1s_turned_off][sensor.kitchen_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Notification',
@@ -2136,11 +2736,11 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_turned_off][service_calls]
+# name: test_toggle_notifications[zha-doors_open_5m1s_turned_off][service_calls]
   list([
   ])
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_turned_off][switch.doors_open_notification]
+# name: test_toggle_notifications[zha-doors_open_5m1s_turned_off][switch.doors_open_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Doors Open Notification',
@@ -2154,13 +2754,17 @@
     'state': 'off',
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_turned_off][switch_info]
+# name: test_toggle_notifications[zha-doors_open_5m1s_turned_off][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': None,
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
     ),
@@ -2168,13 +2772,12 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': None,
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
   })
 # ---
-# name: test_toggle_notifications[doors_open_5m1s_turned_off][zha_cluster_commands]
+# name: test_toggle_notifications[zha-doors_open_5m1s_turned_off][zha_cluster_commands]
   list([
     ServiceCallSnapshot({
       'context': <ANY>,
@@ -2222,7 +2825,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[doors_open_mixed_specific_durations_expired][events]
+# name: test_toggle_notifications[zha-doors_open_mixed_specific_durations_expired][events]
   list([
     EventSnapshot({
       'context': <ANY>,
@@ -2236,7 +2839,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[doors_open_mixed_specific_durations_expired][notification_info]
+# name: test_toggle_notifications[zha-doors_open_mixed_specific_durations_expired][notification_info]
   dict({
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
@@ -2247,7 +2850,7 @@
     'notification_on': False,
   })
 # ---
-# name: test_toggle_notifications[doors_open_mixed_specific_durations_expired][sensor.kitchen_effect_brightness]
+# name: test_toggle_notifications[zha-doors_open_mixed_specific_durations_expired][sensor.kitchen_effect_brightness]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
@@ -2263,7 +2866,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_mixed_specific_durations_expired][sensor.kitchen_effect_color]
+# name: test_toggle_notifications[zha-doors_open_mixed_specific_durations_expired][sensor.kitchen_effect_color]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect color',
@@ -2277,7 +2880,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_mixed_specific_durations_expired][sensor.kitchen_effect_duration]
+# name: test_toggle_notifications[zha-doors_open_mixed_specific_durations_expired][sensor.kitchen_effect_duration]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect duration',
@@ -2293,7 +2896,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_mixed_specific_durations_expired][sensor.kitchen_effect_type]
+# name: test_toggle_notifications[zha-doors_open_mixed_specific_durations_expired][sensor.kitchen_effect_type]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
@@ -2307,7 +2910,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_mixed_specific_durations_expired][sensor.kitchen_notification]
+# name: test_toggle_notifications[zha-doors_open_mixed_specific_durations_expired][sensor.kitchen_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Notification',
@@ -2321,11 +2924,11 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_mixed_specific_durations_expired][service_calls]
+# name: test_toggle_notifications[zha-doors_open_mixed_specific_durations_expired][service_calls]
   list([
   ])
 # ---
-# name: test_toggle_notifications[doors_open_mixed_specific_durations_expired][switch.doors_open_notification]
+# name: test_toggle_notifications[zha-doors_open_mixed_specific_durations_expired][switch.doors_open_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Doors Open Notification',
@@ -2339,13 +2942,17 @@
     'state': 'off',
   })
 # ---
-# name: test_toggle_notifications[doors_open_mixed_specific_durations_expired][switch_info]
+# name: test_toggle_notifications[zha-doors_open_mixed_specific_durations_expired][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': None,
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
     ),
@@ -2353,13 +2960,12 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': None,
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
   })
 # ---
-# name: test_toggle_notifications[doors_open_mixed_specific_durations_expired][zha_cluster_commands]
+# name: test_toggle_notifications[zha-doors_open_mixed_specific_durations_expired][zha_cluster_commands]
   list([
     ServiceCallSnapshot({
       'context': <ANY>,
@@ -2685,7 +3291,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[doors_open_mixed_specific_durations_partially_expired][notification_info]
+# name: test_toggle_notifications[zha-doors_open_mixed_specific_durations_partially_expired][notification_info]
   dict({
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': <ANY>,
@@ -2696,7 +3302,7 @@
     'notification_on': True,
   })
 # ---
-# name: test_toggle_notifications[doors_open_mixed_specific_durations_partially_expired][sensor.kitchen_effect_brightness]
+# name: test_toggle_notifications[zha-doors_open_mixed_specific_durations_partially_expired][sensor.kitchen_effect_brightness]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
@@ -2721,7 +3327,7 @@
     'state': '100.0',
   })
 # ---
-# name: test_toggle_notifications[doors_open_mixed_specific_durations_partially_expired][sensor.kitchen_effect_color]
+# name: test_toggle_notifications[zha-doors_open_mixed_specific_durations_partially_expired][sensor.kitchen_effect_color]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect color',
@@ -2744,7 +3350,7 @@
     'state': 'multi',
   })
 # ---
-# name: test_toggle_notifications[doors_open_mixed_specific_durations_partially_expired][sensor.kitchen_effect_duration]
+# name: test_toggle_notifications[zha-doors_open_mixed_specific_durations_partially_expired][sensor.kitchen_effect_duration]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect duration',
@@ -2769,7 +3375,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_mixed_specific_durations_partially_expired][sensor.kitchen_effect_type]
+# name: test_toggle_notifications[zha-doors_open_mixed_specific_durations_partially_expired][sensor.kitchen_effect_type]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
@@ -2792,7 +3398,7 @@
     'state': 'multi',
   })
 # ---
-# name: test_toggle_notifications[doors_open_mixed_specific_durations_partially_expired][sensor.kitchen_notification]
+# name: test_toggle_notifications[zha-doors_open_mixed_specific_durations_partially_expired][sensor.kitchen_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Notification',
@@ -2806,11 +3412,11 @@
     'state': 'doors_open',
   })
 # ---
-# name: test_toggle_notifications[doors_open_mixed_specific_durations_partially_expired][service_calls]
+# name: test_toggle_notifications[zha-doors_open_mixed_specific_durations_partially_expired][service_calls]
   list([
   ])
 # ---
-# name: test_toggle_notifications[doors_open_mixed_specific_durations_partially_expired][switch.doors_open_notification]
+# name: test_toggle_notifications[zha-doors_open_mixed_specific_durations_partially_expired][switch.doors_open_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'expires_at': '2025-05-20T04:01:33.003245-07:00',
@@ -2826,13 +3432,17 @@
     'state': 'on',
   })
 # ---
-# name: test_toggle_notifications[doors_open_mixed_specific_durations_partially_expired][switch_info]
+# name: test_toggle_notifications[zha-doors_open_mixed_specific_durations_partially_expired][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': None,
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
       dict({
@@ -2882,13 +3492,12 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': 'doors_open',
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
   })
 # ---
-# name: test_toggle_notifications[doors_open_mixed_specific_durations_partially_expired][zha_cluster_commands]
+# name: test_toggle_notifications[zha-doors_open_mixed_specific_durations_partially_expired][zha_cluster_commands]
   list([
     ServiceCallSnapshot({
       'context': <ANY>,
@@ -3099,7 +3708,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[doors_open_multiple_switches_dismissed][events]
+# name: test_toggle_notifications[zha-doors_open_multiple_switches_dismissed][events]
   list([
     EventSnapshot({
       'context': <ANY>,
@@ -3113,7 +3722,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[doors_open_multiple_switches_dismissed][notification_info]
+# name: test_toggle_notifications[zha-doors_open_multiple_switches_dismissed][notification_info]
   dict({
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
@@ -3124,7 +3733,81 @@
     'notification_on': False,
   })
 # ---
-# name: test_toggle_notifications[doors_open_multiple_switches_dismissed][sensor.kitchen_effect_brightness]
+# name: test_toggle_notifications[zha-doors_open_multiple_switches_dismissed][sensor.entryway_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Entryway Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.entryway_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_toggle_notifications[zha-doors_open_multiple_switches_dismissed][sensor.entryway_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Entryway Effect color',
+      'icon': 'mdi:palette',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.entryway_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_toggle_notifications[zha-doors_open_multiple_switches_dismissed][sensor.entryway_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Entryway Effect duration',
+      'icon': 'mdi:timer',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.entryway_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_toggle_notifications[zha-doors_open_multiple_switches_dismissed][sensor.entryway_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Entryway Effect type',
+      'icon': 'mdi:star-four-points-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.entryway_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_toggle_notifications[zha-doors_open_multiple_switches_dismissed][sensor.entryway_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Entryway Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.entryway_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_toggle_notifications[zha-doors_open_multiple_switches_dismissed][sensor.kitchen_effect_brightness]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
@@ -3140,7 +3823,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_multiple_switches_dismissed][sensor.kitchen_effect_color]
+# name: test_toggle_notifications[zha-doors_open_multiple_switches_dismissed][sensor.kitchen_effect_color]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect color',
@@ -3154,7 +3837,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_multiple_switches_dismissed][sensor.kitchen_effect_duration]
+# name: test_toggle_notifications[zha-doors_open_multiple_switches_dismissed][sensor.kitchen_effect_duration]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect duration',
@@ -3170,7 +3853,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_multiple_switches_dismissed][sensor.kitchen_effect_type]
+# name: test_toggle_notifications[zha-doors_open_multiple_switches_dismissed][sensor.kitchen_effect_type]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
@@ -3184,7 +3867,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_multiple_switches_dismissed][sensor.kitchen_notification]
+# name: test_toggle_notifications[zha-doors_open_multiple_switches_dismissed][sensor.kitchen_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Notification',
@@ -3198,11 +3881,11 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_multiple_switches_dismissed][service_calls]
+# name: test_toggle_notifications[zha-doors_open_multiple_switches_dismissed][service_calls]
   list([
   ])
 # ---
-# name: test_toggle_notifications[doors_open_multiple_switches_dismissed][switch.doors_open_notification]
+# name: test_toggle_notifications[zha-doors_open_multiple_switches_dismissed][switch.doors_open_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Doors Open Notification',
@@ -3216,13 +3899,17 @@
     'state': 'off',
   })
 # ---
-# name: test_toggle_notifications[doors_open_multiple_switches_dismissed][switch_info]
+# name: test_toggle_notifications[zha-doors_open_multiple_switches_dismissed][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': None,
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
     ),
@@ -3230,19 +3917,22 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': None,
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
   })
 # ---
-# name: test_toggle_notifications[doors_open_multiple_switches_dismissed][swtich_info:light.entryway]
+# name: test_toggle_notifications[zha-doors_open_multiple_switches_dismissed][swtich_info:light.entryway]
   dict({
-    'disable_clear_notification_id': None,
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': None,
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.entryway_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.entryway_local_protection',
     }),
     'led_config': tuple(
     ),
@@ -3250,13 +3940,12 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': None,
     }),
-    'local_protection_id': None,
     'priorities': tuple(
       'doors_open',
     ),
   })
 # ---
-# name: test_toggle_notifications[doors_open_multiple_switches_dismissed][zha_cluster_commands]
+# name: test_toggle_notifications[zha-doors_open_multiple_switches_dismissed][zha_cluster_commands]
   list([
     ServiceCallSnapshot({
       'context': <ANY>,
@@ -3326,7 +4015,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_5m1s_duration_expired][events]
+# name: test_toggle_notifications[zha-doors_open_on,kitchen_override_leds_5m1s_duration_expired][events]
   list([
     EventSnapshot({
       'context': <ANY>,
@@ -3341,7 +4030,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_5m1s_duration_expired][notification_info]
+# name: test_toggle_notifications[zha-doors_open_on,kitchen_override_leds_5m1s_duration_expired][notification_info]
   dict({
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
@@ -3352,7 +4041,7 @@
     'notification_on': True,
   })
 # ---
-# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_5m1s_duration_expired][sensor.kitchen_effect_brightness]
+# name: test_toggle_notifications[zha-doors_open_on,kitchen_override_leds_5m1s_duration_expired][sensor.kitchen_effect_brightness]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
@@ -3368,7 +4057,7 @@
     'state': '100.0',
   })
 # ---
-# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_5m1s_duration_expired][sensor.kitchen_effect_color]
+# name: test_toggle_notifications[zha-doors_open_on,kitchen_override_leds_5m1s_duration_expired][sensor.kitchen_effect_color]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect color',
@@ -3382,7 +4071,7 @@
     'state': 'red',
   })
 # ---
-# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_5m1s_duration_expired][sensor.kitchen_effect_duration]
+# name: test_toggle_notifications[zha-doors_open_on,kitchen_override_leds_5m1s_duration_expired][sensor.kitchen_effect_duration]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect duration',
@@ -3398,7 +4087,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_5m1s_duration_expired][sensor.kitchen_effect_type]
+# name: test_toggle_notifications[zha-doors_open_on,kitchen_override_leds_5m1s_duration_expired][sensor.kitchen_effect_type]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
@@ -3412,7 +4101,7 @@
     'state': 'open_close',
   })
 # ---
-# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_5m1s_duration_expired][sensor.kitchen_notification]
+# name: test_toggle_notifications[zha-doors_open_on,kitchen_override_leds_5m1s_duration_expired][sensor.kitchen_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Notification',
@@ -3426,11 +4115,11 @@
     'state': 'doors_open',
   })
 # ---
-# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_5m1s_duration_expired][service_calls]
+# name: test_toggle_notifications[zha-doors_open_on,kitchen_override_leds_5m1s_duration_expired][service_calls]
   list([
   ])
 # ---
-# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_5m1s_duration_expired][switch.doors_open_notification]
+# name: test_toggle_notifications[zha-doors_open_on,kitchen_override_leds_5m1s_duration_expired][switch.doors_open_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Doors Open Notification',
@@ -3444,13 +4133,17 @@
     'state': 'on',
   })
 # ---
-# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_5m1s_duration_expired][switch_info]
+# name: test_toggle_notifications[zha-doors_open_on,kitchen_override_leds_5m1s_duration_expired][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': None,
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
       dict({
@@ -3464,13 +4157,12 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': 'doors_open',
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
   })
 # ---
-# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_5m1s_duration_expired][zha_cluster_commands]
+# name: test_toggle_notifications[zha-doors_open_on,kitchen_override_leds_5m1s_duration_expired][zha_cluster_commands]
   list([
     ServiceCallSnapshot({
       'context': <ANY>,
@@ -3540,7 +4232,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_dismissed][events]
+# name: test_toggle_notifications[zha-doors_open_on,kitchen_override_leds_dismissed][events]
   list([
     EventSnapshot({
       'context': <ANY>,
@@ -3555,7 +4247,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_dismissed][notification_info]
+# name: test_toggle_notifications[zha-doors_open_on,kitchen_override_leds_dismissed][notification_info]
   dict({
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
@@ -3566,7 +4258,7 @@
     'notification_on': True,
   })
 # ---
-# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_dismissed][sensor.kitchen_effect_brightness]
+# name: test_toggle_notifications[zha-doors_open_on,kitchen_override_leds_dismissed][sensor.kitchen_effect_brightness]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
@@ -3582,7 +4274,7 @@
     'state': '100.0',
   })
 # ---
-# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_dismissed][sensor.kitchen_effect_color]
+# name: test_toggle_notifications[zha-doors_open_on,kitchen_override_leds_dismissed][sensor.kitchen_effect_color]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect color',
@@ -3596,7 +4288,7 @@
     'state': 'red',
   })
 # ---
-# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_dismissed][sensor.kitchen_effect_duration]
+# name: test_toggle_notifications[zha-doors_open_on,kitchen_override_leds_dismissed][sensor.kitchen_effect_duration]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect duration',
@@ -3612,7 +4304,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_dismissed][sensor.kitchen_effect_type]
+# name: test_toggle_notifications[zha-doors_open_on,kitchen_override_leds_dismissed][sensor.kitchen_effect_type]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
@@ -3626,7 +4318,7 @@
     'state': 'open_close',
   })
 # ---
-# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_dismissed][sensor.kitchen_notification]
+# name: test_toggle_notifications[zha-doors_open_on,kitchen_override_leds_dismissed][sensor.kitchen_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Notification',
@@ -3640,11 +4332,11 @@
     'state': 'doors_open',
   })
 # ---
-# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_dismissed][service_calls]
+# name: test_toggle_notifications[zha-doors_open_on,kitchen_override_leds_dismissed][service_calls]
   list([
   ])
 # ---
-# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_dismissed][switch.doors_open_notification]
+# name: test_toggle_notifications[zha-doors_open_on,kitchen_override_leds_dismissed][switch.doors_open_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Doors Open Notification',
@@ -3658,14 +4350,18 @@
     'state': 'on',
   })
 # ---
-# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_dismissed][switch_info]
+# name: test_toggle_notifications[zha-doors_open_on,kitchen_override_leds_dismissed][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': None,
     }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
+    }),
     'led_config': tuple(
       dict({
         'brightness': 100.0,
@@ -3678,13 +4374,12 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': 'doors_open',
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
   })
 # ---
-# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_dismissed][zha_cluster_commands]
+# name: test_toggle_notifications[zha-doors_open_on,kitchen_override_leds_dismissed][zha_cluster_commands]
   list([
     ServiceCallSnapshot({
       'context': <ANY>,
@@ -3732,7 +4427,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_reset][notification_info]
+# name: test_toggle_notifications[zha-doors_open_on,kitchen_override_leds_reset][notification_info]
   dict({
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
@@ -3743,7 +4438,7 @@
     'notification_on': True,
   })
 # ---
-# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_reset][sensor.kitchen_effect_brightness]
+# name: test_toggle_notifications[zha-doors_open_on,kitchen_override_leds_reset][sensor.kitchen_effect_brightness]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
@@ -3759,7 +4454,7 @@
     'state': '100.0',
   })
 # ---
-# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_reset][sensor.kitchen_effect_color]
+# name: test_toggle_notifications[zha-doors_open_on,kitchen_override_leds_reset][sensor.kitchen_effect_color]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect color',
@@ -3773,7 +4468,7 @@
     'state': 'red',
   })
 # ---
-# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_reset][sensor.kitchen_effect_duration]
+# name: test_toggle_notifications[zha-doors_open_on,kitchen_override_leds_reset][sensor.kitchen_effect_duration]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect duration',
@@ -3789,7 +4484,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_reset][sensor.kitchen_effect_type]
+# name: test_toggle_notifications[zha-doors_open_on,kitchen_override_leds_reset][sensor.kitchen_effect_type]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
@@ -3803,7 +4498,7 @@
     'state': 'open_close',
   })
 # ---
-# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_reset][sensor.kitchen_notification]
+# name: test_toggle_notifications[zha-doors_open_on,kitchen_override_leds_reset][sensor.kitchen_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Notification',
@@ -3817,11 +4512,11 @@
     'state': 'doors_open',
   })
 # ---
-# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_reset][service_calls]
+# name: test_toggle_notifications[zha-doors_open_on,kitchen_override_leds_reset][service_calls]
   list([
   ])
 # ---
-# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_reset][switch.doors_open_notification]
+# name: test_toggle_notifications[zha-doors_open_on,kitchen_override_leds_reset][switch.doors_open_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Doors Open Notification',
@@ -3835,13 +4530,17 @@
     'state': 'on',
   })
 # ---
-# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_reset][switch_info]
+# name: test_toggle_notifications[zha-doors_open_on,kitchen_override_leds_reset][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
       dict({
@@ -3855,13 +4554,12 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': 'doors_open',
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
   })
 # ---
-# name: test_toggle_notifications[doors_open_on,kitchen_override_leds_reset][zha_cluster_commands]
+# name: test_toggle_notifications[zha-doors_open_on,kitchen_override_leds_reset][zha_cluster_commands]
   list([
     ServiceCallSnapshot({
       'context': <ANY>,
@@ -3931,7 +4629,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[doors_open_various_firmware_durations_expired][events]
+# name: test_toggle_notifications[zha-doors_open_various_firmware_durations_expired][events]
   list([
     EventSnapshot({
       'context': <ANY>,
@@ -3945,7 +4643,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[doors_open_various_firmware_durations_expired][notification_info]
+# name: test_toggle_notifications[zha-doors_open_various_firmware_durations_expired][notification_info]
   dict({
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
@@ -3956,7 +4654,7 @@
     'notification_on': False,
   })
 # ---
-# name: test_toggle_notifications[doors_open_various_firmware_durations_expired][sensor.kitchen_effect_brightness]
+# name: test_toggle_notifications[zha-doors_open_various_firmware_durations_expired][sensor.kitchen_effect_brightness]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
@@ -3972,7 +4670,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_various_firmware_durations_expired][sensor.kitchen_effect_color]
+# name: test_toggle_notifications[zha-doors_open_various_firmware_durations_expired][sensor.kitchen_effect_color]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect color',
@@ -3986,7 +4684,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_various_firmware_durations_expired][sensor.kitchen_effect_duration]
+# name: test_toggle_notifications[zha-doors_open_various_firmware_durations_expired][sensor.kitchen_effect_duration]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect duration',
@@ -4002,7 +4700,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_various_firmware_durations_expired][sensor.kitchen_effect_type]
+# name: test_toggle_notifications[zha-doors_open_various_firmware_durations_expired][sensor.kitchen_effect_type]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
@@ -4016,7 +4714,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_various_firmware_durations_expired][sensor.kitchen_notification]
+# name: test_toggle_notifications[zha-doors_open_various_firmware_durations_expired][sensor.kitchen_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Notification',
@@ -4030,11 +4728,11 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[doors_open_various_firmware_durations_expired][service_calls]
+# name: test_toggle_notifications[zha-doors_open_various_firmware_durations_expired][service_calls]
   list([
   ])
 # ---
-# name: test_toggle_notifications[doors_open_various_firmware_durations_expired][switch.doors_open_notification]
+# name: test_toggle_notifications[zha-doors_open_various_firmware_durations_expired][switch.doors_open_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Doors Open Notification',
@@ -4048,13 +4746,17 @@
     'state': 'off',
   })
 # ---
-# name: test_toggle_notifications[doors_open_various_firmware_durations_expired][switch_info]
+# name: test_toggle_notifications[zha-doors_open_various_firmware_durations_expired][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': None,
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
     ),
@@ -4062,13 +4764,12 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': None,
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
   })
 # ---
-# name: test_toggle_notifications[doors_open_various_firmware_durations_expired][zha_cluster_commands]
+# name: test_toggle_notifications[zha-doors_open_various_firmware_durations_expired][zha_cluster_commands]
   list([
     ServiceCallSnapshot({
       'context': <ANY>,
@@ -4233,7 +4934,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[entryway_no_override_dismissed][notification_info]
+# name: test_toggle_notifications[zha-entryway_no_override_dismissed][notification_info]
   dict({
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
@@ -4244,7 +4945,7 @@
     'notification_on': False,
   })
 # ---
-# name: test_toggle_notifications[entryway_no_override_dismissed][sensor.kitchen_effect_brightness]
+# name: test_toggle_notifications[zha-entryway_no_override_dismissed][sensor.kitchen_effect_brightness]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
@@ -4260,7 +4961,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[entryway_no_override_dismissed][sensor.kitchen_effect_color]
+# name: test_toggle_notifications[zha-entryway_no_override_dismissed][sensor.kitchen_effect_color]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect color',
@@ -4274,7 +4975,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[entryway_no_override_dismissed][sensor.kitchen_effect_duration]
+# name: test_toggle_notifications[zha-entryway_no_override_dismissed][sensor.kitchen_effect_duration]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect duration',
@@ -4290,7 +4991,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[entryway_no_override_dismissed][sensor.kitchen_effect_type]
+# name: test_toggle_notifications[zha-entryway_no_override_dismissed][sensor.kitchen_effect_type]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
@@ -4304,7 +5005,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[entryway_no_override_dismissed][sensor.kitchen_notification]
+# name: test_toggle_notifications[zha-entryway_no_override_dismissed][sensor.kitchen_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Notification',
@@ -4318,11 +5019,11 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[entryway_no_override_dismissed][service_calls]
+# name: test_toggle_notifications[zha-entryway_no_override_dismissed][service_calls]
   list([
   ])
 # ---
-# name: test_toggle_notifications[entryway_no_override_dismissed][switch.doors_open_notification]
+# name: test_toggle_notifications[zha-entryway_no_override_dismissed][switch.doors_open_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Doors Open Notification',
@@ -4336,13 +5037,17 @@
     'state': 'off',
   })
 # ---
-# name: test_toggle_notifications[entryway_no_override_dismissed][switch_info]
+# name: test_toggle_notifications[zha-entryway_no_override_dismissed][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': None,
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
     ),
@@ -4350,16 +5055,15 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': None,
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
   })
 # ---
-# name: test_toggle_notifications[entryway_no_override_dismissed][swtich_info:light.entryway]
+# name: test_toggle_notifications[zha-entryway_no_override_dismissed][swtich_info:light.entryway]
   None
 # ---
-# name: test_toggle_notifications[entryway_override][notification_info]
+# name: test_toggle_notifications[zha-entryway_override][notification_info]
   dict({
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
@@ -4370,7 +5074,7 @@
     'notification_on': False,
   })
 # ---
-# name: test_toggle_notifications[entryway_override][sensor.kitchen_effect_brightness]
+# name: test_toggle_notifications[zha-entryway_override][sensor.kitchen_effect_brightness]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
@@ -4386,7 +5090,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[entryway_override][sensor.kitchen_effect_color]
+# name: test_toggle_notifications[zha-entryway_override][sensor.kitchen_effect_color]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect color',
@@ -4400,7 +5104,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[entryway_override][sensor.kitchen_effect_duration]
+# name: test_toggle_notifications[zha-entryway_override][sensor.kitchen_effect_duration]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect duration',
@@ -4416,7 +5120,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[entryway_override][sensor.kitchen_effect_type]
+# name: test_toggle_notifications[zha-entryway_override][sensor.kitchen_effect_type]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
@@ -4430,7 +5134,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[entryway_override][sensor.kitchen_notification]
+# name: test_toggle_notifications[zha-entryway_override][sensor.kitchen_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Notification',
@@ -4444,11 +5148,11 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[entryway_override][service_calls]
+# name: test_toggle_notifications[zha-entryway_override][service_calls]
   list([
   ])
 # ---
-# name: test_toggle_notifications[entryway_override][switch.doors_open_notification]
+# name: test_toggle_notifications[zha-entryway_override][switch.doors_open_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Doors Open Notification',
@@ -4462,13 +5166,17 @@
     'state': 'off',
   })
 # ---
-# name: test_toggle_notifications[entryway_override][switch_info]
+# name: test_toggle_notifications[zha-entryway_override][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': None,
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
     ),
@@ -4476,19 +5184,22 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': None,
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
   })
 # ---
-# name: test_toggle_notifications[entryway_override][swtich_info:light.entryway]
+# name: test_toggle_notifications[zha-entryway_override][swtich_info:light.entryway]
   dict({
-    'disable_clear_notification_id': 'switch.entryway_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.entryway_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.entryway_local_protection',
     }),
     'led_config': tuple(
       dict({
@@ -4502,12 +5213,11 @@
       'type': <LEDConfigSourceType.SERVICE: 'service'>,
       'value': 'lampie.override',
     }),
-    'local_protection_id': 'switch.entryway_local_protection',
     'priorities': tuple(
     ),
   })
 # ---
-# name: test_toggle_notifications[entryway_override][zha_cluster_commands]
+# name: test_toggle_notifications[zha-entryway_override][zha_cluster_commands]
   list([
     ServiceCallSnapshot({
       'context': <ANY>,
@@ -4533,7 +5243,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[entryway_override_expired][events]
+# name: test_toggle_notifications[zha-entryway_override_expired][events]
   list([
     EventSnapshot({
       'context': <ANY>,
@@ -4548,7 +5258,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[entryway_override_expired][notification_info]
+# name: test_toggle_notifications[zha-entryway_override_expired][notification_info]
   dict({
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
@@ -4559,7 +5269,7 @@
     'notification_on': False,
   })
 # ---
-# name: test_toggle_notifications[entryway_override_expired][sensor.kitchen_effect_brightness]
+# name: test_toggle_notifications[zha-entryway_override_expired][sensor.kitchen_effect_brightness]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
@@ -4575,7 +5285,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[entryway_override_expired][sensor.kitchen_effect_color]
+# name: test_toggle_notifications[zha-entryway_override_expired][sensor.kitchen_effect_color]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect color',
@@ -4589,7 +5299,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[entryway_override_expired][sensor.kitchen_effect_duration]
+# name: test_toggle_notifications[zha-entryway_override_expired][sensor.kitchen_effect_duration]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect duration',
@@ -4605,7 +5315,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[entryway_override_expired][sensor.kitchen_effect_type]
+# name: test_toggle_notifications[zha-entryway_override_expired][sensor.kitchen_effect_type]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
@@ -4619,7 +5329,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[entryway_override_expired][sensor.kitchen_notification]
+# name: test_toggle_notifications[zha-entryway_override_expired][sensor.kitchen_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Notification',
@@ -4633,11 +5343,11 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[entryway_override_expired][service_calls]
+# name: test_toggle_notifications[zha-entryway_override_expired][service_calls]
   list([
   ])
 # ---
-# name: test_toggle_notifications[entryway_override_expired][switch.doors_open_notification]
+# name: test_toggle_notifications[zha-entryway_override_expired][switch.doors_open_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Doors Open Notification',
@@ -4651,13 +5361,17 @@
     'state': 'off',
   })
 # ---
-# name: test_toggle_notifications[entryway_override_expired][switch_info]
+# name: test_toggle_notifications[zha-entryway_override_expired][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': None,
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
     ),
@@ -4665,19 +5379,22 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': None,
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
   })
 # ---
-# name: test_toggle_notifications[entryway_override_expired][swtich_info:light.entryway]
+# name: test_toggle_notifications[zha-entryway_override_expired][swtich_info:light.entryway]
   dict({
-    'disable_clear_notification_id': 'switch.entryway_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': None,
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.entryway_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.entryway_local_protection',
     }),
     'led_config': tuple(
     ),
@@ -4685,12 +5402,11 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': None,
     }),
-    'local_protection_id': 'switch.entryway_local_protection',
     'priorities': tuple(
     ),
   })
 # ---
-# name: test_toggle_notifications[entryway_override_expired][zha_cluster_commands]
+# name: test_toggle_notifications[zha-entryway_override_expired][zha_cluster_commands]
   list([
     ServiceCallSnapshot({
       'context': <ANY>,
@@ -4716,7 +5432,187 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[kitchen_override,doors_open_on][notification_info]
+# name: test_toggle_notifications[zha-entryway_override_unrelated_command][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'led_config_override': None,
+    'notification_on': False,
+  })
+# ---
+# name: test_toggle_notifications[zha-entryway_override_unrelated_command][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_toggle_notifications[zha-entryway_override_unrelated_command][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_toggle_notifications[zha-entryway_override_unrelated_command][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_toggle_notifications[zha-entryway_override_unrelated_command][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:star-four-points-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_toggle_notifications[zha-entryway_override_unrelated_command][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_toggle_notifications[zha-entryway_override_unrelated_command][service_calls]
+  list([
+  ])
+# ---
+# name: test_toggle_notifications[zha-entryway_override_unrelated_command][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_toggle_notifications[zha-entryway_override_unrelated_command][switch_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
+    }),
+    'led_config': tuple(
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': None,
+    }),
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
+# name: test_toggle_notifications[zha-entryway_override_unrelated_command][swtich_info:light.entryway]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.entryway_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.entryway_local_protection',
+    }),
+    'led_config': tuple(
+      dict({
+        'brightness': 100.0,
+        'color': <Color.GREEN: 90>,
+        'duration': None,
+        'effect': <Effect.SOLID: 1>,
+      }),
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.SERVICE: 'service'>,
+      'value': 'lampie.override',
+    }),
+    'priorities': tuple(
+    ),
+  })
+# ---
+# name: test_toggle_notifications[zha-entryway_override_unrelated_command][zha_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'cluster_id': 64561,
+        'cluster_type': 'in',
+        'command': 1,
+        'command_type': 'server',
+        'endpoint_id': 1,
+        'ieee': 'mock-ieee:entryway',
+        'manufacturer': 4655,
+        'params': dict({
+          'led_color': 90,
+          'led_duration': 255,
+          'led_effect': 1,
+          'led_level': 100,
+        }),
+      }),
+      'domain': 'zha',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'issue_zigbee_cluster_command',
+    }),
+  ])
+# ---
+# name: test_toggle_notifications[zha-kitchen_override,doors_open_on][notification_info]
   dict({
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
@@ -4727,7 +5623,7 @@
     'notification_on': True,
   })
 # ---
-# name: test_toggle_notifications[kitchen_override,doors_open_on][sensor.kitchen_effect_brightness]
+# name: test_toggle_notifications[zha-kitchen_override,doors_open_on][sensor.kitchen_effect_brightness]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
@@ -4743,7 +5639,7 @@
     'state': '100.0',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override,doors_open_on][sensor.kitchen_effect_color]
+# name: test_toggle_notifications[zha-kitchen_override,doors_open_on][sensor.kitchen_effect_color]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect color',
@@ -4757,7 +5653,7 @@
     'state': 'green',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override,doors_open_on][sensor.kitchen_effect_duration]
+# name: test_toggle_notifications[zha-kitchen_override,doors_open_on][sensor.kitchen_effect_duration]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect duration',
@@ -4773,7 +5669,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override,doors_open_on][sensor.kitchen_effect_type]
+# name: test_toggle_notifications[zha-kitchen_override,doors_open_on][sensor.kitchen_effect_type]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
@@ -4787,7 +5683,7 @@
     'state': 'solid',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override,doors_open_on][sensor.kitchen_notification]
+# name: test_toggle_notifications[zha-kitchen_override,doors_open_on][sensor.kitchen_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Notification',
@@ -4801,11 +5697,11 @@
     'state': 'lampie.override',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override,doors_open_on][service_calls]
+# name: test_toggle_notifications[zha-kitchen_override,doors_open_on][service_calls]
   list([
   ])
 # ---
-# name: test_toggle_notifications[kitchen_override,doors_open_on][switch.doors_open_notification]
+# name: test_toggle_notifications[zha-kitchen_override,doors_open_on][switch.doors_open_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Doors Open Notification',
@@ -4819,13 +5715,17 @@
     'state': 'on',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override,doors_open_on][switch_info]
+# name: test_toggle_notifications[zha-kitchen_override,doors_open_on][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
       dict({
@@ -4839,13 +5739,12 @@
       'type': <LEDConfigSourceType.SERVICE: 'service'>,
       'value': 'lampie.override',
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
   })
 # ---
-# name: test_toggle_notifications[kitchen_override,doors_open_on][zha_cluster_commands]
+# name: test_toggle_notifications[zha-kitchen_override,doors_open_on][zha_cluster_commands]
   list([
     ServiceCallSnapshot({
       'context': <ANY>,
@@ -4871,7 +5770,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_5m1s_duration_dismissed][events]
+# name: test_toggle_notifications[zha-kitchen_override_leds_5m1s_duration_dismissed][events]
   list([
     EventSnapshot({
       'context': <ANY>,
@@ -4886,7 +5785,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_5m1s_duration_dismissed][notification_info]
+# name: test_toggle_notifications[zha-kitchen_override_leds_5m1s_duration_dismissed][notification_info]
   dict({
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
@@ -4897,7 +5796,7 @@
     'notification_on': False,
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_5m1s_duration_dismissed][sensor.kitchen_effect_brightness]
+# name: test_toggle_notifications[zha-kitchen_override_leds_5m1s_duration_dismissed][sensor.kitchen_effect_brightness]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
@@ -4913,7 +5812,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_5m1s_duration_dismissed][sensor.kitchen_effect_color]
+# name: test_toggle_notifications[zha-kitchen_override_leds_5m1s_duration_dismissed][sensor.kitchen_effect_color]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect color',
@@ -4927,7 +5826,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_5m1s_duration_dismissed][sensor.kitchen_effect_duration]
+# name: test_toggle_notifications[zha-kitchen_override_leds_5m1s_duration_dismissed][sensor.kitchen_effect_duration]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect duration',
@@ -4943,7 +5842,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_5m1s_duration_dismissed][sensor.kitchen_effect_type]
+# name: test_toggle_notifications[zha-kitchen_override_leds_5m1s_duration_dismissed][sensor.kitchen_effect_type]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
@@ -4957,7 +5856,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_5m1s_duration_dismissed][sensor.kitchen_notification]
+# name: test_toggle_notifications[zha-kitchen_override_leds_5m1s_duration_dismissed][sensor.kitchen_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Notification',
@@ -4971,11 +5870,11 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_5m1s_duration_dismissed][service_calls]
+# name: test_toggle_notifications[zha-kitchen_override_leds_5m1s_duration_dismissed][service_calls]
   list([
   ])
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_5m1s_duration_dismissed][switch.doors_open_notification]
+# name: test_toggle_notifications[zha-kitchen_override_leds_5m1s_duration_dismissed][switch.doors_open_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Doors Open Notification',
@@ -4989,13 +5888,17 @@
     'state': 'off',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_5m1s_duration_dismissed][switch_info]
+# name: test_toggle_notifications[zha-kitchen_override_leds_5m1s_duration_dismissed][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': None,
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
     ),
@@ -5003,13 +5906,12 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': None,
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_5m1s_duration_dismissed][zha_cluster_commands]
+# name: test_toggle_notifications[zha-kitchen_override_leds_5m1s_duration_dismissed][zha_cluster_commands]
   list([
     ServiceCallSnapshot({
       'context': <ANY>,
@@ -5035,7 +5937,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_5m1s_duration_expired][events]
+# name: test_toggle_notifications[zha-kitchen_override_leds_5m1s_duration_expired][events]
   list([
     EventSnapshot({
       'context': <ANY>,
@@ -5050,7 +5952,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_5m1s_duration_expired][notification_info]
+# name: test_toggle_notifications[zha-kitchen_override_leds_5m1s_duration_expired][notification_info]
   dict({
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
@@ -5061,7 +5963,7 @@
     'notification_on': False,
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_5m1s_duration_expired][sensor.kitchen_effect_brightness]
+# name: test_toggle_notifications[zha-kitchen_override_leds_5m1s_duration_expired][sensor.kitchen_effect_brightness]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
@@ -5077,7 +5979,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_5m1s_duration_expired][sensor.kitchen_effect_color]
+# name: test_toggle_notifications[zha-kitchen_override_leds_5m1s_duration_expired][sensor.kitchen_effect_color]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect color',
@@ -5091,7 +5993,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_5m1s_duration_expired][sensor.kitchen_effect_duration]
+# name: test_toggle_notifications[zha-kitchen_override_leds_5m1s_duration_expired][sensor.kitchen_effect_duration]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect duration',
@@ -5107,7 +6009,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_5m1s_duration_expired][sensor.kitchen_effect_type]
+# name: test_toggle_notifications[zha-kitchen_override_leds_5m1s_duration_expired][sensor.kitchen_effect_type]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
@@ -5121,7 +6023,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_5m1s_duration_expired][sensor.kitchen_notification]
+# name: test_toggle_notifications[zha-kitchen_override_leds_5m1s_duration_expired][sensor.kitchen_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Notification',
@@ -5135,11 +6037,11 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_5m1s_duration_expired][service_calls]
+# name: test_toggle_notifications[zha-kitchen_override_leds_5m1s_duration_expired][service_calls]
   list([
   ])
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_5m1s_duration_expired][switch.doors_open_notification]
+# name: test_toggle_notifications[zha-kitchen_override_leds_5m1s_duration_expired][switch.doors_open_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Doors Open Notification',
@@ -5153,13 +6055,17 @@
     'state': 'off',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_5m1s_duration_expired][switch_info]
+# name: test_toggle_notifications[zha-kitchen_override_leds_5m1s_duration_expired][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': None,
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
     ),
@@ -5167,13 +6073,12 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': None,
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_5m1s_duration_expired][zha_cluster_commands]
+# name: test_toggle_notifications[zha-kitchen_override_leds_5m1s_duration_expired][zha_cluster_commands]
   list([
     ServiceCallSnapshot({
       'context': <ANY>,
@@ -5221,7 +6126,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_5m1s_duration_unexpired][notification_info]
+# name: test_toggle_notifications[zha-kitchen_override_leds_5m1s_duration_unexpired][notification_info]
   dict({
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
@@ -5232,7 +6137,7 @@
     'notification_on': False,
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_5m1s_duration_unexpired][sensor.kitchen_effect_brightness]
+# name: test_toggle_notifications[zha-kitchen_override_leds_5m1s_duration_unexpired][sensor.kitchen_effect_brightness]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
@@ -5248,7 +6153,7 @@
     'state': '100.0',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_5m1s_duration_unexpired][sensor.kitchen_effect_color]
+# name: test_toggle_notifications[zha-kitchen_override_leds_5m1s_duration_unexpired][sensor.kitchen_effect_color]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect color',
@@ -5262,7 +6167,7 @@
     'state': 'green',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_5m1s_duration_unexpired][sensor.kitchen_effect_duration]
+# name: test_toggle_notifications[zha-kitchen_override_leds_5m1s_duration_unexpired][sensor.kitchen_effect_duration]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'expires_at': '2025-05-20T03:56:33.003245-07:00',
@@ -5280,7 +6185,7 @@
     'state': '301.0',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_5m1s_duration_unexpired][sensor.kitchen_effect_type]
+# name: test_toggle_notifications[zha-kitchen_override_leds_5m1s_duration_unexpired][sensor.kitchen_effect_type]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
@@ -5294,7 +6199,7 @@
     'state': 'solid',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_5m1s_duration_unexpired][sensor.kitchen_notification]
+# name: test_toggle_notifications[zha-kitchen_override_leds_5m1s_duration_unexpired][sensor.kitchen_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Notification',
@@ -5308,11 +6213,11 @@
     'state': 'lampie.override',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_5m1s_duration_unexpired][service_calls]
+# name: test_toggle_notifications[zha-kitchen_override_leds_5m1s_duration_unexpired][service_calls]
   list([
   ])
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_5m1s_duration_unexpired][switch.doors_open_notification]
+# name: test_toggle_notifications[zha-kitchen_override_leds_5m1s_duration_unexpired][switch.doors_open_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Doors Open Notification',
@@ -5326,13 +6231,17 @@
     'state': 'off',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_5m1s_duration_unexpired][switch_info]
+# name: test_toggle_notifications[zha-kitchen_override_leds_5m1s_duration_unexpired][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': <ANY>,
       'expires_at': HAFakeDatetime(2025, 5, 20, 3, 56, 33, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
       'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
       dict({
@@ -5346,13 +6255,12 @@
       'type': <LEDConfigSourceType.SERVICE: 'service'>,
       'value': 'lampie.override',
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_5m1s_duration_unexpired][zha_cluster_commands]
+# name: test_toggle_notifications[zha-kitchen_override_leds_5m1s_duration_unexpired][zha_cluster_commands]
   list([
     ServiceCallSnapshot({
       'context': <ANY>,
@@ -5378,7 +6286,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_clear][notification_info]
+# name: test_toggle_notifications[zha-kitchen_override_leds_clear][notification_info]
   dict({
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
@@ -5389,7 +6297,7 @@
     'notification_on': False,
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_clear][sensor.kitchen_effect_brightness]
+# name: test_toggle_notifications[zha-kitchen_override_leds_clear][sensor.kitchen_effect_brightness]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
@@ -5405,7 +6313,7 @@
     'state': '100.0',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_clear][sensor.kitchen_effect_color]
+# name: test_toggle_notifications[zha-kitchen_override_leds_clear][sensor.kitchen_effect_color]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect color',
@@ -5419,7 +6327,7 @@
     'state': 'blue',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_clear][sensor.kitchen_effect_duration]
+# name: test_toggle_notifications[zha-kitchen_override_leds_clear][sensor.kitchen_effect_duration]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect duration',
@@ -5435,7 +6343,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_clear][sensor.kitchen_effect_type]
+# name: test_toggle_notifications[zha-kitchen_override_leds_clear][sensor.kitchen_effect_type]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
@@ -5449,7 +6357,7 @@
     'state': 'clear',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_clear][sensor.kitchen_notification]
+# name: test_toggle_notifications[zha-kitchen_override_leds_clear][sensor.kitchen_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Notification',
@@ -5463,11 +6371,11 @@
     'state': 'lampie.override',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_clear][service_calls]
+# name: test_toggle_notifications[zha-kitchen_override_leds_clear][service_calls]
   list([
   ])
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_clear][switch.doors_open_notification]
+# name: test_toggle_notifications[zha-kitchen_override_leds_clear][switch.doors_open_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Doors Open Notification',
@@ -5481,13 +6389,17 @@
     'state': 'off',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_clear][switch_info]
+# name: test_toggle_notifications[zha-kitchen_override_leds_clear][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
       dict({
@@ -5501,13 +6413,12 @@
       'type': <LEDConfigSourceType.SERVICE: 'service'>,
       'value': 'lampie.override',
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_clear][zha_cluster_commands]
+# name: test_toggle_notifications[zha-kitchen_override_leds_clear][zha_cluster_commands]
   list([
     ServiceCallSnapshot({
       'context': <ANY>,
@@ -5555,7 +6466,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_dismissed][events]
+# name: test_toggle_notifications[zha-kitchen_override_leds_dismissed][events]
   list([
     EventSnapshot({
       'context': <ANY>,
@@ -5570,7 +6481,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_dismissed][notification_info]
+# name: test_toggle_notifications[zha-kitchen_override_leds_dismissed][notification_info]
   dict({
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
@@ -5581,7 +6492,7 @@
     'notification_on': False,
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_dismissed][sensor.kitchen_effect_brightness]
+# name: test_toggle_notifications[zha-kitchen_override_leds_dismissed][sensor.kitchen_effect_brightness]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
@@ -5597,7 +6508,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_dismissed][sensor.kitchen_effect_color]
+# name: test_toggle_notifications[zha-kitchen_override_leds_dismissed][sensor.kitchen_effect_color]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect color',
@@ -5611,7 +6522,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_dismissed][sensor.kitchen_effect_duration]
+# name: test_toggle_notifications[zha-kitchen_override_leds_dismissed][sensor.kitchen_effect_duration]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect duration',
@@ -5627,7 +6538,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_dismissed][sensor.kitchen_effect_type]
+# name: test_toggle_notifications[zha-kitchen_override_leds_dismissed][sensor.kitchen_effect_type]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
@@ -5641,7 +6552,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_dismissed][sensor.kitchen_notification]
+# name: test_toggle_notifications[zha-kitchen_override_leds_dismissed][sensor.kitchen_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Notification',
@@ -5655,11 +6566,11 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_dismissed][service_calls]
+# name: test_toggle_notifications[zha-kitchen_override_leds_dismissed][service_calls]
   list([
   ])
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_dismissed][switch.doors_open_notification]
+# name: test_toggle_notifications[zha-kitchen_override_leds_dismissed][switch.doors_open_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Doors Open Notification',
@@ -5673,13 +6584,17 @@
     'state': 'off',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_dismissed][switch_info]
+# name: test_toggle_notifications[zha-kitchen_override_leds_dismissed][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': None,
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
     ),
@@ -5687,13 +6602,12 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': None,
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_dismissed][zha_cluster_commands]
+# name: test_toggle_notifications[zha-kitchen_override_leds_dismissed][zha_cluster_commands]
   list([
     ServiceCallSnapshot({
       'context': <ANY>,
@@ -5719,7 +6633,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_mixed_specific_durations_expired][events]
+# name: test_toggle_notifications[zha-kitchen_override_leds_mixed_specific_durations_expired][events]
   list([
     EventSnapshot({
       'context': <ANY>,
@@ -5734,7 +6648,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_mixed_specific_durations_expired][notification_info]
+# name: test_toggle_notifications[zha-kitchen_override_leds_mixed_specific_durations_expired][notification_info]
   dict({
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
@@ -5745,7 +6659,7 @@
     'notification_on': False,
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_mixed_specific_durations_expired][sensor.kitchen_effect_brightness]
+# name: test_toggle_notifications[zha-kitchen_override_leds_mixed_specific_durations_expired][sensor.kitchen_effect_brightness]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
@@ -5761,7 +6675,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_mixed_specific_durations_expired][sensor.kitchen_effect_color]
+# name: test_toggle_notifications[zha-kitchen_override_leds_mixed_specific_durations_expired][sensor.kitchen_effect_color]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect color',
@@ -5775,7 +6689,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_mixed_specific_durations_expired][sensor.kitchen_effect_duration]
+# name: test_toggle_notifications[zha-kitchen_override_leds_mixed_specific_durations_expired][sensor.kitchen_effect_duration]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect duration',
@@ -5791,7 +6705,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_mixed_specific_durations_expired][sensor.kitchen_effect_type]
+# name: test_toggle_notifications[zha-kitchen_override_leds_mixed_specific_durations_expired][sensor.kitchen_effect_type]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
@@ -5805,7 +6719,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_mixed_specific_durations_expired][sensor.kitchen_notification]
+# name: test_toggle_notifications[zha-kitchen_override_leds_mixed_specific_durations_expired][sensor.kitchen_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Notification',
@@ -5819,11 +6733,11 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_mixed_specific_durations_expired][service_calls]
+# name: test_toggle_notifications[zha-kitchen_override_leds_mixed_specific_durations_expired][service_calls]
   list([
   ])
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_mixed_specific_durations_expired][switch.doors_open_notification]
+# name: test_toggle_notifications[zha-kitchen_override_leds_mixed_specific_durations_expired][switch.doors_open_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Doors Open Notification',
@@ -5837,13 +6751,17 @@
     'state': 'off',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_mixed_specific_durations_expired][switch_info]
+# name: test_toggle_notifications[zha-kitchen_override_leds_mixed_specific_durations_expired][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': None,
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
     ),
@@ -5851,13 +6769,12 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': None,
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_mixed_specific_durations_expired][zha_cluster_commands]
+# name: test_toggle_notifications[zha-kitchen_override_leds_mixed_specific_durations_expired][zha_cluster_commands]
   list([
     ServiceCallSnapshot({
       'context': <ANY>,
@@ -6183,7 +7100,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_mixed_specific_durations_partially_expired][notification_info]
+# name: test_toggle_notifications[zha-kitchen_override_leds_mixed_specific_durations_partially_expired][notification_info]
   dict({
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
@@ -6194,7 +7111,7 @@
     'notification_on': False,
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_mixed_specific_durations_partially_expired][sensor.kitchen_effect_brightness]
+# name: test_toggle_notifications[zha-kitchen_override_leds_mixed_specific_durations_partially_expired][sensor.kitchen_effect_brightness]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
@@ -6219,7 +7136,7 @@
     'state': '100.0',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_mixed_specific_durations_partially_expired][sensor.kitchen_effect_color]
+# name: test_toggle_notifications[zha-kitchen_override_leds_mixed_specific_durations_partially_expired][sensor.kitchen_effect_color]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect color',
@@ -6242,7 +7159,7 @@
     'state': 'multi',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_mixed_specific_durations_partially_expired][sensor.kitchen_effect_duration]
+# name: test_toggle_notifications[zha-kitchen_override_leds_mixed_specific_durations_partially_expired][sensor.kitchen_effect_duration]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'expires_at': '2025-05-20T04:01:33.003245-07:00',
@@ -6269,7 +7186,7 @@
     'state': '601.0',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_mixed_specific_durations_partially_expired][sensor.kitchen_effect_type]
+# name: test_toggle_notifications[zha-kitchen_override_leds_mixed_specific_durations_partially_expired][sensor.kitchen_effect_type]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
@@ -6292,7 +7209,7 @@
     'state': 'multi',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_mixed_specific_durations_partially_expired][sensor.kitchen_notification]
+# name: test_toggle_notifications[zha-kitchen_override_leds_mixed_specific_durations_partially_expired][sensor.kitchen_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Notification',
@@ -6306,11 +7223,11 @@
     'state': 'lampie.override',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_mixed_specific_durations_partially_expired][service_calls]
+# name: test_toggle_notifications[zha-kitchen_override_leds_mixed_specific_durations_partially_expired][service_calls]
   list([
   ])
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_mixed_specific_durations_partially_expired][switch.doors_open_notification]
+# name: test_toggle_notifications[zha-kitchen_override_leds_mixed_specific_durations_partially_expired][switch.doors_open_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Doors Open Notification',
@@ -6324,13 +7241,17 @@
     'state': 'off',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_mixed_specific_durations_partially_expired][switch_info]
+# name: test_toggle_notifications[zha-kitchen_override_leds_mixed_specific_durations_partially_expired][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': <ANY>,
       'expires_at': HAFakeDatetime(2025, 5, 20, 4, 1, 33, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
       'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
       dict({
@@ -6380,13 +7301,12 @@
       'type': <LEDConfigSourceType.SERVICE: 'service'>,
       'value': 'lampie.override',
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_mixed_specific_durations_partially_expired][zha_cluster_commands]
+# name: test_toggle_notifications[zha-kitchen_override_leds_mixed_specific_durations_partially_expired][zha_cluster_commands]
   list([
     ServiceCallSnapshot({
       'context': <ANY>,
@@ -6597,7 +7517,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_named][notification_info]
+# name: test_toggle_notifications[zha-kitchen_override_leds_named][notification_info]
   dict({
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
@@ -6608,7 +7528,7 @@
     'notification_on': False,
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_named][sensor.kitchen_effect_brightness]
+# name: test_toggle_notifications[zha-kitchen_override_leds_named][sensor.kitchen_effect_brightness]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
@@ -6624,7 +7544,7 @@
     'state': '100.0',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_named][sensor.kitchen_effect_color]
+# name: test_toggle_notifications[zha-kitchen_override_leds_named][sensor.kitchen_effect_color]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect color',
@@ -6638,7 +7558,7 @@
     'state': 'green',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_named][sensor.kitchen_effect_duration]
+# name: test_toggle_notifications[zha-kitchen_override_leds_named][sensor.kitchen_effect_duration]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect duration',
@@ -6654,7 +7574,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_named][sensor.kitchen_effect_type]
+# name: test_toggle_notifications[zha-kitchen_override_leds_named][sensor.kitchen_effect_type]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
@@ -6668,7 +7588,7 @@
     'state': 'solid',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_named][sensor.kitchen_notification]
+# name: test_toggle_notifications[zha-kitchen_override_leds_named][sensor.kitchen_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Notification',
@@ -6682,11 +7602,11 @@
     'state': 'customized_name',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_named][service_calls]
+# name: test_toggle_notifications[zha-kitchen_override_leds_named][service_calls]
   list([
   ])
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_named][switch.doors_open_notification]
+# name: test_toggle_notifications[zha-kitchen_override_leds_named][switch.doors_open_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Doors Open Notification',
@@ -6700,13 +7620,17 @@
     'state': 'off',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_named][switch_info]
+# name: test_toggle_notifications[zha-kitchen_override_leds_named][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
       dict({
@@ -6720,13 +7644,12 @@
       'type': <LEDConfigSourceType.SERVICE: 'service'>,
       'value': 'customized_name',
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_named][zha_cluster_commands]
+# name: test_toggle_notifications[zha-kitchen_override_leds_named][zha_cluster_commands]
   list([
     ServiceCallSnapshot({
       'context': <ANY>,
@@ -6752,7 +7675,7 @@
     }),
   ])
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_reset][notification_info]
+# name: test_toggle_notifications[zha-kitchen_override_leds_reset][notification_info]
   dict({
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
@@ -6763,7 +7686,7 @@
     'notification_on': False,
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_reset][sensor.kitchen_effect_brightness]
+# name: test_toggle_notifications[zha-kitchen_override_leds_reset][sensor.kitchen_effect_brightness]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect brightness',
@@ -6779,7 +7702,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_reset][sensor.kitchen_effect_color]
+# name: test_toggle_notifications[zha-kitchen_override_leds_reset][sensor.kitchen_effect_color]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect color',
@@ -6793,7 +7716,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_reset][sensor.kitchen_effect_duration]
+# name: test_toggle_notifications[zha-kitchen_override_leds_reset][sensor.kitchen_effect_duration]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect duration',
@@ -6809,7 +7732,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_reset][sensor.kitchen_effect_type]
+# name: test_toggle_notifications[zha-kitchen_override_leds_reset][sensor.kitchen_effect_type]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Effect type',
@@ -6823,7 +7746,7 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_reset][sensor.kitchen_notification]
+# name: test_toggle_notifications[zha-kitchen_override_leds_reset][sensor.kitchen_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Kitchen Notification',
@@ -6837,11 +7760,11 @@
     'state': 'unknown',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_reset][service_calls]
+# name: test_toggle_notifications[zha-kitchen_override_leds_reset][service_calls]
   list([
   ])
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_reset][switch.doors_open_notification]
+# name: test_toggle_notifications[zha-kitchen_override_leds_reset][switch.doors_open_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'friendly_name': 'Doors Open Notification',
@@ -6855,13 +7778,17 @@
     'state': 'off',
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_reset][switch_info]
+# name: test_toggle_notifications[zha-kitchen_override_leds_reset][switch_info]
   dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
       'cancel_listener': None,
       'expires_at': None,
       'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'integration': <Integration.ZHA: 'zha'>,
+    'integration_info': dict({
+      'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+      'local_protection_id': 'switch.kitchen_local_protection',
     }),
     'led_config': tuple(
     ),
@@ -6869,13 +7796,12 @@
       'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
       'value': None,
     }),
-    'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
     ),
   })
 # ---
-# name: test_toggle_notifications[kitchen_override_leds_reset][zha_cluster_commands]
+# name: test_toggle_notifications[zha-kitchen_override_leds_reset][zha_cluster_commands]
   list([
     ServiceCallSnapshot({
       'context': <ANY>,
@@ -6920,6 +7846,754 @@
       'hass': <ANY>,
       'return_response': False,
       'service': 'issue_zigbee_cluster_command',
+    }),
+  ])
+# ---
+# name: test_toggle_notifications[zwave-doors_open_5m1s_duration_unexpired][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': <ANY>,
+      'expires_at': HAFakeDatetime(2025, 5, 20, 3, 56, 33, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+      'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'led_config_override': None,
+    'notification_on': True,
+  })
+# ---
+# name: test_toggle_notifications[zwave-doors_open_5m1s_duration_unexpired][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '100.0',
+  })
+# ---
+# name: test_toggle_notifications[zwave-doors_open_5m1s_duration_unexpired][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'red',
+  })
+# ---
+# name: test_toggle_notifications[zwave-doors_open_5m1s_duration_unexpired][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '301',
+  })
+# ---
+# name: test_toggle_notifications[zwave-doors_open_5m1s_duration_unexpired][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:star-four-points-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'open_close',
+  })
+# ---
+# name: test_toggle_notifications[zwave-doors_open_5m1s_duration_unexpired][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'doors_open',
+  })
+# ---
+# name: test_toggle_notifications[zwave-doors_open_5m1s_duration_unexpired][service_calls]
+  list([
+  ])
+# ---
+# name: test_toggle_notifications[zwave-doors_open_5m1s_duration_unexpired][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'expires_at': '2025-05-20T03:56:33.003245-07:00',
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+      'started_at': '2025-05-20T03:51:32.003245-07:00',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'on',
+  })
+# ---
+# name: test_toggle_notifications[zwave-doors_open_5m1s_duration_unexpired][switch_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'integration': <Integration.ZWAVE: 'zwave'>,
+    'integration_info': dict({
+    }),
+    'led_config': tuple(
+      dict({
+        'brightness': 100.0,
+        'color': <Color.RED: 0>,
+        'duration': 301,
+        'effect': <Effect.OPEN_CLOSE: 6>,
+      }),
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': 'doors_open',
+    }),
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
+# name: test_toggle_notifications[zwave-doors_open_5m1s_duration_unexpired][zwave_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'device_id': <ANY>,
+        'parameter': 99,
+        'value': 100689151,
+      }),
+      'domain': 'zwave_js',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'bulk_set_partial_config_parameters',
+    }),
+  ])
+# ---
+# name: test_toggle_notifications[zwave-doors_open_various_firmware_durations_expired][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': <ANY>,
+      'expires_at': HAFakeDatetime(2025, 5, 20, 3, 52, 2, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+      'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'led_config_override': None,
+    'notification_on': True,
+  })
+# ---
+# name: test_toggle_notifications[zwave-doors_open_various_firmware_durations_expired][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'individual': list([
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+      ]),
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '100.0',
+  })
+# ---
+# name: test_toggle_notifications[zwave-doors_open_various_firmware_durations_expired][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+      'individual': list([
+        'blue',
+        'blue',
+        'blue',
+        'blue',
+        'blue',
+        'blue',
+        'blue',
+      ]),
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'blue',
+  })
+# ---
+# name: test_toggle_notifications[zwave-doors_open_various_firmware_durations_expired][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'individual': list([
+        30,
+        300,
+        7200,
+        30,
+        7200,
+        300,
+        30,
+      ]),
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '7200',
+  })
+# ---
+# name: test_toggle_notifications[zwave-doors_open_various_firmware_durations_expired][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:star-four-points-box',
+      'individual': list([
+        'solid',
+        'solid',
+        'solid',
+        'solid',
+        'solid',
+        'solid',
+        'solid',
+      ]),
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'solid',
+  })
+# ---
+# name: test_toggle_notifications[zwave-doors_open_various_firmware_durations_expired][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'doors_open',
+  })
+# ---
+# name: test_toggle_notifications[zwave-doors_open_various_firmware_durations_expired][service_calls]
+  list([
+  ])
+# ---
+# name: test_toggle_notifications[zwave-doors_open_various_firmware_durations_expired][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'expires_at': '2025-05-20T03:52:02.003245-07:00',
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+      'started_at': '2025-05-20T03:51:32.003245-07:00',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'on',
+  })
+# ---
+# name: test_toggle_notifications[zwave-doors_open_various_firmware_durations_expired][switch_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'integration': <Integration.ZWAVE: 'zwave'>,
+    'integration_info': dict({
+    }),
+    'led_config': tuple(
+      dict({
+        'brightness': 100.0,
+        'color': <Color.BLUE: 170>,
+        'duration': 30,
+        'effect': <Effect.SOLID: 1>,
+      }),
+      dict({
+        'brightness': 100.0,
+        'color': <Color.BLUE: 170>,
+        'duration': 300,
+        'effect': <Effect.SOLID: 1>,
+      }),
+      dict({
+        'brightness': 100.0,
+        'color': <Color.BLUE: 170>,
+        'duration': 7200,
+        'effect': <Effect.SOLID: 1>,
+      }),
+      dict({
+        'brightness': 100.0,
+        'color': <Color.BLUE: 170>,
+        'duration': 30,
+        'effect': <Effect.SOLID: 1>,
+      }),
+      dict({
+        'brightness': 100.0,
+        'color': <Color.BLUE: 170>,
+        'duration': 7200,
+        'effect': <Effect.SOLID: 1>,
+      }),
+      dict({
+        'brightness': 100.0,
+        'color': <Color.BLUE: 170>,
+        'duration': 300,
+        'effect': <Effect.SOLID: 1>,
+      }),
+      dict({
+        'brightness': 100.0,
+        'color': <Color.BLUE: 170>,
+        'duration': 30,
+        'effect': <Effect.SOLID: 1>,
+      }),
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': 'doors_open',
+    }),
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
+# name: test_toggle_notifications[zwave-doors_open_various_firmware_durations_expired][zwave_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'device_id': <ANY>,
+        'parameter': 64,
+        'value': 27944191,
+      }),
+      'domain': 'zwave_js',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'bulk_set_partial_config_parameters',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'device_id': <ANY>,
+        'parameter': 69,
+        'value': 27944191,
+      }),
+      'domain': 'zwave_js',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'bulk_set_partial_config_parameters',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'device_id': <ANY>,
+        'parameter': 74,
+        'value': 27944191,
+      }),
+      'domain': 'zwave_js',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'bulk_set_partial_config_parameters',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'device_id': <ANY>,
+        'parameter': 79,
+        'value': 27944191,
+      }),
+      'domain': 'zwave_js',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'bulk_set_partial_config_parameters',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'device_id': <ANY>,
+        'parameter': 84,
+        'value': 27944191,
+      }),
+      'domain': 'zwave_js',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'bulk_set_partial_config_parameters',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'device_id': <ANY>,
+        'parameter': 89,
+        'value': 27944191,
+      }),
+      'domain': 'zwave_js',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'bulk_set_partial_config_parameters',
+    }),
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'device_id': <ANY>,
+        'parameter': 94,
+        'value': 27944191,
+      }),
+      'domain': 'zwave_js',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'bulk_set_partial_config_parameters',
+    }),
+  ])
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_5m1s_duration_unexpired][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': <ANY>,
+      'expires_at': HAFakeDatetime(2025, 5, 20, 3, 56, 33, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+      'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'led_config_override': None,
+    'notification_on': True,
+  })
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_5m1s_duration_unexpired][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '100.0',
+  })
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_5m1s_duration_unexpired][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'red',
+  })
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_5m1s_duration_unexpired][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '301',
+  })
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_5m1s_duration_unexpired][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:star-four-points-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'open_close',
+  })
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_5m1s_duration_unexpired][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'doors_open',
+  })
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_5m1s_duration_unexpired][service_calls]
+  list([
+  ])
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_5m1s_duration_unexpired][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'expires_at': '2025-05-20T03:56:33.003245-07:00',
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+      'started_at': '2025-05-20T03:51:32.003245-07:00',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'on',
+  })
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_5m1s_duration_unexpired][switch_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'integration': <Integration.ZWAVE: 'zwave'>,
+    'integration_info': dict({
+    }),
+    'led_config': tuple(
+      dict({
+        'brightness': 100.0,
+        'color': <Color.RED: 0>,
+        'duration': 301,
+        'effect': <Effect.OPEN_CLOSE: 6>,
+      }),
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': 'doors_open',
+    }),
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_5m1s_duration_unexpired][zwave_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'device_id': <ANY>,
+        'parameter': 24,
+        'value': 50268672,
+      }),
+      'domain': 'zwave_js',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'bulk_set_partial_config_parameters',
+    }),
+  ])
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_various_firmware_durations_expired][notification_info]
+  dict({
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': <ANY>,
+      'expires_at': HAFakeDatetime(2025, 5, 20, 3, 52, 2, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+      'started_at': HAFakeDatetime(2025, 5, 20, 3, 51, 32, 3245, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')),
+    }),
+    'led_config_override': None,
+    'notification_on': True,
+  })
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_various_firmware_durations_expired][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'individual': list([
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+      ]),
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '100.0',
+  })
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_various_firmware_durations_expired][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+      'individual': list([
+        'blue',
+        'blue',
+        'blue',
+        'blue',
+        'blue',
+        'blue',
+        'blue',
+      ]),
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'blue',
+  })
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_various_firmware_durations_expired][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'individual': list([
+        30,
+        300,
+        7200,
+        30,
+        7200,
+        300,
+        30,
+      ]),
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '7200',
+  })
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_various_firmware_durations_expired][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:star-four-points-box',
+      'individual': list([
+        'solid',
+        'solid',
+        'solid',
+        'solid',
+        'solid',
+        'solid',
+        'solid',
+      ]),
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'solid',
+  })
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_various_firmware_durations_expired][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'doors_open',
+  })
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_various_firmware_durations_expired][service_calls]
+  list([
+  ])
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_various_firmware_durations_expired][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'expires_at': '2025-05-20T03:52:02.003245-07:00',
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+      'started_at': '2025-05-20T03:51:32.003245-07:00',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'on',
+  })
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_various_firmware_durations_expired][switch_info]
+  None
+# ---
+# name: test_toggle_notifications[zwave-lzw36-doors_open_various_firmware_durations_expired][zwave_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'device_id': <ANY>,
+        'parameter': 25,
+        'value': 33491626,
+      }),
+      'domain': 'zwave_js',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'bulk_set_partial_config_parameters',
     }),
   ])
 # ---
