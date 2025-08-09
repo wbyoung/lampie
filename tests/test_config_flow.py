@@ -1084,6 +1084,31 @@ async def test_update_priorities_across_entries(hass: HomeAssistant) -> None:
             "mock_setup calls do not match expected (no priority change)"
         )
 
+    with patches() as mocks:
+        assert await hass.config_entries.async_remove(windows_open_entry.entry_id)
+        await hass.async_block_till_done()
+
+        assert call_slugs(mocks["update_entry"].mock_calls) == {
+            "doors_open",
+            "medicine",
+        }, "update_entry calls do not match expected"
+
+        assert call_slugs(mocks["unload"].mock_calls) == {
+            "doors_open",
+            "windows_open",
+        }, "unload calls do not match expected"
+
+        assert call_slugs(mocks["setup"].mock_calls) == set(), (
+            "setup calls do not match expected"
+        )
+
+        assert "windows_open" not in [
+            other_entry_slug
+            for config_entry in [medicine_entry, doors_open_entry]
+            for priority_list in config_entry.data[CONF_PRIORITY].values()
+            for other_entry_slug in priority_list
+        ]
+
 
 def _add_entry_to_hass(hass: HomeAssistant, entry: MockConfigEntry):
     entry.runtime_data = LampieConfigEntryRuntimeData(

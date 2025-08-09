@@ -9,9 +9,11 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.event import async_track_entity_registry_updated_event
 from homeassistant.helpers.typing import ConfigType
+from homeassistant.util import slugify
 
-from .const import CONF_SWITCH_ENTITIES, DOMAIN
+from .const import CONF_PRIORITY, CONF_SWITCH_ENTITIES, DOMAIN
 from .coordinator import LampieUpdateCoordinator
+from .helpers import auto_reload_disabled, get_other_entries, unloaded
 from .orchestrator import LampieOrchestrator
 from .services import async_setup_services
 from .types import LampieConfigEntry, LampieConfigEntryRuntimeData
@@ -85,6 +87,38 @@ async def async_unload_entry(hass: HomeAssistant, entry: LampieConfigEntry) -> b
             hass.data.pop(DOMAIN)
 
     return unload_ok
+
+
+async def async_remove_entry(hass: HomeAssistant, entry: LampieConfigEntry) -> None:
+    """Remove a config entry."""
+
+    remove_entry_slug = slugify(entry.title)
+    other_entries = get_other_entries(entry, hass=hass)
+    priorities = entry.data.get(CONF_PRIORITY, {})
+    priority_keys = priorities.keys()
+
+    other_entries = [
+        entry
+        for entry in other_entries
+        if (set(priority_keys) & set(entry.data[CONF_SWITCH_ENTITIES]))
+    ]
+
+    async with (
+        auto_reload_disabled(other_entries),
+        unloaded(other_entries, hass=hass),
+    ):
+        for other_entry in other_entries:
+            updated_priorities = {
+                switch_id: [slug for slug in priorities if slug != remove_entry_slug]
+                for switch_id, priorities in other_entry.data.get(
+                    CONF_PRIORITY, {}
+                ).items()
+            }
+
+            hass.config_entries.async_update_entry(
+                other_entry,
+                data={**other_entry.data, CONF_PRIORITY: updated_priorities},
+            )
 
 
 async def _async_update_listener(
