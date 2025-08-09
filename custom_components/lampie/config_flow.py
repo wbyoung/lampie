@@ -239,7 +239,14 @@ class LampieFlowCoordinator:
                                         effect.name.lower().capitalize().split("_")
                                     ),
                                 )
-                                for effect in Effect
+                                for effect in sorted(
+                                    Effect,
+                                    key=lambda effect: {
+                                        Effect.OFF: " 0",
+                                        Effect.CLEAR: " 1",
+                                    }.get(effect, "")
+                                    + effect.name,
+                                )
                             ],
                             mode=SelectSelectorMode.DROPDOWN,
                         )
