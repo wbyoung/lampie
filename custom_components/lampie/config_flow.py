@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 from collections import deque
-from collections.abc import AsyncGenerator, Callable, Sequence
-from contextlib import asynccontextmanager, suppress
+from collections.abc import Callable, Sequence
+from contextlib import suppress
 import logging
 from typing import Any, Final, NamedTuple
 
@@ -13,7 +13,6 @@ from homeassistant.components.light import DOMAIN as LIGHT_DOMAIN
 from homeassistant.components.script import DOMAIN as SCRIPT_DOMAIN
 from homeassistant.config_entries import (
     ConfigEntry,
-    ConfigEntryState,
     ConfigFlow,
     ConfigFlowResult,
     OptionsFlow,
@@ -50,7 +49,8 @@ from .const import (
     DOMAIN,
     INOVELLI_MODELS,
 )
-from .types import Color, Effect, InvalidColor, LampieConfigEntryRuntimeData, LEDConfig
+from .helpers import auto_reload_disabled, get_other_entries, unloaded
+from .types import Color, Effect, InvalidColor, LEDConfig
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -177,11 +177,7 @@ class LampieFlowCoordinator:
         return dict(self.config_entry.data) if self.config_entry else {}
 
     def _other_entries(self) -> list[ConfigEntry]:
-        return [
-            entry
-            for entry in self.hass.config_entries.async_entries(DOMAIN)
-            if entry is not self.config_entry
-        ]
+        return get_other_entries(self.config_entry, hass=self.hass)
 
     def _switch_overlaps(self) -> deque[Overlap]:
         result: deque[Overlap] = deque()
@@ -554,40 +550,6 @@ class LampieFlowCoordinator:
 
         self.flow_source._async_abort_entries_match(match_dict)  # noqa: SLF001
 
-    @classmethod
-    @asynccontextmanager
-    async def _auto_reload_disabled(
-        cls, other_entries: list[ConfigEntry]
-    ) -> AsyncGenerator[None]:
-        targets: list[LampieConfigEntryRuntimeData] = [
-            entry.runtime_data
-            for entry in other_entries
-            if hasattr(entry, "runtime_data")
-        ]
-
-        for runtime_data in targets:
-            runtime_data.auto_reload_enabled = False
-
-        try:
-            yield
-        finally:
-            for runtime_data in targets:
-                runtime_data.auto_reload_enabled = True
-
-    @asynccontextmanager
-    async def _unloaded(self, other_entries: list[ConfigEntry]) -> AsyncGenerator[None]:
-        other_entries = [  # filter to only the loaded entries
-            entry for entry in other_entries if entry.state is ConfigEntryState.LOADED
-        ]
-        for entry in other_entries:
-            await self.hass.config_entries.async_unload(entry.entry_id)
-
-        yield
-
-        for entry in other_entries:
-            assert entry.state is ConfigEntryState.NOT_LOADED
-            await self.hass.config_entries.async_setup(entry.entry_id)
-
     async def _update_other_entries_priorities(self) -> None:
         self_slug = slugify(self.title)
         other_entries = self._other_entries()
@@ -608,8 +570,8 @@ class LampieFlowCoordinator:
         ]
 
         async with (
-            self._auto_reload_disabled(other_entries),
-            self._unloaded(other_entries),
+            auto_reload_disabled(other_entries),
+            unloaded(other_entries, hass=self.hass),
         ):
             for entry in other_entries:
                 entry_priorities = {**entry.data.get(CONF_PRIORITY, {})}
