@@ -27,7 +27,8 @@ from custom_components.lampie.const import (
 )
 from custom_components.lampie.types import LampieConfigEntryRuntimeData
 
-from . import Scenario, add_mock_switch, setup_added_integration
+from . import add_mock_switch, setup_added_integration
+from .scenario import Scenario
 
 FLOW_SCENARIOS = {
     "non_overlapping": {

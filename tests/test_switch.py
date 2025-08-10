@@ -34,7 +34,8 @@ from custom_components.lampie.types import (
     LEDConfig,
 )
 
-from . import AbsentNone, Scenario, setup_integration
+from . import AbsentNone, setup_integration
+from .scenario import Scenario
 
 
 async def test_switches(

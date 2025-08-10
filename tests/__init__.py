@@ -4,13 +4,11 @@ from __future__ import annotations
 
 import datetime as dt
 from enum import Flag
-from itertools import starmap
 from typing import Any
 
 from freezegun.api import FrozenDateTimeFactory
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import device_registry as dr, entity_registry as er
-import pytest
 from pytest_homeassistant_custom_component.common import (
     MockConfigEntry,
     async_fire_time_changed,
@@ -108,31 +106,3 @@ class AbsentNone(Flag):
 
 
 ABSENT_NONE = AbsentNone._singleton
-
-
-class Scenario:
-    """Scenario for repeatable tet parametrization."""
-
-    ABSENT = ABSENT_NONE
-
-    def __init__(self, scenario_id: str, args: dict[str, Any]) -> None:
-        super().__init__()
-        self._id = scenario_id
-        self._args = args
-
-    @classmethod
-    def parametrize(cls, *args: Scenario, **kwargs: Any) -> Any:
-        scenarios = args + tuple(starmap(Scenario, kwargs.items()))
-        ids = []
-        argvalues = []
-        argnames = tuple(
-            {key: None for scenario in scenarios for key in scenario._args}.keys()
-        )
-
-        for item in scenarios:
-            ids.append(item._id)
-            argvalues.append(
-                tuple(item._args.get(key, ABSENT_NONE) for key in argnames)
-            )
-
-        return pytest.mark.parametrize(argnames=argnames, argvalues=argvalues, ids=ids)
