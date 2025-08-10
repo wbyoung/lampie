@@ -606,16 +606,12 @@ async def _assert_expectations(  # noqa: RUF029
             'to exist' if expected_timer else 'not to exist'
         }"
 
-    if snapshot_events and expected_events not in {None, Scenario.ABSENT, ANY}:
+    if expected_events not in {None, Scenario.ABSENT, ANY}:
         assert len(_events) == expected_events, (
             f"expected {expected_events} lampie events to have been emitted"
         )
 
-    if snapshot_service_calls and expected_service_calls not in {
-        None,
-        Scenario.ABSENT,
-        ANY,
-    }:
+    if expected_service_calls not in {None, Scenario.ABSENT, ANY}:
         assert len(_service_calls) == expected_service_calls, (
             f"expected {expected_service_calls} services calls (usually script invocations)"
         )
