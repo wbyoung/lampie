@@ -561,7 +561,7 @@ class LampieOrchestrator:
                     slug,
                     led_config_override=led_config,
                 )
-                response["leds"] = led_config
+                response = dict(response, leds=led_config)
 
         return _StartScriptResult(
             led_config=response.get("leds"),
