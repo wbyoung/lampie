@@ -26,7 +26,7 @@ What it can do:
 - **Even more**  
   There are some more goodies in to docs below. Enjoy!
 
-_Note: currently this is limited to Blue switches using ZHA, but ideally Z2M and other Inovelli switches will be added in the future._
+_Note: currently this is limited to Blue switches using ZHA or Zigbee2MQTT, but other Inovelli switches will be added in the future._
 
 **Configure notifications** for multiple switches easily:
 
