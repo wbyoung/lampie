@@ -266,7 +266,12 @@ class LampieOrchestrator:
         entry = coordinator.config_entry
         switches = entry.data[CONF_SWITCH_ENTITIES]
 
-        start_action_response = await self._invoke_start_action(slug)
+        start_action_response = await self._invoke_start_action(
+            slug,
+            led_config
+            or self.notification_info(slug).led_config_override
+            or coordinator.led_config,
+        )
         block_activation = start_action_response.block_activation
 
         if block_activation:
@@ -529,14 +534,19 @@ class LampieOrchestrator:
         coordinator = self._coordinators.get(priorities[0]) if priorities else None
         return coordinator or _LampieUnmanagedSwitchCoordinator()
 
-    async def _invoke_start_action(self, slug: Slug) -> _StartScriptResult:
+    async def _invoke_start_action(
+        self, slug: Slug, led_config: tuple[LEDConfig, ...]
+    ) -> _StartScriptResult:
         coordinator = self._coordinators[slug]
         entry = coordinator.config_entry
         start_action = entry.data.get(CONF_START_ACTION)
         response = {}
 
         if start_action:
-            args = {"notification": slug}
+            args = {
+                "notification": slug,
+                "leds": [item.to_dict() for item in led_config],
+            }
 
             _LOGGER.debug(
                 "executing start action %r for notification %r (%r)",
