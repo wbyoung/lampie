@@ -115,6 +115,7 @@ A script that will be called when the notification is activated. This can occur 
 
 - Input fields:
   - `notification`: The slug of the notification being activated.
+  - `leds`: The current configuration of the LEDs for the notification. If being activated, this is how they're configured by default. If the notification is active and being re-activated, this is the current LED configuration (respecting any override used in [`lampie.activate`](#lampieactivate)).
 - Response variables _all are optional_:
   - `leds` _default_ &raquo; `null`: An override LED configuration to use or `null` to use the already configured value. See: [`examples/start-action.yaml`](examples/start-action.yaml).
   - `block_activation` _default_ &raquo; `False`: Allow blocking of activation (including marking the notification as `on`).

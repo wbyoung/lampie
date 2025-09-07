@@ -6241,6 +6241,14 @@
       'script',
       'block_activation',
       dict({
+        'leds': list([
+          dict({
+            'brightness': 100.0,
+            'color': 'red',
+            'duration': None,
+            'effect': 'open_close',
+          }),
+        ]),
         'notification': 'doors_open',
       }),
     ),
@@ -6516,6 +6524,14 @@
       'script',
       'color_override',
       dict({
+        'leds': list([
+          dict({
+            'brightness': 100.0,
+            'color': 'red',
+            'duration': None,
+            'effect': 'open_close',
+          }),
+        ]),
         'notification': 'doors_open',
       }),
     ),
@@ -6536,6 +6552,154 @@
   })
 # ---
 # name: test_toggle_notification_with_actions[color_override][zha_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'cluster_id': 64561,
+        'cluster_type': 'in',
+        'command': 1,
+        'command_type': 'server',
+        'endpoint_id': 1,
+        'ieee': 'mock-ieee:kitchen',
+        'manufacturer': 4655,
+        'params': dict({
+          'led_color': 130,
+          'led_duration': 255,
+          'led_effect': 1,
+          'led_level': 100,
+        }),
+      }),
+      'domain': 'zha',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'issue_zigbee_cluster_command',
+    }),
+  ])
+# ---
+# name: test_toggle_notification_with_actions[color_override_reactivated][sensor.kitchen_effect_brightness]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect brightness',
+      'icon': 'mdi:brightness-percent',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_brightness',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '100.0',
+  })
+# ---
+# name: test_toggle_notification_with_actions[color_override_reactivated][sensor.kitchen_effect_color]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect color',
+      'icon': 'mdi:palette',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_color',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'cyan',
+  })
+# ---
+# name: test_toggle_notification_with_actions[color_override_reactivated][sensor.kitchen_effect_duration]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect duration',
+      'icon': 'mdi:timer',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_duration',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_toggle_notification_with_actions[color_override_reactivated][sensor.kitchen_effect_type]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Effect type',
+      'icon': 'mdi:star-four-points-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_effect_type',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'solid',
+  })
+# ---
+# name: test_toggle_notification_with_actions[color_override_reactivated][sensor.kitchen_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Kitchen Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.kitchen_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'doors_open',
+  })
+# ---
+# name: test_toggle_notification_with_actions[color_override_reactivated][service_calls]
+  list([
+    tuple(
+      'script',
+      'color_override',
+      dict({
+        'leds': list([
+          dict({
+            'brightness': 100.0,
+            'color': 'red',
+            'duration': None,
+            'effect': 'open_close',
+          }),
+        ]),
+        'notification': 'doors_open',
+      }),
+    ),
+    tuple(
+      'script',
+      'color_override',
+      dict({
+        'leds': list([
+          dict({
+            'brightness': 100.0,
+            'color': 'cyan',
+            'duration': None,
+            'effect': 'solid',
+          }),
+        ]),
+        'notification': 'doors_open',
+      }),
+    ),
+  ])
+# ---
+# name: test_toggle_notification_with_actions[color_override_reactivated][switch.doors_open_notification]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.doors_open_notification',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'on',
+  })
+# ---
+# name: test_toggle_notification_with_actions[color_override_reactivated][zha_cluster_commands]
   list([
     ServiceCallSnapshot({
       'context': <ANY>,
@@ -6677,6 +6841,14 @@
       'script',
       'color_from_input',
       dict({
+        'leds': list([
+          dict({
+            'brightness': 100.0,
+            'color': 'orange',
+            'duration': None,
+            'effect': 'slow_blink',
+          }),
+        ]),
         'notification': 'windows_open',
       }),
     ),
@@ -6684,6 +6856,14 @@
       'script',
       'color_from_input',
       dict({
+        'leds': list([
+          dict({
+            'brightness': 100.0,
+            'color': 'red',
+            'duration': None,
+            'effect': 'open_close',
+          }),
+        ]),
         'notification': 'doors_open',
       }),
     ),

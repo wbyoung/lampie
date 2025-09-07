@@ -1608,6 +1608,34 @@ _TOGGLE_NOTIFICATION_WITH_ACTIONS_BASE = {
         },
     ),
     Scenario(
+        "color_override_reactivated",
+        {
+            **_TOGGLE_NOTIFICATION_WITH_ACTIONS_BASE,
+            "configs": {
+                **_TOGGLE_NOTIFICATION_WITH_ACTIONS_CONFIGS,
+                "doors_open": {
+                    **_TOGGLE_NOTIFICATION_WITH_ACTIONS_DOORS_OPEN,
+                    CONF_START_ACTION: "script.color_override",
+                },
+            },
+            "scripts": _response_script(
+                "color_override", {"leds": [{"color": "cyan"}]}
+            ),
+            "steps": [
+                {
+                    "target": "switch.doors_open_notification",
+                    "action": f"{SWITCH_DOMAIN}.{SERVICE_TURN_ON}",
+                },
+                {
+                    "action": f"{DOMAIN}.{SERVICE_NAME_ACTIVATE}",
+                    "data": {
+                        "notification": "doors_open",
+                    },
+                },
+            ],
+        },
+    ),
+    Scenario(
         "single_led_change",
         {
             **_TOGGLE_NOTIFICATION_WITH_ACTIONS_BASE,
