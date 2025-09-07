@@ -1900,12 +1900,28 @@ _DISMISSAL_FROM_SWITCH_BASE = {
                 },
             ),
             Scenario(
+                f"{prefix}_double_press_with_notification_activation_customizing_leds",
+                {
+                    **_DISMISSAL_FROM_SWITCH_BASE,
+                    "initial_leds_on": [True],
+                    "initial_led_config_source": LEDConfigSource(
+                        "doors_open,second_slug[custom]",
+                        LEDConfigSourceType.NOTIFICATION,
+                    ),
+                    "steps": [{"event": {"command": command}}],
+                    "expected_notification_state": "off",
+                    "expected_leds_on": [],
+                    "expected_zha_calls": 0,
+                },
+            ),
+            Scenario(
                 f"{prefix}_double_press_with_service_override",
                 {
                     **_DISMISSAL_FROM_SWITCH_BASE,
                     "initial_leds_on": [True],
                     "initial_led_config_source": LEDConfigSource(
-                        f"{DOMAIN}.{SERVICE_NAME_OVERRIDE}", LEDConfigSourceType.SERVICE
+                        f"{DOMAIN}.{SERVICE_NAME_OVERRIDE}",
+                        LEDConfigSourceType.OVERRIDE,
                     ),
                     "steps": [{"event": {"command": command}}],
                     "expected_notification_state": "on",

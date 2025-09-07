@@ -65,6 +65,10 @@
     ),
   ])
 # ---
+# name: test_dismissal_from_switch[aux_double_press_with_notification_activation_customizing_leds][service_calls]
+  list([
+  ])
+# ---
 # name: test_dismissal_from_switch[aux_double_press_with_service_override][service_calls]
   list([
   ])
@@ -181,6 +185,10 @@
         'switch_id': 'light.kitchen',
       }),
     ),
+  ])
+# ---
+# name: test_dismissal_from_switch[config_double_press_with_notification_activation_customizing_leds][service_calls]
+  list([
   ])
 # ---
 # name: test_dismissal_from_switch[config_double_press_with_service_override][service_calls]
@@ -994,7 +1002,7 @@
       }),
     ),
     'led_config_source': dict({
-      'type': <LEDConfigSourceType.SERVICE: 'service'>,
+      'type': <LEDConfigSourceType.OVERRIDE: 'override'>,
       'value': 'lampie.override',
     }),
     'local_protection_id': 'switch.kitchen_local_protection',
@@ -3912,7 +3920,7 @@
       }),
     ),
     'led_config_source': dict({
-      'type': <LEDConfigSourceType.SERVICE: 'service'>,
+      'type': <LEDConfigSourceType.OVERRIDE: 'override'>,
       'value': 'lampie.override',
     }),
     'local_protection_id': 'switch.kitchen_local_protection',
@@ -4067,7 +4075,7 @@
       }),
     ),
     'led_config_source': dict({
-      'type': <LEDConfigSourceType.SERVICE: 'service'>,
+      'type': <LEDConfigSourceType.OVERRIDE: 'override'>,
       'value': 'lampie.override',
     }),
     'local_protection_id': 'switch.kitchen_local_protection',
@@ -4408,7 +4416,7 @@
       }),
     ),
     'led_config_source': dict({
-      'type': <LEDConfigSourceType.SERVICE: 'service'>,
+      'type': <LEDConfigSourceType.OVERRIDE: 'override'>,
       'value': 'customized_name',
     }),
     'local_protection_id': 'switch.kitchen_local_protection',
@@ -4880,7 +4888,7 @@
       }),
     ),
     'led_config_source': dict({
-      'type': <LEDConfigSourceType.SERVICE: 'service'>,
+      'type': <LEDConfigSourceType.OVERRIDE: 'override'>,
       'value': 'lampie.override',
     }),
     'local_protection_id': 'switch.entryway_local_protection',
@@ -5941,7 +5949,7 @@
       }),
     ),
     'led_config_source': dict({
-      'type': <LEDConfigSourceType.SERVICE: 'service'>,
+      'type': <LEDConfigSourceType.OVERRIDE: 'override'>,
       'value': 'lampie.override',
     }),
     'local_protection_id': 'switch.kitchen_local_protection',

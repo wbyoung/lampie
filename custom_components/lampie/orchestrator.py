@@ -403,7 +403,7 @@ class LampieOrchestrator:
             switch_id,
             led_config_source=led_config_source,
             led_config=led_config,
-            exclude={LEDConfigSourceType.SERVICE} if is_reset else set(),
+            exclude={LEDConfigSourceType.OVERRIDE} if is_reset else set(),
             log_context="override-switch",
         )
 
@@ -462,8 +462,8 @@ class LampieOrchestrator:
 
             if (
                 from_state.led_config_source
-                and from_state.led_config_source.type == LEDConfigSourceType.SERVICE
-                and LEDConfigSourceType.SERVICE not in exclude
+                and from_state.led_config_source.type == LEDConfigSourceType.OVERRIDE
+                and LEDConfigSourceType.OVERRIDE not in exclude
             ):
                 led_config_source = from_state.led_config_source
                 led_config = from_state.led_config
@@ -869,7 +869,7 @@ class LampieOrchestrator:
         elif all_clear:
             await self._switch_apply_notification_or_override(
                 switch_id,
-                exclude={LEDConfigSourceType.SERVICE},
+                exclude={LEDConfigSourceType.OVERRIDE},
                 dismissal_command=command,
                 via_switch_firmware=via_switch_firmware,
                 log_context=f"dismissed via {switch_id}",
@@ -966,7 +966,7 @@ class LampieOrchestrator:
             dismiss=partial(
                 self._switch_apply_notification_or_override,
                 switch_id,
-                exclude={LEDConfigSourceType.SERVICE},
+                exclude={LEDConfigSourceType.OVERRIDE},
                 log_context=f"override expired for {switch_id}",
             ),
             handle_expired=partial(

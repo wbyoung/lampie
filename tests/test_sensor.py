@@ -242,7 +242,7 @@ RESTORE_STATE_SCENARIOS = (
             "switch_info": LampieSwitchInfo(
                 led_config=(LEDConfig(Color.BLUE, effect=Effect.SOLID),),
                 led_config_source=LEDConfigSource(
-                    "lampie.override", LEDConfigSourceType.SERVICE
+                    "lampie.override", LEDConfigSourceType.OVERRIDE
                 ),
                 local_protection_id="unstored:entity_id",
                 disable_clear_notification_id="unstored:entity_id",
@@ -258,7 +258,7 @@ RESTORE_STATE_SCENARIOS = (
                     }
                 ],
                 "source": {
-                    "type": "service",
+                    "type": "override",
                     "value": "lampie.override",
                 },
             },

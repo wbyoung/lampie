@@ -72,7 +72,7 @@ async def _activate(
     slugs: list[str] = call.data[ATTR_NOTIFICATION]
     led_config: tuple[LEDConfig, ...] | None = call.data.get(ATTR_LED_CONFIG)
     led_config_source = (
-        LEDConfigSource(f"{','.join(slugs)}[custom]", LEDConfigSourceType.SERVICE)
+        LEDConfigSource(f"{','.join(slugs)}[custom]", LEDConfigSourceType.NOTIFICATION)
         if led_config is not None
         else None
     )
@@ -105,7 +105,7 @@ async def _override(
     name: str = call.data.get(ATTR_NAME) or f"{DOMAIN}.{SERVICE_NAME_OVERRIDE}"
     switch_ids: list[str] = call.data[ATTR_ENTITY_ID]
     led_config: tuple[LEDConfig, ...] | None = call.data[ATTR_LED_CONFIG]
-    led_config_source = LEDConfigSource(name, LEDConfigSourceType.SERVICE)
+    led_config_source = LEDConfigSource(name, LEDConfigSourceType.OVERRIDE)
 
     if led_config is None:  # none indicates a reset
         led_config_source = LEDConfigSource(None)
