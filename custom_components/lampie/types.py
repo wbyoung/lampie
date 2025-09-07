@@ -7,6 +7,7 @@ from contextlib import suppress
 from dataclasses import dataclass, field
 import datetime as dt
 from enum import Enum, IntEnum, StrEnum, auto
+import re
 from typing import TYPE_CHECKING, Any, NotRequired, Self, TypedDict
 
 from homeassistant.config_entries import ConfigEntry
@@ -29,6 +30,8 @@ from .const import (
 if TYPE_CHECKING:
     from .coordinator import LampieUpdateCoordinator
     from .orchestrator import LampieOrchestrator
+
+_SLUG_TAG_SUFFIX = re.compile(r"\[[^\]]+\]$")
 
 type Slug = str
 type DeviceId = str
@@ -182,7 +185,7 @@ class LEDConfigSourceType(StrEnum):
     """LED configuration source type."""
 
     NOTIFICATION = auto()
-    SERVICE = auto()
+    OVERRIDE = auto()
 
 
 @dataclass(frozen=True)
@@ -196,7 +199,25 @@ class LEDConfigSource:
         return self.type.name.lower() + (f":{self.value}" if self.value else "")
 
     def is_for_notification(self, slug: str) -> bool:
-        return self.type == LEDConfigSourceType.NOTIFICATION and self.value == slug
+        """Checks if a source is for a notification slug.
+
+        The following would result in `True` for `doors_open`:
+
+        LEDConfigSource("doors_open")
+        LEDConfigSource("doors_open,windows_open[custom]")
+
+        While these would be `False`:
+
+        LEDConfigSource("lampie.override", LEDConfigSourceType.OVERRIDE)
+        LEDConfigSource("doors_open", LEDConfigSourceType.OVERRIDE)
+
+        Returns:
+            True when this is for the given slug.
+        """
+        return (
+            self.type == LEDConfigSourceType.NOTIFICATION
+            and slug in _SLUG_TAG_SUFFIX.sub("", self.value or "").split(",")
+        )
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -206,9 +227,12 @@ class LEDConfigSource:
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> Self:
+        type_name_migration_mapping = {"service": "override"}
+        type_name = type_name_migration_mapping.get(data[ATTR_TYPE], data[ATTR_TYPE])
+
         return cls(
             value=data[ATTR_VALUE],
-            type=getattr(LEDConfigSourceType, data[ATTR_TYPE].upper()),
+            type=getattr(LEDConfigSourceType, type_name.upper()),
         )
 
 
