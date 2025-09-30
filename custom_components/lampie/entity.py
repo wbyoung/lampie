@@ -49,7 +49,7 @@ class LampieEntity[DataT](ABC, CoordinatorEntity[LampieUpdateCoordinator]):
 
     @property
     def orchestrator(self) -> LampieOrchestrator:
-        """Get the Lapmpie orchestrator."""
+        """Get the Lampie orchestrator."""
         config_entry = self.coordinator.config_entry
         orchestrator: LampieOrchestrator = config_entry.runtime_data.orchestrator
         return orchestrator

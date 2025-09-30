@@ -32,9 +32,9 @@ def staged_test(
 
     StageFunction:
         A callable with any number of arguments just like standard `pytest` test
-        cases. Its function signature isare used to determine the signature of
-        the final wrapper function created by the `staged_test` decorator,
-        ensuring pytest injected fixtures still work.
+        cases. Its function signature is used to determine the signature of the
+        final wrapper function created by the `staged_test` decorator, ensuring
+        pytest injected fixtures still work.
 
         These may return a dictionary. The values in the dictionary will be
         merged into those values being passed to the next stage.
@@ -46,7 +46,7 @@ def staged_test(
 
 
     Example:
-        def _steup(my_fixture, **kwargs): return {"action": "light.turn_on"}
+        def _setup(my_fixture, **kwargs): return {"action": "light.turn_on"}
         def _actions(my_fixture, action, **kwargs): ...
         def _assertions(my_fixture, action, **kwargs): ...
 
@@ -55,7 +55,7 @@ def staged_test(
             setup,
             actions,
             assertions,
-            hass: HomeAssistant,  # pytest injectected fixtures still work
+            hass: HomeAssistant,  # pytest injected fixtures still work
             **kwargs: Any,
         ):
             await setup()

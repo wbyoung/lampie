@@ -20,7 +20,7 @@ ATTR_STARTED_AT: Final = "started_at"
 ATTR_TYPE: Final = "type"
 ATTR_VALUE: Final = "value"
 
-CONF_BRIGTNESS: Final = "brightness"
+CONF_BRIGHTNESS: Final = "brightness"
 CONF_COLOR: Final = "color"
 CONF_DURATION: Final = "duration"
 CONF_EFFECT: Final = "effect"

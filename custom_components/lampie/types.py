@@ -21,7 +21,7 @@ from .const import (
     ATTR_EFFECT,
     ATTR_TYPE,
     ATTR_VALUE,
-    CONF_BRIGTNESS,
+    CONF_BRIGHTNESS,
     CONF_COLOR,
     CONF_DURATION,
     CONF_EFFECT,
@@ -161,7 +161,7 @@ class LEDConfig:
 
         color = config.get(CONF_COLOR, Color.BLUE.name)
         color = Color.parse_or_validate_in_range(color)
-        brightness: float = config.get(CONF_BRIGTNESS, 100.0)
+        brightness: float = config.get(CONF_BRIGHTNESS, 100.0)
         effect: Effect = getattr(
             Effect, config.get(CONF_EFFECT, Effect.SOLID.name).upper()
         )

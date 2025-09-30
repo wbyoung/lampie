@@ -1,4 +1,4 @@
-"""Support for the Lapmpie services."""
+"""Support for the Lampie services."""
 
 from functools import partial
 from typing import Any, Final

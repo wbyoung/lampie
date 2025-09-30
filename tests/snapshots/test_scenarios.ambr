@@ -3222,6 +3222,26 @@
     'state': 'off',
   })
 # ---
+# name: test_single_config_entry[doors_open_multiple_switches_dismissed][switch_info:light.entryway]
+  dict({
+    'disable_clear_notification_id': None,
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'led_config': tuple(
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': None,
+    }),
+    'local_protection_id': None,
+    'priorities': tuple(
+      'doors_open',
+    ),
+  })
+# ---
 # name: test_single_config_entry[doors_open_multiple_switches_dismissed][switch_info]
   dict({
     'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
@@ -3237,26 +3257,6 @@
       'value': None,
     }),
     'local_protection_id': 'switch.kitchen_local_protection',
-    'priorities': tuple(
-      'doors_open',
-    ),
-  })
-# ---
-# name: test_single_config_entry[doors_open_multiple_switches_dismissed][swtich_info:light.entryway]
-  dict({
-    'disable_clear_notification_id': None,
-    'expiration': ExpirationInfoSnapshot({
-      'cancel_listener': None,
-      'expires_at': None,
-      'started_at': None,
-    }),
-    'led_config': tuple(
-    ),
-    'led_config_source': dict({
-      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
-      'value': None,
-    }),
-    'local_protection_id': None,
     'priorities': tuple(
       'doors_open',
     ),
@@ -4725,6 +4725,9 @@
     'state': 'off',
   })
 # ---
+# name: test_switch_override_on_unrelated_switch[entryway_no_override_dismissed][switch_info:light.entryway]
+  None
+# ---
 # name: test_switch_override_on_unrelated_switch[entryway_no_override_dismissed][switch_info]
   dict({
     'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
@@ -4744,9 +4747,6 @@
       'doors_open',
     ),
   })
-# ---
-# name: test_switch_override_on_unrelated_switch[entryway_no_override_dismissed][swtich_info:light.entryway]
-  None
 # ---
 # name: test_switch_override_on_unrelated_switch[entryway_override][notification_info]
   dict({
@@ -4851,27 +4851,7 @@
     'state': 'off',
   })
 # ---
-# name: test_switch_override_on_unrelated_switch[entryway_override][switch_info]
-  dict({
-    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
-    'expiration': ExpirationInfoSnapshot({
-      'cancel_listener': None,
-      'expires_at': None,
-      'started_at': None,
-    }),
-    'led_config': tuple(
-    ),
-    'led_config_source': dict({
-      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
-      'value': None,
-    }),
-    'local_protection_id': 'switch.kitchen_local_protection',
-    'priorities': tuple(
-      'doors_open',
-    ),
-  })
-# ---
-# name: test_switch_override_on_unrelated_switch[entryway_override][swtich_info:light.entryway]
+# name: test_switch_override_on_unrelated_switch[entryway_override][switch_info:light.entryway]
   dict({
     'disable_clear_notification_id': 'switch.entryway_disable_config_2x_tap_to_clear_notifications',
     'expiration': ExpirationInfoSnapshot({
@@ -4893,6 +4873,26 @@
     }),
     'local_protection_id': 'switch.entryway_local_protection',
     'priorities': tuple(
+    ),
+  })
+# ---
+# name: test_switch_override_on_unrelated_switch[entryway_override][switch_info]
+  dict({
+    'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'led_config': tuple(
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': None,
+    }),
+    'local_protection_id': 'switch.kitchen_local_protection',
+    'priorities': tuple(
+      'doors_open',
     ),
   })
 # ---
@@ -5040,6 +5040,25 @@
     'state': 'off',
   })
 # ---
+# name: test_switch_override_on_unrelated_switch[entryway_override_expired][switch_info:light.entryway]
+  dict({
+    'disable_clear_notification_id': 'switch.entryway_disable_config_2x_tap_to_clear_notifications',
+    'expiration': ExpirationInfoSnapshot({
+      'cancel_listener': None,
+      'expires_at': None,
+      'started_at': None,
+    }),
+    'led_config': tuple(
+    ),
+    'led_config_source': dict({
+      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
+      'value': None,
+    }),
+    'local_protection_id': 'switch.entryway_local_protection',
+    'priorities': tuple(
+    ),
+  })
+# ---
 # name: test_switch_override_on_unrelated_switch[entryway_override_expired][switch_info]
   dict({
     'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
@@ -5057,25 +5076,6 @@
     'local_protection_id': 'switch.kitchen_local_protection',
     'priorities': tuple(
       'doors_open',
-    ),
-  })
-# ---
-# name: test_switch_override_on_unrelated_switch[entryway_override_expired][swtich_info:light.entryway]
-  dict({
-    'disable_clear_notification_id': 'switch.entryway_disable_config_2x_tap_to_clear_notifications',
-    'expiration': ExpirationInfoSnapshot({
-      'cancel_listener': None,
-      'expires_at': None,
-      'started_at': None,
-    }),
-    'led_config': tuple(
-    ),
-    'led_config_source': dict({
-      'type': <LEDConfigSourceType.NOTIFICATION: 'notification'>,
-      'value': None,
-    }),
-    'local_protection_id': 'switch.entryway_local_protection',
-    'priorities': tuple(
     ),
   })
 # ---

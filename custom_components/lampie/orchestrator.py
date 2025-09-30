@@ -440,7 +440,7 @@ class LampieOrchestrator:
                 managing durations/expirations instead of the device.
             assert_can_activate: Adds a protective assertion in the method
                 ensuring that there is a notification that can be activated.
-                Useful for initial presentaiton of notifications.
+                Useful for initial presentation of notifications.
             log_context: A short string to include in log messages.
         """
         from_state = self.switch_info(switch_id)
@@ -841,7 +841,7 @@ class LampieOrchestrator:
             is_valid_dismissal = True
             via_switch_firmware = True
 
-        # stop procssing this if it's not a valid dismissal, i.e. the
+        # stop processing this if it's not a valid dismissal, i.e. the
         # `switch.<name>_disable_config_2x_tap_to_clear_notifications` has been
         # enabled by the user.
         if not is_valid_dismissal:
@@ -937,7 +937,7 @@ class LampieOrchestrator:
             and (led_config_source.is_for_notification(slug))
         ]
 
-        await self._async_handle_expriation(
+        await self._async_handle_expiration(
             now=now,
             expiration=info.expiration,
             switches=switches,
@@ -957,7 +957,7 @@ class LampieOrchestrator:
     ) -> None:
         _LOGGER.debug("switch override expired via timer (%s)", switch_id)
 
-        await self._async_handle_expriation(
+        await self._async_handle_expiration(
             now=now,
             expiration=self.switch_info(switch_id).expiration,
             switches=[switch_id],
@@ -975,7 +975,7 @@ class LampieOrchestrator:
             log_context=switch_id,
         )
 
-    async def _async_handle_expriation(
+    async def _async_handle_expiration(
         self,
         *,
         now: dt.datetime,

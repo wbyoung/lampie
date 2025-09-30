@@ -333,7 +333,7 @@ def _step_event(
     Args:
         step: A step for configuring the target device.
         hass: Home Assistant instance.
-        standard_switch: Switch for the stanadr config entry.
+        standard_switch: Switch for the standard config entry.
         entity_registry: The entity registry.
     """
     event_data = {**step["event"]}
@@ -458,7 +458,7 @@ async def _assert_expectations(  # noqa: RUF029
         for entity_id in initial_states or {}:
             if entity_id.startswith("light."):
                 assert orchestrator._switches.get(entity_id) == snapshot(
-                    name=f"swtich_info:{entity_id}"
+                    name=f"switch_info:{entity_id}"
                 )
 
     for entity in (
@@ -487,7 +487,7 @@ async def _assert_expectations(  # noqa: RUF029
         else:
             raise AssertionError(
                 f"bad timer type {timer_type} -- should be notification or"
-                "switc, i.e. `notification|doors_open` "
+                "switch, i.e. `notification|doors_open` "
                 "or `switch|light.kitchen`"
             )
 
