@@ -636,7 +636,7 @@ class LampieOrchestrator:
             TRACE, "transition_switch: %s; %s -> %s", switch_id, from_config, to_config
         )
 
-        if via_switch_firmware:
+        if via_switch_firmware and _all_clear(to_config):
             return
 
         from_mode = (

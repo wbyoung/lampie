@@ -1123,7 +1123,7 @@ async def test_switch_override(
                 "switch|light.kitchen": False,
             },
             "expected_events": 1,
-            "expected_zha_calls": 2,
+            "expected_zha_calls": 3,
         },
     ),
     Scenario(
@@ -1930,6 +1930,39 @@ _DISMISSAL_FROM_SWITCH_BASE = {
                         "doors_open", LEDConfigSourceType.NOTIFICATION
                     ),
                     "expected_zha_calls": 0,
+                },
+            ),
+            Scenario(
+                f"{prefix}_double_press_dismiss_higher_priority_updates_to_display_original",
+                {
+                    **_DISMISSAL_FROM_SWITCH_BASE,
+                    "configs": {
+                        "doors_open": {
+                            CONF_PRIORITY: {
+                                "light.kitchen": ["medicine", "doors_open"],
+                            },
+                        },
+                        "medicine": {
+                            CONF_COLOR: "cyan",
+                            CONF_EFFECT: "slow_blink",
+                            CONF_SWITCH_ENTITIES: ["light.kitchen"],
+                            CONF_PRIORITY: {
+                                "light.kitchen": ["medicine", "doors_open"],
+                            },
+                        },
+                    },
+                    "initial_leds_on": [True],
+                    "steps": [
+                        {
+                            "target": "switch.medicine_notification",
+                            "action": f"{SWITCH_DOMAIN}.{SERVICE_TURN_ON}",
+                        },
+                        {"event": {"command": command}},
+                    ],
+                    "expected_notification_state": "on",
+                    "expected_leds_on": [True],
+                    "expected_zha_calls": 2,  # display medicine, re-display doors_open
+                    "snapshots": {},
                 },
             ),
             Scenario(
