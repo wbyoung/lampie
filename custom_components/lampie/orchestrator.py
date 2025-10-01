@@ -92,6 +92,10 @@ class _LEDMode(IntEnum):
     INDIVIDUAL = 3
 
 
+class _DismissalBlocked(Exception):
+    pass
+
+
 class _StartScriptResult(NamedTuple):
     led_config: tuple[LEDConfig, ...] | None
     block_activation: bool
@@ -307,13 +311,16 @@ class LampieOrchestrator:
         *,
         dismissal_command: str | None = None,
         via_switch: SwitchId | None = None,
-        via_switch_firmware: bool = False,
     ) -> None:
         """Dismiss a notification.
 
         Perform all necessary actions and validations to dismiss a notification,
         and update all switches as necessary based on the outcome. Switches may
         be updated to display another notification or cleared.
+
+        Raises:
+            _DismissalBlocked: Raised for internal event processing to handle
+                dismissals that get blocked.
         """
         coordinator = self._coordinators[slug]
         entry = coordinator.config_entry
@@ -329,23 +336,7 @@ class LampieOrchestrator:
         block_next = end_action_response.block_next
 
         if dismissed and block_dismissal:
-            # set the switch back to what it was before if the dismissal was
-            # blocked and the switch is already showing the clear config because
-            # the dismissal was via the switch firmware. note: it's possible
-            # that the LED config is missing in the from state, i.e. the system
-            # restarted & the recorded state for the switch doesn't match what's
-            # really on the switch.
-            if (
-                via_switch
-                and via_switch_firmware
-                and (prior_led_config := self.switch_info(via_switch).led_config)
-            ):
-                await self._transition_switch(
-                    via_switch,
-                    from_config=(),
-                    to_config=prior_led_config,
-                )
-            return
+            raise _DismissalBlocked
 
         self.store_notification_info(
             slug,
@@ -362,7 +353,6 @@ class LampieOrchestrator:
             await self._switch_apply_notification_or_override(
                 switch_id,
                 exclude={LEDConfigSourceType.NOTIFICATION} if block_next else None,
-                via_switch_firmware=via_switch_firmware and via_switch == switch_id,
                 log_context="dismiss-notification",
             )
 
@@ -415,7 +405,6 @@ class LampieOrchestrator:
         led_config: tuple[LEDConfig, ...] | None = None,
         exclude: set[LEDConfigSourceType] | None = None,
         dismissal_command: str | None = None,
-        via_switch_firmware: bool = False,
         strip_durations_for_firmware: bool = False,
         assert_can_activate: bool = False,
         log_context: str,
@@ -432,9 +421,6 @@ class LampieOrchestrator:
             dismissal_command: The ZHA or internal command that triggered
                 the dismissal. This is used to determine if this was a physical
                 dismissal that correlates to emitting an event for end users.
-            via_switch_firmware: A flag for if this change was via the switch
-                firmware which is passed along to the method that performs the
-                switch transition to minimize updates.
             strip_durations_for_firmware: Remove the durations before they're
                 sent to the device. This should be used if the orchestrator is
                 managing durations/expirations instead of the device.
@@ -493,7 +479,6 @@ class LampieOrchestrator:
             switch_id,
             from_config=from_state.led_config,
             to_config=led_config,
-            via_switch_firmware=via_switch_firmware,
         )
 
         if dismissal_command:
@@ -630,14 +615,10 @@ class LampieOrchestrator:
         *,
         from_config: tuple[LEDConfig, ...],
         to_config: tuple[LEDConfig, ...],
-        via_switch_firmware: bool = False,
     ) -> None:
         _LOGGER.log(
             TRACE, "transition_switch: %s; %s -> %s", switch_id, from_config, to_config
         )
-
-        if via_switch_firmware and _all_clear(to_config):
-            return
 
         from_mode = (
             None
@@ -788,6 +769,7 @@ class LampieOrchestrator:
         led_config = [*from_state.led_config]
         all_clear = False
         is_valid_dismissal = False
+        dismissal_blocked = False
         index = 0
 
         if not led_config or not led_config_source:
@@ -836,10 +818,10 @@ class LampieOrchestrator:
             )
 
             is_valid_dismissal = not disable_clear_notification
-            via_switch_firmware = not local_protection
+            led_changed_via_firmware = not local_protection
         else:
             is_valid_dismissal = True
-            via_switch_firmware = True
+            led_changed_via_firmware = True
 
         # stop processing this if it's not a valid dismissal, i.e. the
         # `switch.<name>_disable_config_2x_tap_to_clear_notifications` has been
@@ -847,38 +829,68 @@ class LampieOrchestrator:
         if not is_valid_dismissal:
             return
 
-        self.store_switch_info(
-            switch_id,
-            expiration=self._cancel_expiration(
-                self.switch_info(switch_id).expiration,
-                log_context=switch_id,
-            ),
-        )
+        # immediately store the change that's been made on the switch if the
+        # switch actually updated itself.
+        if led_changed_via_firmware:
+            self.store_switch_info(
+                switch_id,
+                led_config_source=led_config_source,
+                led_config=tuple(led_config),
+            )
 
         if (
             all_clear
             and (active := self._first_on_for_switch(switch_id))
             and led_config_source.is_for_notification(active.slug)
         ):
-            await self.dismiss_notification(
-                active.slug,
-                dismissal_command=command,
-                via_switch=switch_id,
-                via_switch_firmware=via_switch_firmware,
-            )
+            try:
+                await self.dismiss_notification(
+                    active.slug,
+                    dismissal_command=command,
+                    via_switch=switch_id,
+                )
+            except _DismissalBlocked:
+                # if the switch's firmware changed the LEDs being displayed,
+                # then it's currently showing as all clear. the `switch_info`
+                # was updated earlier in this method to match the firmware's
+                # change before invoking `dismiss_notification`. the update to
+                # switch_info` ensures the stored info matches the switch for
+                # all update/dismissal cases (this allows calculating what
+                # cluster messages need to be sent to get the the correct
+                # state). these changes need to be reversed if the dismissal was
+                # blocked, and the switch needs to be transitioned to actually
+                # show the prior state since it's currently showing as all
+                # clear. note: it's possible that the LED config is missing in
+                # the from state, i.e. the system restarted & the recorded state
+                # for the switch doesn't match what's really on the switch.
+                if led_changed_via_firmware:
+                    self.store_switch_info(
+                        switch_id,
+                        led_config=from_state.led_config,
+                        led_config_source=from_state.led_config_source,
+                    )
+                    await self._transition_switch(
+                        switch_id,
+                        from_config=(),
+                        to_config=from_state.led_config,
+                    )
+                dismissal_blocked = True
         elif all_clear:
             await self._switch_apply_notification_or_override(
                 switch_id,
                 exclude={LEDConfigSourceType.OVERRIDE},
                 dismissal_command=command,
-                via_switch_firmware=via_switch_firmware,
                 log_context=f"dismissed via {switch_id}",
             )
-        else:
+
+        # clear the expiration after successfully dismissing
+        if not dismissal_blocked:
             self.store_switch_info(
                 switch_id,
-                led_config_source=led_config_source,
-                led_config=tuple(led_config),
+                expiration=self._cancel_expiration(
+                    self.switch_info(switch_id).expiration,
+                    log_context=switch_id,
+                ),
             )
 
     @staticmethod

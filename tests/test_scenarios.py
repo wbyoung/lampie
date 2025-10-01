@@ -1929,7 +1929,7 @@ _DISMISSAL_FROM_SWITCH_BASE = {
                     "expected_led_config_source": LEDConfigSource(
                         "doors_open", LEDConfigSourceType.NOTIFICATION
                     ),
-                    "expected_zha_calls": 0,
+                    "expected_zha_calls": 1,
                 },
             ),
             Scenario(
