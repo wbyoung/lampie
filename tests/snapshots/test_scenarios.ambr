@@ -279,6 +279,32 @@
   list([
   ])
 # ---
+# name: test_dismissal_from_switch[aux_double_press_with_service_override][zha_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'cluster_id': 64561,
+        'cluster_type': 'in',
+        'command': 1,
+        'command_type': 'server',
+        'endpoint_id': 1,
+        'ieee': 'mock-ieee:kitchen',
+        'manufacturer': 4655,
+        'params': dict({
+          'led_color': 170,
+          'led_duration': 255,
+          'led_effect': 1,
+          'led_level': 100,
+        }),
+      }),
+      'domain': 'zha',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'issue_zigbee_cluster_command',
+    }),
+  ])
+# ---
 # name: test_dismissal_from_switch[aux_double_with_local_protection_and_2x_tap_and_block_dismissal_script][service_calls]
   list([
     tuple(
@@ -605,6 +631,32 @@
 # ---
 # name: test_dismissal_from_switch[config_double_press_with_service_override][service_calls]
   list([
+  ])
+# ---
+# name: test_dismissal_from_switch[config_double_press_with_service_override][zha_cluster_commands]
+  list([
+    ServiceCallSnapshot({
+      'context': <ANY>,
+      'data': ReadOnlyDict({
+        'cluster_id': 64561,
+        'cluster_type': 'in',
+        'command': 1,
+        'command_type': 'server',
+        'endpoint_id': 1,
+        'ieee': 'mock-ieee:kitchen',
+        'manufacturer': 4655,
+        'params': dict({
+          'led_color': 170,
+          'led_duration': 255,
+          'led_effect': 1,
+          'led_level': 100,
+        }),
+      }),
+      'domain': 'zha',
+      'hass': <ANY>,
+      'return_response': False,
+      'service': 'issue_zigbee_cluster_command',
+    }),
   ])
 # ---
 # name: test_dismissal_from_switch[config_double_with_local_protection_and_2x_tap_and_block_dismissal_script][service_calls]
