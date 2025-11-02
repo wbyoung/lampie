@@ -307,6 +307,62 @@ async def test_renamed_switch_entity(
     assert config_entry.data[CONF_SWITCH_ENTITIES] == [f"{switch.entity_id}_renamed"]
 
 
+async def test_device_registry_cleanup(
+    hass: HomeAssistant,
+    device_registry: dr.DeviceRegistry,
+    caplog: pytest.LogCaptureFixture,
+) -> None:
+    """Test that unused linked switch devices are removed from the config entry."""
+    entryway_switch = add_mock_switch(hass, "light.entryway")
+    kitchen_switch = add_mock_switch(hass, "light.kitchen")
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        title="Doors Open",
+        entry_id="mock-doors-open-id",
+        data={
+            CONF_COLOR: "red",
+            CONF_EFFECT: "open_close",
+            CONF_SWITCH_ENTITIES: [entryway_switch.id, kitchen_switch.id],
+        },
+    )
+    entry.add_to_hass(hass)
+    await setup_integration(hass, entry)
+
+    service_device = device_registry.async_get_device({(DOMAIN, entry.entry_id)})
+    expected_device_ids = {
+        service_device.id,
+        entryway_switch.device_id,
+        kitchen_switch.device_id,
+    }
+
+    def get_device_ids() -> set[str]:
+        return {
+            device.id
+            for device in device_registry.devices.values()
+            if device.config_entries & {entry.entry_id}
+        }
+
+    assert get_device_ids() == expected_device_ids
+    assert f"Unlinking device {service_device.id}" not in caplog.text
+    assert f"{DOMAIN}.mock-doors-open-id" not in caplog.text
+    assert f"Unlinking device {entryway_switch.device_id}" not in caplog.text
+    assert f"Unlinking device {kitchen_switch.device_id}" not in caplog.text
+
+    # remove the kitchen switch & check that it was removed from the registry
+    hass.config_entries.async_update_entry(
+        entry,
+        data={**entry.data, CONF_SWITCH_ENTITIES: [entryway_switch.id]},
+    )
+    expected_device_ids.remove(kitchen_switch.device_id)
+    await hass.async_block_till_done()
+    assert get_device_ids() == expected_device_ids
+    assert f"Unlinking device {service_device.id}" not in caplog.text
+    assert f"{DOMAIN}.mock-doors-open-id" not in caplog.text
+    assert f"Unlinking device {entryway_switch.device_id}" not in caplog.text
+    assert f"Unlinking device {kitchen_switch.device_id}" in caplog.text
+
+
 async def test_create_removed_switch_entity_issue(
     hass: HomeAssistant,
     config_entry: MockConfigEntry,

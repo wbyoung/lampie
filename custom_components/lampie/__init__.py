@@ -6,7 +6,8 @@ import logging
 
 from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers import config_validation as cv
+from homeassistant.helpers import config_validation as cv, device_registry as dr
+from homeassistant.helpers.device import async_device_info_to_link_from_entity
 from homeassistant.helpers.event import async_track_entity_registry_updated_event
 from homeassistant.helpers.typing import ConfigType
 from homeassistant.util import slugify
@@ -65,10 +66,51 @@ async def async_setup_entry(hass: HomeAssistant, entry: LampieConfigEntry) -> bo
         ),
     )
 
+    async_cleanup_device_registry(hass, entry)
+
     await coordinator.async_config_entry_first_refresh()
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     entry.async_on_unload(entry.add_update_listener(_async_update_listener))
     return True
+
+
+def async_cleanup_device_registry(
+    hass: HomeAssistant,
+    entry: LampieConfigEntry,
+) -> None:
+    """Remove entries form device registry if no longer in use."""
+    device_registry = dr.async_get(hass)
+    devices = dr.async_entries_for_config_entry(
+        registry=device_registry,
+        config_entry_id=entry.entry_id,
+    )
+
+    switch_devices = set()
+
+    for switch_id in entry.data[CONF_SWITCH_ENTITIES]:
+        device_info = async_device_info_to_link_from_entity(hass, switch_id)
+        if device_info is not None:
+            id_tuple = next(iter(device_info["identifiers"]))
+            switch_devices.add(id_tuple)
+
+    for device in devices:
+        for item in device.identifiers:
+            # skip the service that's created for instances of LampieEntity.
+            if item[0] == DOMAIN:
+                continue
+            # target the switch devices that are created for instances of
+            # LampieDistributedEntity.
+            if item not in switch_devices:
+                _LOGGER.debug(
+                    "Unlinking device %s for untracked switch %s.%s from config entry %s",
+                    device.id,
+                    item[0],
+                    item[1],
+                    entry.entry_id,
+                )
+                device_registry.async_update_device(
+                    device.id, remove_config_entry_id=entry.entry_id
+                )
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: LampieConfigEntry) -> bool:
