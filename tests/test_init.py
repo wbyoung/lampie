@@ -59,6 +59,7 @@ async def test_standard_setup(
 async def test_config_entries_linked_to_switch_device(
     hass: HomeAssistant,
     device_registry: dr.DeviceRegistry,
+    caplog: pytest.LogCaptureFixture,
 ) -> None:
     """Test that the config entries are linked to the switch devices."""
     entryway_switch = add_mock_switch(hass, "light.entryway")
@@ -71,7 +72,15 @@ async def test_config_entries_linked_to_switch_device(
         data={
             CONF_COLOR: "red",
             CONF_EFFECT: "open_close",
-            CONF_SWITCH_ENTITIES: ["light.entryway"],
+            CONF_SWITCH_ENTITIES: [
+                "light.entryway",
+                "light.kitchen",
+                "light.non_existent",
+            ],
+            CONF_PRIORITY: {
+                "light.kitchen": ["medicine", "doors_open"],
+                "light.non_existent": ["doors_open", "medicine"],
+            },
         },
     )
     doors_open_entry.add_to_hass(hass)
@@ -87,7 +96,14 @@ async def test_config_entries_linked_to_switch_device(
         data={
             CONF_COLOR: "cyan",
             CONF_EFFECT: "slow_blink",
-            CONF_SWITCH_ENTITIES: ["light.kitchen"],
+            CONF_SWITCH_ENTITIES: [
+                "light.kitchen",
+                "light.non_existent",
+            ],
+            CONF_PRIORITY: {
+                "light.kitchen": ["medicine", "doors_open"],
+                "light.non_existent": ["doors_open", "medicine"],
+            },
         },
     )
     medicine_entry.add_to_hass(hass)
@@ -96,18 +112,38 @@ async def test_config_entries_linked_to_switch_device(
         {(DOMAIN, medicine_entry.entry_id)}
     )
 
-    device_ids = {
+    doors_open_device_ids = {
         device.id
         for device in device_registry.devices.values()
-        if device.config_entries & {"mock-doors-open-id", "mock-medicine-id"}
+        if device.config_entries & {"mock-doors-open-id"}
     }
 
-    assert device_ids == {
+    medicine_device_ids = {
+        device.id
+        for device in device_registry.devices.values()
+        if device.config_entries & {"mock-medicine-id"}
+    }
+
+    assert doors_open_device_ids == {
         doors_open_device.id,
-        medicine_device.id,
         entryway_switch.device_id,
         kitchen_switch.device_id,
     }
+
+    assert medicine_device_ids == {
+        medicine_device.id,
+        kitchen_switch.device_id,
+    }
+
+    assert (
+        "skipping linking of switch to config entry for light.non_existent on "
+        "Medicine because an associated device could not be found" in caplog.text
+    )
+
+    assert (
+        "skipping creation of sensors for light.non_existent on Doors Open "
+        "because an associated device could not be found" in caplog.text
+    )
 
 
 async def test_primary_config_entry_sensor_ownership(

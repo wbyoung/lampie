@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from dataclasses import dataclass
+import itertools
 import logging
 from statistics import mean
 from typing import Literal
@@ -15,6 +16,8 @@ from homeassistant.components.sensor import (
 )
 from homeassistant.const import PERCENTAGE, STATE_UNAVAILABLE, STATE_UNKNOWN, UnitOfTime
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers import device_registry as dr
+from homeassistant.helpers.device import async_device_info_to_link_from_entity
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.restore_state import (
     ExtraStoredData,
@@ -34,7 +37,7 @@ from .const import (
     CONF_SWITCH_ENTITIES,
 )
 from .entity import LampieDistributedEntity, LampieEntityDescription
-from .helpers import is_primary_for_switch, lookup_device_info
+from .helpers import is_primary_for_switch
 from .types import LampieConfigEntry, LampieSwitchInfo, LEDConfig, LEDConfigSource
 
 _LOGGER = logging.getLogger(__name__)
@@ -149,19 +152,42 @@ async def async_setup_entry(  # noqa: RUF029
 ) -> None:
     """Set up Lampie sensor entities based on a config entry."""
     coordinator = entry.runtime_data.coordinator
+    device_registry = dr.async_get(hass)
+    entities: list[LampieSensor] = []
 
-    entities: list[LampieSensor] = [
-        LampieSensor(
-            description=description,
-            coordinator=coordinator,
-            switch_id=switch_id,
-            switch_device_info=device_info,
-        )
-        for description in SENSOR_TYPES
-        for switch_id in entry.data[CONF_SWITCH_ENTITIES]
-        if is_primary_for_switch(entry, switch_id)
-        and (device_info := lookup_device_info(hass, entry, switch_id))
-    ]
+    for description, switch_id in itertools.product(
+        SENSOR_TYPES, entry.data[CONF_SWITCH_ENTITIES]
+    ):
+        device_info = async_device_info_to_link_from_entity(hass, switch_id)
+        is_primary = is_primary_for_switch(entry, switch_id)
+        if is_primary and device_info:
+            entities.append(
+                LampieSensor(
+                    description=description,
+                    coordinator=coordinator,
+                    switch_id=switch_id,
+                    switch_device_info=device_info,
+                )
+            )
+        elif is_primary:
+            _LOGGER.warning(
+                "skipping creation of sensors for %s on %s because an associated "
+                "device could not be found",
+                switch_id,
+                entry.title,
+            )
+        elif device_info:  # implied: not is_primary
+            device_registry.async_get_or_create(
+                config_entry_id=entry.entry_id,
+                identifiers=device_info["identifiers"],
+            )
+        else:  # implied: not is_primary
+            _LOGGER.warning(
+                "skipping linking of switch to config entry for %s on %s "
+                "because an associated device could not be found",
+                switch_id,
+                entry.title,
+            )
 
     async_add_entities(entities)
 
