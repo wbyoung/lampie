@@ -218,6 +218,7 @@ async def test_primary_config_entry_sensor_ownership(
 
 async def test_mismatched_priorities_generate_warning(
     hass: HomeAssistant,
+    switch: er.RegistryEntry,
     caplog: pytest.LogCaptureFixture,
 ) -> None:
     """Test that mismatched config priorities generate a warning."""
