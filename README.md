@@ -92,7 +92,7 @@ Follow the instructions to configure the integration.
   - `purple` &rarr; 200
   - `white` &rarr; 255
 - Choose the effect type.
-- Choose a duration in seconds.
+- Choose a duration in seconds. If left empty, the notification will stay active until dismissed.
 - If desired, configure [advanced configuration](#advanced-configuration-settings) options.
 - When you proceed, you may need to choose [priorities for switches](#notification-priority).
 
