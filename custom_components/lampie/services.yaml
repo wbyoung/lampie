@@ -16,10 +16,14 @@ override:
         entity:
           multiple: true
           filter:
-            integration: zha
-            domain:
-              - light
-              - fan
+            - integration: zha
+              domain:
+                - light
+                - fan
+            - integration: mqtt
+              domain:
+                - light
+                - fan
     leds:
       required: true
       selector:
