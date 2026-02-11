@@ -172,8 +172,7 @@ RESTORE_STATE_SCENARIOS = (
                     ),
                 ),
                 led_config_source=LEDConfigSource("doors_open"),
-                local_protection_id="unstored:entity_id",
-                disable_clear_notification_id="unstored:entity_id",
+                integration_info="unstored:integration_info",
                 priorities=("doors_open",),
             ),
             "stored_data": {
@@ -208,8 +207,7 @@ RESTORE_STATE_SCENARIOS = (
                     LEDConfig(80, effect=Effect.SOLID, duration=4, brightness=50.0),
                 ),
                 led_config_source=LEDConfigSource("doors_open"),
-                local_protection_id="unstored:entity_id",
-                disable_clear_notification_id="unstored:entity_id",
+                integration_info="unstored:integration_info",
                 priorities=("doors_open",),
             ),
             "stored_data": {
@@ -244,8 +242,7 @@ RESTORE_STATE_SCENARIOS = (
                 led_config_source=LEDConfigSource(
                     "lampie.override", LEDConfigSourceType.OVERRIDE
                 ),
-                local_protection_id="unstored:entity_id",
-                disable_clear_notification_id="unstored:entity_id",
+                integration_info="unstored:integration_info",
                 priorities=("doors_open",),
             ),
             "stored_data": {
@@ -278,6 +275,7 @@ RESTORE_STATE_SCENARIOS = (
             "switch_info": LampieSwitchInfo(
                 led_config=(),
                 led_config_source=LEDConfigSource(None),
+                integration_info="unstored:integration_info",
                 priorities=("doors_open",),
             ),
             "stored_data": {},
@@ -313,8 +311,7 @@ RESTORE_STATE_SCENARIOS = (
                     "switch_info": LampieSwitchInfo(
                         led_config=(LEDConfig(Color.BLUE, effect=Effect.SOLID),),
                         led_config_source=LEDConfigSource("doors_open"),
-                        local_protection_id="unstored:entity_id",
-                        disable_clear_notification_id="unstored:entity_id",
+                        integration_info="unstored:integration_info",
                         priorities=("doors_open",),
                     ),
                     "stored_data": {
