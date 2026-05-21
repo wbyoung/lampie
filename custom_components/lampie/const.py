@@ -34,6 +34,7 @@ CONF_SWITCH_ENTITIES: Final = "switches"
 INOVELLI_MODELS = {
     "VZM30-SN",  # switch
     "VZM31-SN",  # two in one switch/dimmer
+    "VZM32-SN",  # presence switch/dimmer
     "VZM35-SN",  # fan switch
     "VZM36",  # canopy module
 }
