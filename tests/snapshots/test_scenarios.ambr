@@ -911,7 +911,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"led_effect":{"led_color":0,"led_effect":6,"led_level":100,"led_duration":255}}',
+        'payload': '{"led_effect":{"color":0,"effect":6,"level":100,"duration":255}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -922,7 +922,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"led_effect":{"led_color":90,"led_effect":1,"led_level":100,"led_duration":255}}',
+        'payload': '{"led_effect":{"color":90,"effect":1,"level":100,"duration":255}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -933,7 +933,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"led_effect":{"led_color":0,"led_effect":6,"led_level":100,"led_duration":255}}',
+        'payload': '{"led_effect":{"color":0,"effect":6,"level":100,"duration":255}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -1107,7 +1107,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"led_effect":{"led_color":0,"led_effect":6,"led_level":100,"led_duration":255}}',
+        'payload': '{"led_effect":{"color":0,"effect":6,"level":100,"duration":255}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -1118,7 +1118,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"led_effect":{"led_color":90,"led_effect":1,"led_level":100,"led_duration":255}}',
+        'payload': '{"led_effect":{"color":90,"effect":1,"level":100,"duration":255}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -1129,7 +1129,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"led_effect":{"led_color":0,"led_effect":6,"led_level":100,"led_duration":255}}',
+        'payload': '{"led_effect":{"color":0,"effect":6,"level":100,"duration":255}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -1288,7 +1288,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"led_effect":{"led_color":0,"led_effect":6,"led_level":100,"led_duration":255}}',
+        'payload': '{"led_effect":{"color":0,"effect":6,"level":100,"duration":255}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -1299,7 +1299,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"led_effect":{"led_color":90,"led_effect":1,"led_level":100,"led_duration":255}}',
+        'payload': '{"led_effect":{"color":90,"effect":1,"level":100,"duration":255}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -1310,7 +1310,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"led_effect":{"led_color":0,"led_effect":6,"led_level":100,"led_duration":255}}',
+        'payload': '{"led_effect":{"color":0,"effect":6,"level":100,"duration":255}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -1469,7 +1469,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"led_effect":{"led_color":90,"led_effect":1,"led_level":100,"led_duration":255}}',
+        'payload': '{"led_effect":{"color":90,"effect":1,"level":100,"duration":255}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -2424,7 +2424,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"led_effect":{"led_color":0,"led_effect":6,"led_level":100,"led_duration":255}}',
+        'payload': '{"led_effect":{"color":0,"effect":6,"level":100,"duration":255}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -2591,7 +2591,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"individual_led_effect":{"led_color":170,"led_effect":1,"led_level":100,"led_duration":30,"led_number":0}}',
+        'payload': '{"individual_led_effect":{"color":170,"effect":1,"level":100,"duration":30,"led":0}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -2602,7 +2602,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"individual_led_effect":{"led_color":170,"led_effect":1,"led_level":100,"led_duration":65,"led_number":1}}',
+        'payload': '{"individual_led_effect":{"color":170,"effect":1,"level":100,"duration":65,"led":1}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -2613,7 +2613,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"individual_led_effect":{"led_color":170,"led_effect":1,"led_level":100,"led_duration":122,"led_number":2}}',
+        'payload': '{"individual_led_effect":{"color":170,"effect":1,"level":100,"duration":122,"led":2}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -2624,7 +2624,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"individual_led_effect":{"led_color":170,"led_effect":1,"led_level":100,"led_duration":30,"led_number":3}}',
+        'payload': '{"individual_led_effect":{"color":170,"effect":1,"level":100,"duration":30,"led":3}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -2635,7 +2635,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"individual_led_effect":{"led_color":170,"led_effect":1,"led_level":100,"led_duration":122,"led_number":4}}',
+        'payload': '{"individual_led_effect":{"color":170,"effect":1,"level":100,"duration":122,"led":4}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -2646,7 +2646,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"individual_led_effect":{"led_color":170,"led_effect":1,"led_level":100,"led_duration":65,"led_number":5}}',
+        'payload': '{"individual_led_effect":{"color":170,"effect":1,"level":100,"duration":65,"led":5}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -2657,7 +2657,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"individual_led_effect":{"led_color":170,"led_effect":1,"led_level":100,"led_duration":30,"led_number":6}}',
+        'payload': '{"individual_led_effect":{"color":170,"effect":1,"level":100,"duration":30,"led":6}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -5720,7 +5720,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"led_effect":{"led_color":90,"led_effect":1,"led_level":100,"led_duration":255}}',
+        'payload': '{"led_effect":{"color":90,"effect":1,"level":100,"duration":255}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -5881,7 +5881,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"led_effect":{"led_color":90,"led_effect":1,"led_level":100,"led_duration":255}}',
+        'payload': '{"led_effect":{"color":90,"effect":1,"level":100,"duration":255}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -6040,7 +6040,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"led_effect":{"led_color":90,"led_effect":1,"led_level":100,"led_duration":255}}',
+        'payload': '{"led_effect":{"color":90,"effect":1,"level":100,"duration":255}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -6051,7 +6051,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"led_effect":{"led_color":170,"led_effect":255,"led_level":100,"led_duration":255}}',
+        'payload': '{"led_effect":{"color":170,"effect":255,"level":100,"duration":255}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -6219,7 +6219,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"led_effect":{"led_color":90,"led_effect":1,"led_level":100,"led_duration":255}}',
+        'payload': '{"led_effect":{"color":90,"effect":1,"level":100,"duration":255}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -6378,7 +6378,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"led_effect":{"led_color":90,"led_effect":1,"led_level":100,"led_duration":255}}',
+        'payload': '{"led_effect":{"color":90,"effect":1,"level":100,"duration":255}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -6531,7 +6531,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"led_effect":{"led_color":90,"led_effect":1,"led_level":100,"led_duration":255}}',
+        'payload': '{"led_effect":{"color":90,"effect":1,"level":100,"duration":255}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -6542,7 +6542,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"led_effect":{"led_color":170,"led_effect":255,"led_level":100,"led_duration":255}}',
+        'payload': '{"led_effect":{"color":170,"effect":255,"level":100,"duration":255}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -7886,7 +7886,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"led_effect":{"led_color":90,"led_effect":1,"led_level":100,"led_duration":255}}',
+        'payload': '{"led_effect":{"color":90,"effect":1,"level":100,"duration":255}}',
         'topic': 'home/z2m/Entryway/set',
       }),
       'domain': 'mqtt',
@@ -8088,7 +8088,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"led_effect":{"led_color":90,"led_effect":1,"led_level":100,"led_duration":255}}',
+        'payload': '{"led_effect":{"color":90,"effect":1,"level":100,"duration":255}}',
         'topic': 'home/z2m/Entryway/set',
       }),
       'domain': 'mqtt',
@@ -8281,7 +8281,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"led_effect":{"led_color":90,"led_effect":1,"led_level":100,"led_duration":255}}',
+        'payload': '{"led_effect":{"color":90,"effect":1,"level":100,"duration":255}}',
         'topic': 'home/z2m/Entryway/set',
       }),
       'domain': 'mqtt',
@@ -9127,7 +9127,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"led_effect":{"led_color":90,"led_effect":1,"led_level":100,"led_duration":255}}',
+        'payload': '{"led_effect":{"color":90,"effect":1,"level":100,"duration":255}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -9138,7 +9138,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"led_effect":{"led_color":170,"led_effect":255,"led_level":100,"led_duration":255}}',
+        'payload': '{"led_effect":{"color":170,"effect":255,"level":100,"duration":255}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -9306,7 +9306,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"individual_led_effect":{"led_color":0,"led_effect":1,"led_level":100,"led_duration":255,"led_number":0}}',
+        'payload': '{"individual_led_effect":{"color":0,"effect":1,"level":100,"duration":255,"led":0}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -9317,7 +9317,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"individual_led_effect":{"led_color":25,"led_effect":1,"led_level":100,"led_duration":255,"led_number":1}}',
+        'payload': '{"individual_led_effect":{"color":25,"effect":1,"level":100,"duration":255,"led":1}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -9328,7 +9328,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"individual_led_effect":{"led_color":255,"led_effect":1,"led_level":100,"led_duration":255,"led_number":2}}',
+        'payload': '{"individual_led_effect":{"color":255,"effect":1,"level":100,"duration":255,"led":2}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -9339,7 +9339,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"individual_led_effect":{"led_color":0,"led_effect":1,"led_level":100,"led_duration":255,"led_number":3}}',
+        'payload': '{"individual_led_effect":{"color":0,"effect":1,"level":100,"duration":255,"led":3}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -9350,7 +9350,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"individual_led_effect":{"led_color":25,"led_effect":1,"led_level":100,"led_duration":255,"led_number":4}}',
+        'payload': '{"individual_led_effect":{"color":25,"effect":1,"level":100,"duration":255,"led":4}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -9361,7 +9361,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"individual_led_effect":{"led_color":255,"led_effect":1,"led_level":100,"led_duration":255,"led_number":5}}',
+        'payload': '{"individual_led_effect":{"color":255,"effect":1,"level":100,"duration":255,"led":5}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -9372,7 +9372,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"individual_led_effect":{"led_color":0,"led_effect":1,"led_level":100,"led_duration":255,"led_number":6}}',
+        'payload': '{"individual_led_effect":{"color":0,"effect":1,"level":100,"duration":255,"led":6}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -9383,7 +9383,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"individual_led_effect":{"led_color":170,"led_effect":255,"led_level":100,"led_duration":255,"led_number":0}}',
+        'payload': '{"individual_led_effect":{"color":170,"effect":255,"level":100,"duration":255,"led":0}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -9394,7 +9394,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"individual_led_effect":{"led_color":170,"led_effect":255,"led_level":100,"led_duration":255,"led_number":1}}',
+        'payload': '{"individual_led_effect":{"color":170,"effect":255,"level":100,"duration":255,"led":1}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -9405,7 +9405,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"individual_led_effect":{"led_color":170,"led_effect":255,"led_level":100,"led_duration":255,"led_number":3}}',
+        'payload': '{"individual_led_effect":{"color":170,"effect":255,"level":100,"duration":255,"led":3}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -9416,7 +9416,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"individual_led_effect":{"led_color":170,"led_effect":255,"led_level":100,"led_duration":255,"led_number":4}}',
+        'payload': '{"individual_led_effect":{"color":170,"effect":255,"level":100,"duration":255,"led":4}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -9427,7 +9427,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"individual_led_effect":{"led_color":170,"led_effect":255,"led_level":100,"led_duration":255,"led_number":6}}',
+        'payload': '{"individual_led_effect":{"color":170,"effect":255,"level":100,"duration":255,"led":6}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -9438,7 +9438,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"individual_led_effect":{"led_color":170,"led_effect":255,"led_level":100,"led_duration":255,"led_number":2}}',
+        'payload': '{"individual_led_effect":{"color":170,"effect":255,"level":100,"duration":255,"led":2}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -9449,7 +9449,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"individual_led_effect":{"led_color":170,"led_effect":255,"led_level":100,"led_duration":255,"led_number":5}}',
+        'payload': '{"individual_led_effect":{"color":170,"effect":255,"level":100,"duration":255,"led":5}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -9682,7 +9682,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"individual_led_effect":{"led_color":0,"led_effect":1,"led_level":100,"led_duration":255,"led_number":0}}',
+        'payload': '{"individual_led_effect":{"color":0,"effect":1,"level":100,"duration":255,"led":0}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -9693,7 +9693,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"individual_led_effect":{"led_color":25,"led_effect":1,"led_level":100,"led_duration":255,"led_number":1}}',
+        'payload': '{"individual_led_effect":{"color":25,"effect":1,"level":100,"duration":255,"led":1}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -9704,7 +9704,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"individual_led_effect":{"led_color":255,"led_effect":1,"led_level":100,"led_duration":255,"led_number":2}}',
+        'payload': '{"individual_led_effect":{"color":255,"effect":1,"level":100,"duration":255,"led":2}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -9715,7 +9715,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"individual_led_effect":{"led_color":0,"led_effect":1,"led_level":100,"led_duration":255,"led_number":3}}',
+        'payload': '{"individual_led_effect":{"color":0,"effect":1,"level":100,"duration":255,"led":3}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -9726,7 +9726,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"individual_led_effect":{"led_color":25,"led_effect":1,"led_level":100,"led_duration":255,"led_number":4}}',
+        'payload': '{"individual_led_effect":{"color":25,"effect":1,"level":100,"duration":255,"led":4}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -9737,7 +9737,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"individual_led_effect":{"led_color":255,"led_effect":1,"led_level":100,"led_duration":255,"led_number":5}}',
+        'payload': '{"individual_led_effect":{"color":255,"effect":1,"level":100,"duration":255,"led":5}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -9748,7 +9748,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"individual_led_effect":{"led_color":0,"led_effect":1,"led_level":100,"led_duration":255,"led_number":6}}',
+        'payload': '{"individual_led_effect":{"color":0,"effect":1,"level":100,"duration":255,"led":6}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -9759,7 +9759,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"individual_led_effect":{"led_color":170,"led_effect":255,"led_level":100,"led_duration":255,"led_number":1}}',
+        'payload': '{"individual_led_effect":{"color":170,"effect":255,"level":100,"duration":255,"led":1}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',
@@ -9770,7 +9770,7 @@
     ServiceCallSnapshot({
       'context': <ANY>,
       'data': ReadOnlyDict({
-        'payload': '{"individual_led_effect":{"led_color":170,"led_effect":255,"led_level":100,"led_duration":255,"led_number":4}}',
+        'payload': '{"individual_led_effect":{"color":170,"effect":255,"level":100,"duration":255,"led":4}}',
         'topic': 'home/z2m/Kitchen/set',
       }),
       'domain': 'mqtt',

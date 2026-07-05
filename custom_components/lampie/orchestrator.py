@@ -110,6 +110,14 @@ PHYSICAL_DISMISSAL_COMMANDS = {
     "button_6_double",
 }
 
+_ZHA_PARAM_KEYS = {
+    "color": "led_color",
+    "effect": "led_effect",
+    "level": "led_level",
+    "duration": "led_duration",
+    "led": "led_number",
+}
+
 Z2M_ACTION_TO_COMMAND_MAP = {
     "config_double": "button_3_double",
 }
@@ -861,7 +869,7 @@ class LampieOrchestrator:
                     continue
 
             if led_mode == _LEDMode.INDIVIDUAL:
-                params["led_number"] = idx
+                params["led"] = idx
                 updated_leds.append(str(idx))
 
             _LOGGER.log(TRACE, "update LED %s command: %r", idx, params)
@@ -909,6 +917,7 @@ class LampieOrchestrator:
     ) -> None:
         id_tuple = next(iter(device_info["identifiers"]))
         ieee = id_tuple[1]
+        zha_params = {_ZHA_PARAM_KEYS[k]: v for k, v in params.items()}
 
         _LOGGER.log(TRACE, "zha.issue_zigbee_cluster_command: %s", led_mode)
         await self._hass.services.async_call(
@@ -921,7 +930,7 @@ class LampieOrchestrator:
                 "cluster_type": "in",
                 "command": int(led_mode),
                 "command_type": "server",
-                "params": params,
+                "params": zha_params,
                 "manufacturer": 4655,
             },
             blocking=True,
@@ -962,10 +971,10 @@ class LampieOrchestrator:
         )
 
         return {
-            "led_color": int(led.color),
-            "led_effect": led.effect.value,
-            "led_level": int(led.brightness),
-            "led_duration": 255
+            "color": int(led.color),
+            "effect": led.effect.value,
+            "level": int(led.brightness),
+            "duration": 255
             if led.duration is None
             or led.duration == ALREADY_EXPIRED
             or firmware_duration is None
