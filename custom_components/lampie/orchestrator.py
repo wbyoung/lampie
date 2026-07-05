@@ -118,6 +118,46 @@ _ZHA_PARAM_KEYS = {
     "led": "led_number",
 }
 
+# Z2M's Inovelli converter expects effect as a string name and does its own
+# lookup into these tables; sending the raw integer makes the converter drop
+# the value and reject the command with "Parameter 'effect' is missing".
+# Verbatim from zigbee-herdsman-converters/src/lib/inovelli.ts.
+_Z2M_LED_EFFECT_NAMES = {
+    0: "off",
+    1: "solid",
+    2: "fast_blink",
+    3: "slow_blink",
+    4: "pulse",
+    5: "chase",
+    6: "open_close",
+    7: "small_to_big",
+    8: "aurora",
+    9: "slow_falling",
+    10: "medium_falling",
+    11: "fast_falling",
+    12: "slow_rising",
+    13: "medium_rising",
+    14: "fast_rising",
+    15: "medium_blink",
+    16: "slow_chase",
+    17: "fast_chase",
+    18: "fast_siren",
+    19: "slow_siren",
+    255: "clear_effect",
+}
+_Z2M_INDIVIDUAL_LED_EFFECT_NAMES = {
+    0: "off",
+    1: "solid",
+    2: "fast_blink",
+    3: "slow_blink",
+    4: "pulse",
+    5: "chase",
+    6: "falling",
+    7: "rising",
+    8: "aurora",
+    255: "clear_effect",
+}
+
 Z2M_ACTION_TO_COMMAND_MAP = {
     "config_double": "button_3_double",
 }
@@ -947,6 +987,12 @@ class LampieOrchestrator:
         command = (
             "individual_led_effect" if led_mode == _LEDMode.INDIVIDUAL else "led_effect"
         )
+        effect_names = (
+            _Z2M_INDIVIDUAL_LED_EFFECT_NAMES
+            if led_mode == _LEDMode.INDIVIDUAL
+            else _Z2M_LED_EFFECT_NAMES
+        )
+        z2m_params = {**params, "effect": effect_names[params["effect"]]}
         zha_info = switch_info.integration_info
         topic = f"{zha_info.full_topic}/set"
 
@@ -956,7 +1002,7 @@ class LampieOrchestrator:
             "publish",
             {
                 "topic": topic,
-                "payload": json_dumps({command: params}),
+                "payload": json_dumps({command: z2m_params}),
             },
             blocking=True,
         )
