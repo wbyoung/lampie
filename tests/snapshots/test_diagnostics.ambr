@@ -86,10 +86,14 @@
     }),
     'switches': dict({
       'light.kitchen': dict({
-        'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
         'expiration': dict({
           'cancel_listener': None,
           'started_at': None,
+        }),
+        'integration': 'zha',
+        'integration_info': dict({
+          'disable_clear_notification_id': 'switch.kitchen_disable_config_2x_tap_to_clear_notifications',
+          'local_protection_id': 'switch.kitchen_local_protection',
         }),
         'led_config': list([
           dict({
@@ -106,7 +110,6 @@
           'type': 'notification',
           'value': 'doors_open',
         }),
-        'local_protection_id': 'switch.kitchen_local_protection',
         'priorities': list([
           'doors_open',
         ]),
