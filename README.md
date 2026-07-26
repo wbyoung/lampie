@@ -279,6 +279,14 @@ Once configured, the integration links the various entities to logical devices:
 
 <img width="300" alt="Image" src="https://github.com/user-attachments/assets/b961a8f6-0393-41bf-a9cb-185fd83c45f9" />
 
+## Special Thanks
+
+This project wouldn't be possible without the the support of the community. In particular, thanks to:
+
+- [**@rohankapoorcom**](https://github.com/rohankapoorcom) for guidance in supporting multiple platforms.
+- [**@wingrunr21**](https://github.com/wingrunr21) and [**@MrDaGree**](https://github.com/MrDaGree) for getting Z2M/MQTT support stable.
+- [**@kschlichter**](https://github.com/kschlichter) for guidance and [prior art](https://github.com/kschlichter/Home-Assistant-Inovelli-Effects-and-Colors).
+
 ## Credits
 
 Icon designed by [Oblak Labs][oblak-labs-attribution].
