@@ -23,10 +23,7 @@ from homeassistant.helpers import (
     entity_registry as er,
     event as evt,
 )
-from homeassistant.helpers.device import (
-    async_device_info_to_link_from_entity,
-    async_entity_id_to_device_id,
-)
+from homeassistant.helpers.device import async_entity_id_to_device_id
 from homeassistant.helpers.json import json_dumps
 from homeassistant.util import dt as dt_util
 from homeassistant.util.hass_dict import HassKey
@@ -892,7 +889,10 @@ class LampieOrchestrator:
         from_params = [
             self._switch_command_led_params(led, switch_id) for led in from_config
         ]
-        device_info = async_device_info_to_link_from_entity(self._hass, switch_id)
+        device_id = async_entity_id_to_device_id(self._hass, switch_id)
+        device_info = (
+            dr.async_get(self._hass).async_get(device_id) if device_id else None
+        )
         updated_leds = []
 
         # actually apply the desired changes either for the full LED bar or for
@@ -955,7 +955,7 @@ class LampieOrchestrator:
         led_mode: _LEDMode,
         params: dict[str, Any],
     ) -> None:
-        id_tuple = next(iter(device_info["identifiers"]))
+        id_tuple = next(iter(device_info.identifiers))
         ieee = id_tuple[1]
         zha_params = {_ZHA_PARAM_KEYS[k]: v for k, v in params.items()}
 
