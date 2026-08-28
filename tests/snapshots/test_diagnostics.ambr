@@ -4,6 +4,7 @@
     'device_registry': dict({
       'light.kitchen': dict({
         'area_id': None,
+        'config_subentry_id': None,
         'configuration_url': None,
         'connections': list([
         ]),
@@ -65,7 +66,6 @@
         'area_id': None,
         'categories': dict({
         }),
-        'config_entry_id': None,
         'config_subentry_id': None,
         'disabled_by': None,
         'entity_category': None,

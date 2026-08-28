@@ -7,6 +7,7 @@ from collections.abc import Callable
 import logging
 from typing import Any
 
+from homeassistant.helpers import device_registry as dr
 from homeassistant.helpers.device_registry import DeviceEntryType, DeviceInfo
 from homeassistant.helpers.entity import EntityDescription
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
@@ -77,18 +78,28 @@ class LampieDistributedEntity[DataT](LampieEntity[DataT]):
         description: LampieEntityDescription,
         coordinator: LampieUpdateCoordinator,
         switch_id: str,
-        switch_device_info: DeviceInfo,
+        switch_device: dr.DeviceEntry,
     ) -> None:
         """Initialize the sensor."""
         super().__init__(description=description, coordinator=coordinator)
 
         self.switch_id = switch_id
 
-        id_tuple = next(iter(switch_device_info["identifiers"]))
+        id_tuple = next(iter(switch_device.identifiers))
         id_slug = "_".join(id_tuple)
 
         self._attr_unique_id = f"{id_slug}_{description.key}"
-        self._attr_device_info = switch_device_info
+
+        # attach this entity to the switch's own device without adding our
+        # config entry to it. a device can only belong to a single config entry
+        # as of HA 2026.8, so the previous `device_info`-carrying-another-
+        # device's-identifiers approach is no longer representable.
+        #
+        # `device_info` must be cleared: the entity platform prefers it over a
+        # pre-set `device_entry` and would otherwise re-attach these entities to
+        # the config entry's own service device (inherited from LampieEntity).
+        self._attr_device_info = None
+        self.device_entry = switch_device
 
 
 class LampieEntityDescription[DataT](EntityDescription):

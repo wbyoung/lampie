@@ -2,8 +2,8 @@
 # name: test_activate_service[full_led_config][sensor.kitchen_effect_brightness]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:brightness-percent',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Kitchen Effect brightness',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:brightness-percent',
       'individual': list([
         100.0,
         100.0,
@@ -13,8 +13,8 @@
         100.0,
         100.0,
       ]),
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
-      'unit_of_measurement': '%',
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <EntityStateAttribute.UNIT_OF_MEASUREMENT: 'unit_of_measurement'>: '%',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_brightness',
@@ -27,8 +27,8 @@
 # name: test_activate_service[full_led_config][sensor.kitchen_effect_color]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Kitchen Effect color',
-      'icon': 'mdi:palette',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Kitchen Effect color',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:palette',
       'individual': list([
         'green',
         'orange',
@@ -50,8 +50,8 @@
 # name: test_activate_service[full_led_config][sensor.kitchen_effect_duration]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Kitchen Effect duration',
-      'icon': 'mdi:timer',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Kitchen Effect duration',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:timer',
       'individual': list([
         None,
         None,
@@ -61,8 +61,8 @@
         None,
         None,
       ]),
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
-      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <EntityStateAttribute.UNIT_OF_MEASUREMENT: 'unit_of_measurement'>: <UnitOfTime.SECONDS: 's'>,
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_duration',
@@ -75,8 +75,8 @@
 # name: test_activate_service[full_led_config][sensor.kitchen_effect_type]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:star-four-points-box',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Kitchen Effect type',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:star-four-points-box',
       'individual': list([
         'solid',
         'solid',
@@ -98,8 +98,8 @@
 # name: test_activate_service[full_led_config][sensor.kitchen_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Kitchen Notification',
-      'icon': 'mdi:circle-box',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Kitchen Notification',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:circle-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_notification',
@@ -112,8 +112,8 @@
 # name: test_activate_service[full_led_config][switch.doors_open_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Doors Open Notification',
-      'icon': 'mdi:circle-box',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Doors Open Notification',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:circle-box',
     }),
     'context': <ANY>,
     'entity_id': 'switch.doors_open_notification',
@@ -291,10 +291,10 @@
 # name: test_activate_service[led_color][sensor.kitchen_effect_brightness]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:brightness-percent',
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
-      'unit_of_measurement': '%',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Kitchen Effect brightness',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:brightness-percent',
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <EntityStateAttribute.UNIT_OF_MEASUREMENT: 'unit_of_measurement'>: '%',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_brightness',
@@ -307,8 +307,8 @@
 # name: test_activate_service[led_color][sensor.kitchen_effect_color]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Kitchen Effect color',
-      'icon': 'mdi:palette',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Kitchen Effect color',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:palette',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_color',
@@ -321,10 +321,10 @@
 # name: test_activate_service[led_color][sensor.kitchen_effect_duration]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Kitchen Effect duration',
-      'icon': 'mdi:timer',
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
-      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Kitchen Effect duration',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:timer',
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <EntityStateAttribute.UNIT_OF_MEASUREMENT: 'unit_of_measurement'>: <UnitOfTime.SECONDS: 's'>,
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_duration',
@@ -337,8 +337,8 @@
 # name: test_activate_service[led_color][sensor.kitchen_effect_type]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:star-four-points-box',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Kitchen Effect type',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -351,8 +351,8 @@
 # name: test_activate_service[led_color][sensor.kitchen_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Kitchen Notification',
-      'icon': 'mdi:circle-box',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Kitchen Notification',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:circle-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_notification',
@@ -365,8 +365,8 @@
 # name: test_activate_service[led_color][switch.doors_open_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Doors Open Notification',
-      'icon': 'mdi:circle-box',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Doors Open Notification',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:circle-box',
     }),
     'context': <ANY>,
     'entity_id': 'switch.doors_open_notification',
@@ -405,10 +405,10 @@
 # name: test_activate_service[notification_only][sensor.kitchen_effect_brightness]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:brightness-percent',
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
-      'unit_of_measurement': '%',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Kitchen Effect brightness',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:brightness-percent',
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <EntityStateAttribute.UNIT_OF_MEASUREMENT: 'unit_of_measurement'>: '%',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_brightness',
@@ -421,8 +421,8 @@
 # name: test_activate_service[notification_only][sensor.kitchen_effect_color]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Kitchen Effect color',
-      'icon': 'mdi:palette',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Kitchen Effect color',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:palette',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_color',
@@ -435,10 +435,10 @@
 # name: test_activate_service[notification_only][sensor.kitchen_effect_duration]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Kitchen Effect duration',
-      'icon': 'mdi:timer',
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
-      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Kitchen Effect duration',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:timer',
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <EntityStateAttribute.UNIT_OF_MEASUREMENT: 'unit_of_measurement'>: <UnitOfTime.SECONDS: 's'>,
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_duration',
@@ -451,8 +451,8 @@
 # name: test_activate_service[notification_only][sensor.kitchen_effect_type]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:star-four-points-box',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Kitchen Effect type',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -465,8 +465,8 @@
 # name: test_activate_service[notification_only][sensor.kitchen_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Kitchen Notification',
-      'icon': 'mdi:circle-box',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Kitchen Notification',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:circle-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_notification',
@@ -479,8 +479,8 @@
 # name: test_activate_service[notification_only][switch.doors_open_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Doors Open Notification',
-      'icon': 'mdi:circle-box',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Doors Open Notification',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:circle-box',
     }),
     'context': <ANY>,
     'entity_id': 'switch.doors_open_notification',
@@ -519,8 +519,8 @@
 # name: test_override_service[full_led_config][switch.doors_open_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Doors Open Notification',
-      'icon': 'mdi:circle-box',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Doors Open Notification',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:circle-box',
     }),
     'context': <ANY>,
     'entity_id': 'switch.doors_open_notification',
@@ -698,8 +698,8 @@
 # name: test_override_service[led_color][switch.doors_open_notification]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Doors Open Notification',
-      'icon': 'mdi:circle-box',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Doors Open Notification',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:circle-box',
     }),
     'context': <ANY>,
     'entity_id': 'switch.doors_open_notification',

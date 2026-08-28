@@ -289,11 +289,12 @@
 # ---
 # name: test_sensors[sensor.kitchen_effect_brightness-entry]
   EntityRegistryEntrySnapshot({
-    'aliases': set({
-    }),
+    'aliases': list([
+      None,
+    ]),
     'area_id': None,
     'capabilities': dict({
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
     }),
     'config_entry_id': <ANY>,
     'config_subentry_id': <ANY>,
@@ -330,10 +331,10 @@
 # name: test_sensors[sensor.kitchen_effect_brightness-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:brightness-percent',
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
-      'unit_of_measurement': '%',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Kitchen Effect brightness',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:brightness-percent',
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <EntityStateAttribute.UNIT_OF_MEASUREMENT: 'unit_of_measurement'>: '%',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_brightness',
@@ -345,8 +346,9 @@
 # ---
 # name: test_sensors[sensor.kitchen_effect_color-entry]
   EntityRegistryEntrySnapshot({
-    'aliases': set({
-    }),
+    'aliases': list([
+      None,
+    ]),
     'area_id': None,
     'capabilities': None,
     'config_entry_id': <ANY>,
@@ -381,8 +383,8 @@
 # name: test_sensors[sensor.kitchen_effect_color-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Kitchen Effect color',
-      'icon': 'mdi:palette',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Kitchen Effect color',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:palette',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_color',
@@ -394,11 +396,12 @@
 # ---
 # name: test_sensors[sensor.kitchen_effect_duration-entry]
   EntityRegistryEntrySnapshot({
-    'aliases': set({
-    }),
+    'aliases': list([
+      None,
+    ]),
     'area_id': None,
     'capabilities': dict({
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
     }),
     'config_entry_id': <ANY>,
     'config_subentry_id': <ANY>,
@@ -432,10 +435,10 @@
 # name: test_sensors[sensor.kitchen_effect_duration-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Kitchen Effect duration',
-      'icon': 'mdi:timer',
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
-      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Kitchen Effect duration',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:timer',
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <EntityStateAttribute.UNIT_OF_MEASUREMENT: 'unit_of_measurement'>: <UnitOfTime.SECONDS: 's'>,
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_duration',
@@ -447,8 +450,9 @@
 # ---
 # name: test_sensors[sensor.kitchen_effect_type-entry]
   EntityRegistryEntrySnapshot({
-    'aliases': set({
-    }),
+    'aliases': list([
+      None,
+    ]),
     'area_id': None,
     'capabilities': None,
     'config_entry_id': <ANY>,
@@ -483,8 +487,8 @@
 # name: test_sensors[sensor.kitchen_effect_type-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:star-four-points-box',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Kitchen Effect type',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -496,8 +500,9 @@
 # ---
 # name: test_sensors[sensor.kitchen_notification-entry]
   EntityRegistryEntrySnapshot({
-    'aliases': set({
-    }),
+    'aliases': list([
+      None,
+    ]),
     'area_id': None,
     'capabilities': None,
     'config_entry_id': <ANY>,
@@ -532,8 +537,8 @@
 # name: test_sensors[sensor.kitchen_notification-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Kitchen Notification',
-      'icon': 'mdi:circle-box',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Kitchen Notification',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:circle-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_notification',
@@ -545,11 +550,12 @@
 # ---
 # name: test_sensors_with_advanced_led_config[sensor.kitchen_effect_brightness-entry]
   EntityRegistryEntrySnapshot({
-    'aliases': set({
-    }),
+    'aliases': list([
+      None,
+    ]),
     'area_id': None,
     'capabilities': dict({
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
     }),
     'config_entry_id': <ANY>,
     'config_subentry_id': <ANY>,
@@ -586,8 +592,8 @@
 # name: test_sensors_with_advanced_led_config[sensor.kitchen_effect_brightness-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:brightness-percent',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Kitchen Effect brightness',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:brightness-percent',
       'individual': list([
         80.0,
         20.0,
@@ -597,8 +603,8 @@
         80.0,
         100.0,
       ]),
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
-      'unit_of_measurement': '%',
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <EntityStateAttribute.UNIT_OF_MEASUREMENT: 'unit_of_measurement'>: '%',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_brightness',
@@ -610,8 +616,9 @@
 # ---
 # name: test_sensors_with_advanced_led_config[sensor.kitchen_effect_color-entry]
   EntityRegistryEntrySnapshot({
-    'aliases': set({
-    }),
+    'aliases': list([
+      None,
+    ]),
     'area_id': None,
     'capabilities': None,
     'config_entry_id': <ANY>,
@@ -646,8 +653,8 @@
 # name: test_sensors_with_advanced_led_config[sensor.kitchen_effect_color-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Kitchen Effect color',
-      'icon': 'mdi:palette',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Kitchen Effect color',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:palette',
       'individual': list([
         'red',
         'orange',
@@ -668,11 +675,12 @@
 # ---
 # name: test_sensors_with_advanced_led_config[sensor.kitchen_effect_duration-entry]
   EntityRegistryEntrySnapshot({
-    'aliases': set({
-    }),
+    'aliases': list([
+      None,
+    ]),
     'area_id': None,
     'capabilities': dict({
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
     }),
     'config_entry_id': <ANY>,
     'config_subentry_id': <ANY>,
@@ -706,8 +714,8 @@
 # name: test_sensors_with_advanced_led_config[sensor.kitchen_effect_duration-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Kitchen Effect duration',
-      'icon': 'mdi:timer',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Kitchen Effect duration',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:timer',
       'individual': list([
         5,
         10,
@@ -717,8 +725,8 @@
         5,
         10,
       ]),
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
-      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <EntityStateAttribute.UNIT_OF_MEASUREMENT: 'unit_of_measurement'>: <UnitOfTime.SECONDS: 's'>,
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_duration',
@@ -730,8 +738,9 @@
 # ---
 # name: test_sensors_with_advanced_led_config[sensor.kitchen_effect_type-entry]
   EntityRegistryEntrySnapshot({
-    'aliases': set({
-    }),
+    'aliases': list([
+      None,
+    ]),
     'area_id': None,
     'capabilities': None,
     'config_entry_id': <ANY>,
@@ -766,8 +775,8 @@
 # name: test_sensors_with_advanced_led_config[sensor.kitchen_effect_type-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:star-four-points-box',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Kitchen Effect type',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:star-four-points-box',
       'individual': list([
         'slow_blink',
         'solid',
@@ -788,8 +797,9 @@
 # ---
 # name: test_sensors_with_advanced_led_config[sensor.kitchen_notification-entry]
   EntityRegistryEntrySnapshot({
-    'aliases': set({
-    }),
+    'aliases': list([
+      None,
+    ]),
     'area_id': None,
     'capabilities': None,
     'config_entry_id': <ANY>,
@@ -824,8 +834,8 @@
 # name: test_sensors_with_advanced_led_config[sensor.kitchen_notification-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Kitchen Notification',
-      'icon': 'mdi:circle-box',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Kitchen Notification',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:circle-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_notification',
@@ -837,11 +847,12 @@
 # ---
 # name: test_sensors_with_simple_led_config[sensor.kitchen_effect_brightness-entry]
   EntityRegistryEntrySnapshot({
-    'aliases': set({
-    }),
+    'aliases': list([
+      None,
+    ]),
     'area_id': None,
     'capabilities': dict({
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
     }),
     'config_entry_id': <ANY>,
     'config_subentry_id': <ANY>,
@@ -878,10 +889,10 @@
 # name: test_sensors_with_simple_led_config[sensor.kitchen_effect_brightness-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Kitchen Effect brightness',
-      'icon': 'mdi:brightness-percent',
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
-      'unit_of_measurement': '%',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Kitchen Effect brightness',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:brightness-percent',
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <EntityStateAttribute.UNIT_OF_MEASUREMENT: 'unit_of_measurement'>: '%',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_brightness',
@@ -893,8 +904,9 @@
 # ---
 # name: test_sensors_with_simple_led_config[sensor.kitchen_effect_color-entry]
   EntityRegistryEntrySnapshot({
-    'aliases': set({
-    }),
+    'aliases': list([
+      None,
+    ]),
     'area_id': None,
     'capabilities': None,
     'config_entry_id': <ANY>,
@@ -929,8 +941,8 @@
 # name: test_sensors_with_simple_led_config[sensor.kitchen_effect_color-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Kitchen Effect color',
-      'icon': 'mdi:palette',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Kitchen Effect color',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:palette',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_color',
@@ -942,11 +954,12 @@
 # ---
 # name: test_sensors_with_simple_led_config[sensor.kitchen_effect_duration-entry]
   EntityRegistryEntrySnapshot({
-    'aliases': set({
-    }),
+    'aliases': list([
+      None,
+    ]),
     'area_id': None,
     'capabilities': dict({
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
     }),
     'config_entry_id': <ANY>,
     'config_subentry_id': <ANY>,
@@ -980,10 +993,10 @@
 # name: test_sensors_with_simple_led_config[sensor.kitchen_effect_duration-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Kitchen Effect duration',
-      'icon': 'mdi:timer',
-      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
-      'unit_of_measurement': <UnitOfTime.SECONDS: 's'>,
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Kitchen Effect duration',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:timer',
+      <SensorEntityCapabilityAttribute.STATE_CLASS: 'state_class'>: <SensorStateClass.MEASUREMENT: 'measurement'>,
+      <EntityStateAttribute.UNIT_OF_MEASUREMENT: 'unit_of_measurement'>: <UnitOfTime.SECONDS: 's'>,
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_duration',
@@ -995,8 +1008,9 @@
 # ---
 # name: test_sensors_with_simple_led_config[sensor.kitchen_effect_type-entry]
   EntityRegistryEntrySnapshot({
-    'aliases': set({
-    }),
+    'aliases': list([
+      None,
+    ]),
     'area_id': None,
     'capabilities': None,
     'config_entry_id': <ANY>,
@@ -1031,8 +1045,8 @@
 # name: test_sensors_with_simple_led_config[sensor.kitchen_effect_type-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Kitchen Effect type',
-      'icon': 'mdi:star-four-points-box',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Kitchen Effect type',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:star-four-points-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_effect_type',
@@ -1044,8 +1058,9 @@
 # ---
 # name: test_sensors_with_simple_led_config[sensor.kitchen_notification-entry]
   EntityRegistryEntrySnapshot({
-    'aliases': set({
-    }),
+    'aliases': list([
+      None,
+    ]),
     'area_id': None,
     'capabilities': None,
     'config_entry_id': <ANY>,
@@ -1080,8 +1095,8 @@
 # name: test_sensors_with_simple_led_config[sensor.kitchen_notification-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Kitchen Notification',
-      'icon': 'mdi:circle-box',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Kitchen Notification',
+      <EntityStateAttribute.ICON: 'icon'>: 'mdi:circle-box',
     }),
     'context': <ANY>,
     'entity_id': 'sensor.kitchen_notification',

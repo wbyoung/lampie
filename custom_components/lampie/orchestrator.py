@@ -930,11 +930,22 @@ class LampieOrchestrator:
         self,
         *,
         switch_id: SwitchId,
-        device_info: dr.DeviceInfo,
+        device_info: dr.DeviceEntry | None,
         led_mode: _LEDMode,
         params: dict[str, Any],
     ) -> None:
         switch_info = self.switch_info(switch_id)
+
+        # only the ZHA path needs the device (for its IEEE address); bail out
+        # here rather than raising an AttributeError deeper in the call stack.
+        if switch_info.integration == Integration.ZHA and device_info is None:
+            _LOGGER.warning(
+                "skipping LED update for %s because no device could be found "
+                "for it in the device registry",
+                switch_id,
+            )
+            return
+
         service_command = {
             Integration.ZHA: self._zha_service_command,
             Integration.Z2M: self._z2m_service_command,
@@ -951,7 +962,7 @@ class LampieOrchestrator:
         self,
         *,
         switch_info: LampieSwitchInfo,  # noqa: ARG002
-        device_info: dr.DeviceInfo,
+        device_info: dr.DeviceEntry,
         led_mode: _LEDMode,
         params: dict[str, Any],
     ) -> None:
@@ -980,7 +991,7 @@ class LampieOrchestrator:
         self,
         *,
         switch_info: LampieSwitchInfo,
-        device_info: dr.DeviceInfo,  # noqa: ARG002
+        device_info: dr.DeviceEntry | None,  # noqa: ARG002
         led_mode: _LEDMode,
         params: dict[str, Any],
     ) -> None:

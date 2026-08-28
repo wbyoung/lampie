@@ -124,21 +124,24 @@ async def test_config_entries_linked_to_switch_device(
         if device.config_entries & {"mock-medicine-id"}
     }
 
-    assert doors_open_device_ids == {
-        doors_open_device.id,
-        entryway_switch.device_id,
-        kitchen_switch.device_id,
-    }
+    # a device belongs to a single config entry as of HA 2026.8, so the switch
+    # devices are no longer added to ours; only our own service device is.
+    assert doors_open_device_ids == {doors_open_device.id}
+    assert medicine_device_ids == {medicine_device.id}
 
-    assert medicine_device_ids == {
-        medicine_device.id,
-        kitchen_switch.device_id,
-    }
+    # the sensors are still attached to the switch's device, via the entity
+    # rather than by claiming the device for our config entry.
+    entity_registry = er.async_get(hass)
 
-    assert (
-        "skipping linking of switch to config entry for light.non_existent on "
-        "Medicine because an associated device could not be found" in caplog.text
-    )
+    def sensor_device_ids(prefix: str) -> set[str]:
+        return {
+            entry.device_id
+            for entry in entity_registry.entities.values()
+            if entry.platform == DOMAIN and entry.entity_id.startswith(prefix)
+        }
+
+    assert sensor_device_ids("sensor.kitchen") == {kitchen_switch.device_id}
+    assert sensor_device_ids("sensor.entryway") == {entryway_switch.device_id}
 
     assert (
         "skipping creation of sensors for light.non_existent on Doors Open "
@@ -367,11 +370,10 @@ async def test_device_registry_cleanup(
     await setup_integration(hass, entry)
 
     service_device = device_registry.async_get_device({(DOMAIN, entry.entry_id)})
-    expected_device_ids = {
-        service_device.id,
-        entryway_switch.device_id,
-        kitchen_switch.device_id,
-    }
+
+    # a device belongs to exactly one config entry as of HA 2026.8, so switch
+    # devices are never added to ours and only the service device is owned here.
+    expected_device_ids = {service_device.id}
 
     def get_device_ids() -> set[str]:
         return {
@@ -386,18 +388,18 @@ async def test_device_registry_cleanup(
     assert f"Unlinking device {entryway_switch.device_id}" not in caplog.text
     assert f"Unlinking device {kitchen_switch.device_id}" not in caplog.text
 
-    # remove the kitchen switch & check that it was removed from the registry
+    # removing a switch leaves the service device alone and must not unlink
+    # anything else -- there is nothing left for cleanup to remove.
     hass.config_entries.async_update_entry(
         entry,
         data={**entry.data, CONF_SWITCH_ENTITIES: [entryway_switch.id]},
     )
-    expected_device_ids.remove(kitchen_switch.device_id)
     await hass.async_block_till_done()
     assert get_device_ids() == expected_device_ids
     assert f"Unlinking device {service_device.id}" not in caplog.text
     assert f"{DOMAIN}.mock-doors-open-id" not in caplog.text
     assert f"Unlinking device {entryway_switch.device_id}" not in caplog.text
-    assert f"Unlinking device {kitchen_switch.device_id}" in caplog.text
+    assert f"Unlinking device {kitchen_switch.device_id}" not in caplog.text
 
 
 async def test_create_removed_switch_entity_issue(

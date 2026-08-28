@@ -7,7 +7,7 @@ import logging
 from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import config_validation as cv, device_registry as dr
-from homeassistant.helpers.device import async_device_info_to_link_from_entity
+from homeassistant.helpers.device import async_entity_id_to_device_id
 from homeassistant.helpers.event import async_track_entity_registry_updated_event
 from homeassistant.helpers.typing import ConfigType
 from homeassistant.util import slugify
@@ -91,9 +91,10 @@ def async_cleanup_device_registry(
     switch_devices = set()
 
     for switch_id in entry.data[CONF_SWITCH_ENTITIES]:
-        device_info = async_device_info_to_link_from_entity(hass, switch_id)
-        if device_info is not None:
-            id_tuple = next(iter(device_info["identifiers"]))
+        device_id = async_entity_id_to_device_id(hass, switch_id)
+        switch_device = device_registry.async_get(device_id) if device_id else None
+        if switch_device is not None:
+            id_tuple = next(iter(switch_device.identifiers))
             switch_devices.add(id_tuple)
 
     for device in devices:

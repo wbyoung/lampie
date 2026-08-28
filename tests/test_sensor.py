@@ -7,7 +7,6 @@ from unittest.mock import patch
 from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant, State
 from homeassistant.helpers import device_registry as dr, entity_registry as er
-from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.restore_state import STORAGE_KEY as RESTORE_STATE_KEY
 import pytest
 from pytest_homeassistant_custom_component.common import (
@@ -434,7 +433,8 @@ def test_restore_functionality_defaults_off(
         description=description,
         coordinator=config_entry.runtime_data.coordinator,
         switch_id="mock_switch_id",
-        switch_device_info=DeviceInfo(
+        switch_device=dr.DeviceEntry(
+            config_entry_id="mock-config-entry-id",
             identifiers={("mock-device-domain", "mock-device-id")},
         ),
     )
