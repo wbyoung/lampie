@@ -27,6 +27,11 @@ from custom_components.lampie.const import (
 from . import add_mock_switch, setup_integration
 
 
+def device_for_config_entry(device_registry: dr.DeviceRegistry, config_entry_id: str):
+    with patch("homeassistant.helpers.device_registry.report_usage"):
+        return device_registry.async_get_device({(DOMAIN, config_entry_id)})
+
+
 async def test_async_setup(hass: HomeAssistant):
     """Test the component gets setup."""
     assert await async_setup_component(hass, DOMAIN, {}) is True
@@ -86,8 +91,8 @@ async def test_config_entries_linked_to_switch_device(
     )
     doors_open_entry.add_to_hass(hass)
     await setup_integration(hass, doors_open_entry)
-    doors_open_device = device_registry.async_get_device(
-        {(DOMAIN, doors_open_entry.entry_id)}
+    doors_open_device = device_for_config_entry(
+        device_registry, doors_open_entry.entry_id
     )
 
     medicine_entry = MockConfigEntry(
@@ -109,21 +114,20 @@ async def test_config_entries_linked_to_switch_device(
     )
     medicine_entry.add_to_hass(hass)
     await setup_integration(hass, medicine_entry)
-    medicine_device = device_registry.async_get_device(
-        {(DOMAIN, medicine_entry.entry_id)}
-    )
+    medicine_device = device_for_config_entry(device_registry, medicine_entry.entry_id)
 
-    doors_open_device_ids = {
-        device.id
-        for device in device_registry.devices.values()
-        if device.config_entries & {"mock-doors-open-id"}
-    }
+    with patch("homeassistant.helpers.device_registry.report_usage"):
+        doors_open_device_ids = {
+            device.id
+            for device in device_registry.devices.values()
+            if device.config_entries & {"mock-doors-open-id"}
+        }
 
-    medicine_device_ids = {
-        device.id
-        for device in device_registry.devices.values()
-        if device.config_entries & {"mock-medicine-id"}
-    }
+        medicine_device_ids = {
+            device.id
+            for device in device_registry.devices.values()
+            if device.config_entries & {"mock-medicine-id"}
+        }
 
     # a device belongs to a single config entry as of HA 2026.8, so the switch
     # devices are no longer added to ours; only our own service device is.
@@ -176,8 +180,8 @@ async def test_primary_config_entry_sensor_ownership(
     )
     doors_open_entry.add_to_hass(hass)
     await setup_integration(hass, doors_open_entry)
-    doors_open_device = device_registry.async_get_device(
-        {(DOMAIN, doors_open_entry.entry_id)}
+    doors_open_device = device_for_config_entry(
+        device_registry, doors_open_entry.entry_id
     )
 
     medicine_entry = MockConfigEntry(
@@ -195,9 +199,7 @@ async def test_primary_config_entry_sensor_ownership(
     )
     medicine_entry.add_to_hass(hass)
     await setup_integration(hass, medicine_entry)
-    medicine_device = device_registry.async_get_device(
-        {(DOMAIN, medicine_entry.entry_id)}
-    )
+    medicine_device = device_for_config_entry(device_registry, medicine_entry.entry_id)
 
     doors_open_switch_entities = [
         entity
@@ -371,18 +373,19 @@ async def test_device_registry_cleanup(
     entry.add_to_hass(hass)
     await setup_integration(hass, entry)
 
-    service_device = device_registry.async_get_device({(DOMAIN, entry.entry_id)})
+    service_device = device_for_config_entry(device_registry, entry.entry_id)
 
     # a device belongs to exactly one config entry as of HA 2026.8, so switch
     # devices are never added to ours and only the service device is owned here.
     expected_device_ids = {service_device.id}
 
     def get_device_ids() -> set[str]:
-        return {
-            device.id
-            for device in device_registry.devices.values()
-            if device.config_entries & {entry.entry_id}
-        }
+        with patch("homeassistant.helpers.device_registry.report_usage"):
+            return {
+                device.id
+                for device in device_registry.devices.values()
+                if device.config_entries & {entry.entry_id}
+            }
 
     assert get_device_ids() == expected_device_ids
     assert f"Unlinking device {service_device.id}" not in caplog.text

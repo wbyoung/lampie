@@ -14,6 +14,7 @@ from homeassistant.components.switch import DOMAIN as SWITCH_DOMAIN
 from homeassistant.const import ATTR_ENTITY_ID, SERVICE_TURN_OFF, SERVICE_TURN_ON
 from homeassistant.core import Event, HomeAssistant
 from homeassistant.helpers import device_registry as dr, entity_registry as er
+from homeassistant.helpers.device import async_entity_id_to_device_id
 from homeassistant.helpers.json import json_dumps
 from homeassistant.setup import async_setup_component
 from homeassistant.util import dt as dt_util, slugify
@@ -485,7 +486,11 @@ async def _step_zha_event(  # noqa: RUF029
     """
     event_data = {**step["event"]}
     entity_id = event_data.pop("entity_id", None)
-    device_id = standard_switch.device_id if standard_switch is not None else None
+    device_id = (
+        async_entity_id_to_device_id(hass, standard_switch.entity_id)
+        if standard_switch is not None
+        else None
+    )
 
     # if supplied, get the device related to the entity_id instead
     if entity_id is not None:

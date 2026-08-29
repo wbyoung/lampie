@@ -144,11 +144,12 @@ async def test_missing_switch_device(
     with patch("custom_components.lampie.PLATFORMS", [Platform.SENSOR]):
         await setup_integration(hass, config_entry)
 
-    devices = [
-        device
-        for device in device_registry.devices.values()
-        if config_entry.entry_id in device.config_entries
-    ]
+    with patch("homeassistant.helpers.device_registry.report_usage"):
+        devices = [
+            device
+            for device in device_registry.devices.values()
+            if config_entry.entry_id in device.config_entries
+        ]
 
     entities = entity_registry.entities.get_entries_for_config_entry_id(
         config_entry.entry_id

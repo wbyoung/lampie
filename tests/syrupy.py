@@ -3,8 +3,9 @@
 from dataclasses import asdict, fields, replace
 from typing import Any
 
-from homeassistant.core import Event, ServiceCall
-from homeassistant.helpers import entity_registry as er
+from homeassistant.core import Event, ServiceCall, State
+from homeassistant.helpers import device_registry as dr, entity_registry as er
+from homeassistant.util.read_only_dict import ReadOnlyDict
 from pytest_homeassistant_custom_component.syrupy import (
     ANY,
     HomeAssistantSnapshotExtension,
@@ -79,6 +80,46 @@ class LampieSnapshotSerializer(HomeAssistantSnapshotSerializer):
         )
 
         return serialized
+
+    @classmethod
+    def _serializable_state(cls, data: State) -> SerializableData:
+        result = super()._serializable_state(data)
+        if "attributes" in result:
+            result["attributes"] = ReadOnlyDict(
+                {str(key): value for key, value in result["attributes"].items()}
+            )
+        return result
+
+    @classmethod
+    def _serializable_entity_registry_entry(
+        cls, data: er.RegistryEntry
+    ) -> SerializableData:
+        result = super()._serializable_entity_registry_entry(data)
+        if "aliases" in result:
+            aliases = [alias for alias in result["aliases"] if alias is not None]
+            result["aliases"] = set(aliases)
+            assert len(aliases) == len(result["aliases"])
+        if result.get("capabilities", None):
+            result["capabilities"] = {
+                str(key): value for key, value in result["capabilities"].items()
+            }
+        return result
+
+    @classmethod
+    def _serializable_device_registry_entry(
+        cls, data: dr.DeviceEntry
+    ) -> SerializableData:
+        result = super()._serializable_device_registry_entry(data)
+        if "config_entry_id" in result:
+            result["primary_config_entry"] = result.pop(
+                "config_entry_id"  # should be ANY
+            )
+            result["config_entries"] = result["primary_config_entry"]
+        if "config_subentry_id" in result:
+            result["config_entries_subentries"] = result.pop(
+                "config_subentry_id"  # should be ANY
+            )
+        return result
 
     @classmethod
     def _serializable_event(cls, data: Event) -> SerializableData:

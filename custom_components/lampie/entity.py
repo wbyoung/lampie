@@ -7,6 +7,8 @@ from collections.abc import Callable
 import logging
 from typing import Any
 
+from awesomeversion import AwesomeVersion
+from homeassistant.const import __version__ as HA_VERSION  # noqa: N812
 from homeassistant.helpers import device_registry as dr
 from homeassistant.helpers.device_registry import DeviceEntryType, DeviceInfo
 from homeassistant.helpers.entity import EntityDescription
@@ -17,6 +19,9 @@ from .coordinator import LampieUpdateCoordinator
 from .orchestrator import LampieOrchestrator
 
 _LOGGER = logging.getLogger(__name__)
+_SINGLE_CONFIG_ENTRY_DEVICES_ENFORCED = AwesomeVersion(HA_VERSION) >= AwesomeVersion(
+    "2026.8.0b0"
+)
 
 
 class LampieEntity[DataT](ABC, CoordinatorEntity[LampieUpdateCoordinator]):
@@ -103,7 +108,19 @@ class LampieDistributedEntity[DataT](LampieEntity[DataT]):
 
     @property
     def suggested_object_id(self) -> str | None:
-        return f"{self.device_entry.name}_{super().suggested_object_id}"
+        """Suggested object ID.
+
+        This returns the standard suggested ID that works for 2026.8+ when
+        single config entry based devices are enforced (and we set
+        `device_entry` in `__init__`). For earlier versions, it adds the device
+        name as a prefix since `device_info` is cleared in `__init__`.
+        """
+        object_id: str = super().suggested_object_id
+
+        return {
+            "unaltered": object_id,
+            "prefixed": f"{(self.device_entry.name)}_{object_id}",
+        }["unaltered" if _SINGLE_CONFIG_ENTRY_DEVICES_ENFORCED else "prefixed"]
 
 
 class LampieEntityDescription[DataT](EntityDescription):
