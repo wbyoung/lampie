@@ -1,7 +1,6 @@
 {
   "filename": "lampie.zip",
   "name": "Lampie",
-  "homeassistant": "2026.8.0",
   "render_readme": true,
   "zip_release": true
 }

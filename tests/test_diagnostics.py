@@ -50,7 +50,6 @@ async def test_entry_diagnostics(
             "expires_at",
             "config_entries",
             "config_entries_subentries",
-            "config_entry_id",
             "primary_config_entry",
         )
     )

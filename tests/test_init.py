@@ -6,6 +6,7 @@ from homeassistant.config_entries import ConfigEntryState
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import (
     device_registry as dr,
+    entity_platform,
     entity_registry as er,
     issue_registry as ir,
 )
@@ -131,13 +132,14 @@ async def test_config_entries_linked_to_switch_device(
 
     # the sensors are still attached to the switch's device, via the entity
     # rather than by claiming the device for our config entry.
-    entity_registry = er.async_get(hass)
+    platforms = entity_platform.async_get_platforms(hass, DOMAIN)
 
     def sensor_device_ids(prefix: str) -> set[str]:
         return {
-            entry.device_id
-            for entry in entity_registry.entities.values()
-            if entry.platform == DOMAIN and entry.entity_id.startswith(prefix)
+            entity.device_entry.id
+            for platform in platforms
+            for entity in platform.entities.values()
+            if entity.entity_id.startswith(prefix)
         }
 
     assert sensor_device_ids("sensor.kitchen") == {kitchen_switch.device_id}
@@ -155,6 +157,7 @@ async def test_primary_config_entry_sensor_ownership(
     entity_registry: er.EntityRegistry,
 ) -> None:
     """Test that sensor is not duplicated across entities on multiple entries."""
+    platforms = entity_platform.async_get_platforms(hass, DOMAIN)
     entryway_switch = add_mock_switch(hass, "light.entryway")
     kitchen_switch = add_mock_switch(hass, "light.kitchen")
 
@@ -198,20 +201,19 @@ async def test_primary_config_entry_sensor_ownership(
 
     doors_open_switch_entities = [
         entity
-        for entity in entity_registry.entities.get_entries_for_config_entry_id(
-            doors_open_entry.entry_id
-        )
-        if entity.device_id != doors_open_device.id
+        for platform in platforms
+        for entity in platform.entities.values()
+        if entity.config_entry_id == doors_open_entry.entry_id
+        and entity.device_id != doors_open_device.id
     ]
     for entity in doors_open_switch_entities:
         assert entity.device_id == entryway_switch.device_id
 
     medicine_switch_entities = [
         entity
-        for entity in entity_registry.entities.get_entries_for_config_entry_id(
-            medicine_entry.entry_id
-        )
-        if entity.device_id != medicine_device.id
+        for platform in platforms
+        if entity.config_entry_id == medicine_entry.entry_id
+        and entity.device_id != medicine_device.id
     ]
     for entity in medicine_switch_entities:
         assert entity.device_id == kitchen_switch.device_id

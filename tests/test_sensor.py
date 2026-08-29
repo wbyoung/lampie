@@ -424,6 +424,7 @@ async def test_restore_state(
 def test_restore_functionality_defaults_off(
     hass: HomeAssistant,
     config_entry: MockConfigEntry,
+    device_registry: dr.DeviceRegistry,
 ):
     description = LampieSensorDescription(
         key="mock_key",
@@ -433,8 +434,8 @@ def test_restore_functionality_defaults_off(
         description=description,
         coordinator=config_entry.runtime_data.coordinator,
         switch_id="mock_switch_id",
-        switch_device=dr.DeviceEntry(
-            config_entry_id="mock-config-entry-id",
+        switch_device=device_registry.async_get_or_create(
+            config_entry_id=config_entry.entry_id,
             identifiers={("mock-device-domain", "mock-device-id")},
         ),
     )

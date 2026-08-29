@@ -72,9 +72,8 @@
 # ---
 # name: test_switches[switch.doors_open_notification-entry]
   EntityRegistryEntrySnapshot({
-    'aliases': list([
-      None,
-    ]),
+    'aliases': set({
+    }),
     'area_id': None,
     'capabilities': None,
     'config_entry_id': <ANY>,
@@ -109,8 +108,8 @@
 # name: test_switches[switch.doors_open_notification-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Doors Open Notification',
-      <EntityStateAttribute.ICON: 'icon'>: 'mdi:circle-box',
+      'friendly_name': 'Doors Open Notification',
+      'icon': 'mdi:circle-box',
     }),
     'context': <ANY>,
     'entity_id': 'switch.doors_open_notification',

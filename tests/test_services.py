@@ -138,10 +138,10 @@ async def test_override_service(
 @pytest.mark.parametrize(
     ("service_data", "error", "error_message"),
     [
-        ({}, vol.er.Error, "required key not provided .+"),
+        ({}, vol.error.Error, "required key not provided .+"),
         (
             {"notification": "doors_open", "leds": "pinkish"},
-            vol.er.Error,
+            vol.error.Error,
             ".+ not a valid color.+name",
         ),
         (
@@ -172,11 +172,15 @@ async def test_activate_service_validation(
 @pytest.mark.parametrize(
     ("service_data", "error", "error_message"),
     [
-        ({"entity_id": "light.kitchen"}, vol.er.Error, "required key not provided .+"),
-        ({"leds": "green"}, vol.er.Error, "required key not provided .+"),
+        (
+            {"entity_id": "light.kitchen"},
+            vol.error.Error,
+            "required key not provided .+",
+        ),
+        ({"leds": "green"}, vol.error.Error, "required key not provided .+"),
         (
             {"entity_id": "light.kitchen", "leds": "pinkish"},
-            vol.er.Error,
+            vol.error.Error,
             ".+ not a valid color.+name",
         ),
     ],

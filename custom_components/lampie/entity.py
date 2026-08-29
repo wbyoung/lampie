@@ -101,6 +101,10 @@ class LampieDistributedEntity[DataT](LampieEntity[DataT]):
         self._attr_device_info = None
         self.device_entry = switch_device
 
+    @property
+    def suggested_object_id(self) -> str | None:
+        return f"{self.device_entry.name}_{super().suggested_object_id}"
+
 
 class LampieEntityDescription[DataT](EntityDescription):
     """Class describing Lampie entities."""
