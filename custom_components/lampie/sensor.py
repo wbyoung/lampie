@@ -17,7 +17,7 @@ from homeassistant.components.sensor import (
 from homeassistant.const import PERCENTAGE, STATE_UNAVAILABLE, STATE_UNKNOWN, UnitOfTime
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import device_registry as dr
-from homeassistant.helpers.device import async_device_info_to_link_from_entity
+from homeassistant.helpers.device import async_entity_id_to_device_id
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.restore_state import (
     ExtraStoredData,
@@ -158,33 +158,22 @@ async def async_setup_entry(  # noqa: RUF029
     for description, switch_id in itertools.product(
         SENSOR_TYPES, entry.data[CONF_SWITCH_ENTITIES]
     ):
-        device_info = async_device_info_to_link_from_entity(hass, switch_id)
+        device_id = async_entity_id_to_device_id(hass, switch_id)
+        switch_device = device_registry.async_get(device_id) if device_id else None
         is_primary = is_primary_for_switch(entry, switch_id)
-        if is_primary and device_info:
+        if is_primary and switch_device:
             entities.append(
                 LampieSensor(
                     description=description,
                     coordinator=coordinator,
                     switch_id=switch_id,
-                    switch_device_info=device_info,
+                    switch_device=switch_device,
                 )
             )
         elif is_primary:
             _LOGGER.warning(
                 "skipping creation of sensors for %s on %s because an associated "
                 "device could not be found",
-                switch_id,
-                entry.title,
-            )
-        elif device_info:  # implied: not is_primary
-            device_registry.async_get_or_create(
-                config_entry_id=entry.entry_id,
-                identifiers=device_info["identifiers"],
-            )
-        else:  # implied: not is_primary
-            _LOGGER.warning(
-                "skipping linking of switch to config entry for %s on %s "
-                "because an associated device could not be found",
                 switch_id,
                 entry.title,
             )

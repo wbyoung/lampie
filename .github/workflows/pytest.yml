@@ -48,8 +48,12 @@ jobs:
       fail-fast: false
       matrix:
         dependencies: ${{ fromJSON(needs.info.outputs.dependencies) }}
-        python-version: ["3.13"]
-
+        python-version: ["3.13", "3.14"]
+        exclude:
+          - dependencies: upgraded
+            python-version: 3.13
+          - dependencies: pinned
+            python-version: 3.14
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}

@@ -7,7 +7,6 @@ from unittest.mock import patch
 from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant, State
 from homeassistant.helpers import device_registry as dr, entity_registry as er
-from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.restore_state import STORAGE_KEY as RESTORE_STATE_KEY
 import pytest
 from pytest_homeassistant_custom_component.common import (
@@ -145,11 +144,12 @@ async def test_missing_switch_device(
     with patch("custom_components.lampie.PLATFORMS", [Platform.SENSOR]):
         await setup_integration(hass, config_entry)
 
-    devices = [
-        device
-        for device in device_registry.devices.values()
-        if config_entry.entry_id in device.config_entries
-    ]
+    with patch("homeassistant.helpers.device_registry.report_usage"):
+        devices = [
+            device
+            for device in device_registry.devices.values()
+            if config_entry.entry_id in device.config_entries
+        ]
 
     entities = entity_registry.entities.get_entries_for_config_entry_id(
         config_entry.entry_id
@@ -425,6 +425,7 @@ async def test_restore_state(
 def test_restore_functionality_defaults_off(
     hass: HomeAssistant,
     config_entry: MockConfigEntry,
+    device_registry: dr.DeviceRegistry,
 ):
     description = LampieSensorDescription(
         key="mock_key",
@@ -434,7 +435,8 @@ def test_restore_functionality_defaults_off(
         description=description,
         coordinator=config_entry.runtime_data.coordinator,
         switch_id="mock_switch_id",
-        switch_device_info=DeviceInfo(
+        switch_device=device_registry.async_get_or_create(
+            config_entry_id=config_entry.entry_id,
             identifiers={("mock-device-domain", "mock-device-id")},
         ),
     )

@@ -930,7 +930,7 @@ class LampieOrchestrator:
         self,
         *,
         switch_id: SwitchId,
-        device_info: dr.DeviceInfo,
+        device_info: dr.DeviceEntry | None,
         led_mode: _LEDMode,
         params: dict[str, Any],
     ) -> None:
@@ -951,7 +951,7 @@ class LampieOrchestrator:
         self,
         *,
         switch_info: LampieSwitchInfo,  # noqa: ARG002
-        device_info: dr.DeviceInfo,
+        device_info: dr.DeviceEntry,
         led_mode: _LEDMode,
         params: dict[str, Any],
     ) -> None:
@@ -980,7 +980,7 @@ class LampieOrchestrator:
         self,
         *,
         switch_info: LampieSwitchInfo,
-        device_info: dr.DeviceInfo,  # noqa: ARG002
+        device_info: dr.DeviceEntry | None,  # noqa: ARG002
         led_mode: _LEDMode,
         params: dict[str, Any],
     ) -> None:
