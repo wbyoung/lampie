@@ -4,32 +4,50 @@ change-template: "- #$NUMBER $TITLE @$AUTHOR"
 sort-direction: "ascending"
 categories:
   - title: "⚠️ Breaking changes"
-    label: "breaking change"
+    semver-increment: "major"
+    when:
+      - conventional:
+          breaking: true
+      - labels:
+          - "breaking change"
   - title: "💡 Features"
-    label: ":bulb: feature"
-  - title: "✨ Code enhancements"
-    label: ":sparkles: enhancement"
-  - title: "💡 New Custom Cards"
-    label: ":bulb: custom feature"
-  - title: "✨ Custom Card enhancements"
-    label: ":sparkles: custom enhancement"
+    semver-increment: "minor"
+    when:
+      - conventional:
+          types:
+            - "feat"
+            - "perf"
+      - labels:
+          - "feature"
+          - "enhancement"
   - title: "🐛 Bug Fixes"
-    label: ":bug: bug"
-  - title: "💬 Translations"
-    label: ":speech_balloon: translation"
-  - title: "📝 Documentation"
-    label: ":memo: documentation"
-version-resolver:
-  major:
-    labels:
-      - "major"
-  minor:
-    labels:
-      - "minor"
-  patch:
-    labels:
-      - "patch"
-  default: "patch"
+    when:
+      - conventional:
+          types:
+            - "fix"
+      - labels:
+          - "bug"
+  - title: "✏️ Documentation"
+    when:
+      - conventional:
+          types:
+            - "docs"
+      - labels:
+          - "documentation"
+  - title: "🧰 Chore"
+    when:
+      - conventional:
+          types:
+            - "chore"
+            - "build"
+            - "ci"
+            - "style"
+            - "refactor"
+            - "test"
+      - labels:
+          - "chore"
+    collapse-after: 3
+
 template: |
   ## Changes
 
@@ -41,10 +59,8 @@ template: |
 exclude-contributors:
   - "github-actions"
 
-autolabeler:
-  - label: ":bug: bug"
-    branch:
-      - "/fix/.+/"
-  - label: ":bulb: feature"
-    branch:
-      - "/feature/.+/"
+replacers:
+  - search: '/(- #\d+) (?:feat|fix|docs|chore)!?:/g'
+    replace: "$1"
+  - search: '/(- #\d+) ([a-z])/g'
+    replace: '$1 \u$2' # capitalize the first letter of each entry
