@@ -22,7 +22,13 @@ from custom_components.lampie.const import (
 from custom_components.lampie.orchestrator import DATA_MQTT
 from custom_components.lampie.types import Integration
 
-from . import MOCK_UTC_NOW, MockNow, add_mock_switch, setup_integration
+from . import (
+    MOCK_UTC_NOW,
+    IntegrationConfig,
+    MockNow,
+    add_mock_switch,
+    setup_integration,
+)
 from .syrupy import LampieSnapshotExtension
 
 _LOGGER = logging.getLogger(__name__)
@@ -142,25 +148,29 @@ def mock_config_entry() -> MockConfigEntry:
     )
 
 
-@pytest.fixture(name="integration_domain")
-def mock_integration_domain() -> Integration:
-    """Return the default mocked integration domain."""
-    return Integration.ZHA
+@pytest.fixture(name="integration_config")
+def mock_integration_config() -> IntegrationConfig:
+    """Return the default mocked integration config."""
+    return IntegrationConfig(Integration.ZHA)
 
 
 @pytest.fixture(name="switch")
 def mock_switch(
-    hass: HomeAssistant, integration_domain: Integration
+    hass: HomeAssistant,
+    integration_config: IntegrationConfig,
 ) -> er.RegistryEntry:
     """Return the default mocked config entry."""
 
-    model_key = "model_id" if integration_domain == Integration.Z2M else "model"
+    switch_attrs = {"manufacturer": "Inovelli"}
+
+    if integration_config.model:
+        switch_attrs["model"] = integration_config.model
 
     return add_mock_switch(
         hass,
         "light.kitchen",
-        {"manufacturer": "Inovelli", model_key: "VZM31-SN"},
-        integration=integration_domain,
+        switch_attrs,
+        integration=integration_config.integration,
     )
 
 
