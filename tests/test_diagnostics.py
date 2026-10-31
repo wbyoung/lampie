@@ -52,6 +52,7 @@ async def test_entry_diagnostics(
             "config_entries_subentries",
             "config_entry_id",
             "config_subentry_id",
+            "next_name_part",
             "parent_device_id",
             "primary_config_entry",
         )
