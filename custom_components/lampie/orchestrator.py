@@ -13,6 +13,7 @@ import re
 from typing import TYPE_CHECKING, Any, Final, NamedTuple, Protocol, Unpack
 
 from homeassistant.components import mqtt
+from homeassistant.components.light import DOMAIN as LIGHT_DOMAIN
 from homeassistant.components.mqtt import DOMAIN as MQTT_DOMAIN
 from homeassistant.components.mqtt.models import MqttData
 from homeassistant.components.script import DOMAIN as SCRIPT_DOMAIN
@@ -34,7 +35,10 @@ from .const import (
     CONF_PRIORITY,
     CONF_START_ACTION,
     CONF_SWITCH_ENTITIES,
+    INOVELLI_MODELS,
     TRACE,
+    ZWAVE_EFFECT_MAPPING as _ZWAVE_EFFECT_MAPPING,
+    ZWAVE_EFFECT_PARAMETERS,
 )
 from .types import (
     Color,
@@ -49,27 +53,40 @@ from .types import (
     LEDConfig,
     LEDConfigSource,
     LEDConfigSourceType,
+    MatterSwitchInfo,
     Slug,
     SwitchId,
     Z2MSwitchInfo,
     ZHASwitchInfo,
+    ZWaveSwitchInfo,
 )
 
 if TYPE_CHECKING:
     from .coordinator import LampieUpdateCoordinator
 
 type ZHAEventData = dict[str, Any]
+type ZWaveEventData = dict[str, Any]
+type MatterEventData = dict[str, Any]
 type MQTTDeviceName = str
 
 _LOGGER = logging.getLogger(__name__)
 
 ZHA_DOMAIN: Final = "zha"
 DATA_MQTT: HassKey[MqttData] = HassKey("mqtt")
+ZWAVE_DOMAIN: Final = "zwave_js"
+ZWAVE_EFFECT_MAPPING: Final = {
+    model: {Effect[effect_key].value: value for effect_key, value in mapping.items()}
+    for model, mapping in _ZWAVE_EFFECT_MAPPING.items()
+}
+MATTER_DOMAIN: Final = "matter"
+
 ALREADY_EXPIRED: Final = 0
 
 SWITCH_INTEGRATIONS = {
     ZHA_DOMAIN: Integration.ZHA,
     MQTT_DOMAIN: Integration.Z2M,
+    ZWAVE_DOMAIN: Integration.ZWAVE,
+    MATTER_DOMAIN: Integration.MATTER,
 }
 
 FIRMWARE_SECONDS_MAX = dt.timedelta(seconds=60).total_seconds()
@@ -159,6 +176,12 @@ Z2M_ACTION_TO_COMMAND_MAP = {
     "config_double": "button_3_double",
 }
 
+ZWAVE_COMMAND_MAP = {
+    ("003", "KeyPressed2x"): "button_3_double",
+}
+
+MATTER_COMMAND_MAP = {("config", "multi_press_2"): "button_3_double"}
+
 
 class _LEDMode(IntEnum):
     ALL = 1
@@ -228,7 +251,17 @@ class LampieOrchestrator:
                 "zha_event",
                 self._handle_zha_event,
                 self._filter_zha_events,
-            )
+            ),
+            hass.bus.async_listen(
+                "zwave_js_value_notification",
+                self._handle_zwave_event,
+                self._filter_zwave_events,
+            ),
+            hass.bus.async_listen(  # matter listener is for any state change event
+                "state_changed",
+                self._handle_matter_event,
+                self._filter_matter_events,
+            ),
         ]
 
     async def add_coordinator(self, coordinator: LampieUpdateCoordinator) -> None:
@@ -318,6 +351,8 @@ class LampieOrchestrator:
         integration_info = await {
             Integration.ZHA: self._zha_switch_setup,
             Integration.Z2M: self._z2m_switch_setup,
+            Integration.ZWAVE: self._zwave_switch_setup,
+            Integration.MATTER: self._matter_switch_setup,
         }[integration](switch_id, device, entity_entries)
 
         self._switch_ids[_SwitchKey(_SwitchKeyType.DEVICE_ID, device_id)] = switch_id
@@ -431,6 +466,40 @@ class LampieOrchestrator:
         )
 
         return Z2MSwitchInfo(full_topic=full_topic)
+
+    async def _zwave_switch_setup(  # noqa: PLR6301
+        self,
+        switch_id: SwitchId,  # noqa: ARG002
+        device: dr.DeviceEntry,  # noqa: ARG002
+        entity_entries: list[er.RegistryEntry],  # noqa: ARG002
+    ) -> ZWaveSwitchInfo:
+        return ZWaveSwitchInfo()
+
+    async def _matter_switch_setup(  # noqa: PLR6301
+        self,
+        switch_id: SwitchId,  # noqa: ARG002
+        device: dr.DeviceEntry,  # noqa: ARG002
+        entity_entries: list[er.RegistryEntry],
+    ) -> MatterSwitchInfo:
+        effect_id = None
+
+        def is_matter_platform(entry: er.RegistryEntry) -> bool:
+            return bool(entry.platform == MATTER_DOMAIN)
+
+        for entity_entry in filter(is_matter_platform, entity_entries):
+            if (
+                entity_entry.domain == LIGHT_DOMAIN
+                and entity_entry.translation_key == "effect"
+            ):
+                effect_id = entity_entry.entity_id
+                _LOGGER.debug(
+                    "found Matter effect entity: %s",
+                    effect_id,
+                )
+
+        return MatterSwitchInfo(
+            effect_id=effect_id,
+        )
 
     def has_notification(self, slug: Slug) -> bool:
         return slug in self._coordinators
@@ -938,9 +1007,12 @@ class LampieOrchestrator:
         service_command = {
             Integration.ZHA: self._zha_service_command,
             Integration.Z2M: self._z2m_service_command,
+            Integration.ZWAVE: self._zwave_service_command,
+            Integration.MATTER: self._matter_service_command,
         }[switch_info.integration]
 
         await service_command(
+            switch_id=switch_id,
             switch_info=switch_info,
             device_info=device_info,
             led_mode=led_mode,
@@ -950,6 +1022,7 @@ class LampieOrchestrator:
     async def _zha_service_command(
         self,
         *,
+        switch_id: SwitchId,
         switch_info: LampieSwitchInfo,  # noqa: ARG002
         device_info: dr.DeviceEntry,
         led_mode: _LEDMode,
@@ -959,7 +1032,9 @@ class LampieOrchestrator:
         ieee = id_tuple[1]
         zha_params = {_ZHA_PARAM_KEYS[k]: v for k, v in params.items()}
 
-        _LOGGER.log(TRACE, "zha.issue_zigbee_cluster_command: %s", led_mode)
+        _LOGGER.log(
+            TRACE, "zha.issue_zigbee_cluster_command: %s, mode=%s", switch_id, led_mode
+        )
         await self._hass.services.async_call(
             ZHA_DOMAIN,
             "issue_zigbee_cluster_command",
@@ -979,6 +1054,7 @@ class LampieOrchestrator:
     async def _z2m_service_command(
         self,
         *,
+        switch_id: SwitchId,
         switch_info: LampieSwitchInfo,
         device_info: dr.DeviceEntry | None,  # noqa: ARG002
         led_mode: _LEDMode,
@@ -996,7 +1072,7 @@ class LampieOrchestrator:
         zha_info = switch_info.integration_info
         topic = f"{zha_info.full_topic}/set"
 
-        _LOGGER.log(TRACE, "mqtt.publish: %s", topic)
+        _LOGGER.log(TRACE, "mqtt.publish: %s for %s", topic, switch_id)
         await self._hass.services.async_call(
             MQTT_DOMAIN,
             "publish",
@@ -1005,6 +1081,137 @@ class LampieOrchestrator:
                 "payload": json_dumps({command: z2m_params}),
             },
             blocking=True,
+        )
+
+    async def _zwave_service_command(
+        self,
+        *,
+        switch_id: SwitchId,
+        switch_info: LampieSwitchInfo,  # noqa: ARG002
+        device_info: dr.DeviceEntry,
+        led_mode: _LEDMode,
+        params: dict[str, Any],
+    ) -> None:
+        model = next(
+            iter({model for model in INOVELLI_MODELS if model in device_info.model}),
+            None,
+        )
+
+        assert model is not None, (
+            f"failed to lookup model switch {switch_id}: {device_info.model}"
+        )
+        effect_mapping = ZWAVE_EFFECT_MAPPING.get(model, {})
+        led_effect = params["effect"]
+        led_effect = effect_mapping.get(led_effect, led_effect)
+
+        # different models target different parameters & targeting individual
+        # LEDs is also through different parameters. pull out the one for the
+        # model & setting all LEDs, then update to the individual parameter
+        # if the switch supports it (or just set the first LED).
+        if "LZW36" in model:
+            combo_button = switch_id.split(".", 1)[0]
+            parameter_key = f"{model}_{combo_button}"
+        else:
+            parameter_key = model
+
+        parameter = ZWAVE_EFFECT_PARAMETERS.get(parameter_key)
+
+        if led_mode == _LEDMode.INDIVIDUAL:
+            led_number = params["led"]
+            individual_parameter = ZWAVE_EFFECT_PARAMETERS.get(
+                f"{parameter_key}_individual_{led_number + 1}"
+            )
+
+            if individual_parameter is not None:
+                parameter = individual_parameter
+            elif led_number != 0:
+                _LOGGER.warning(
+                    "skipping setting LED_%s (idx %s) on for model %s: "
+                    "individual LEDs unsupported",
+                    led_number + 1,
+                    led_number,
+                    model,
+                )
+                return
+
+        assert parameter is not None, (
+            f"failed to lookup notification parameter for {model}"
+        )
+
+        _LOGGER.log(
+            TRACE,
+            "zwave_js.bulk_set_partial_config_parameters: parameter=%s for model %s",
+            parameter,
+            model,
+        )
+
+        if model in {  # older models have a different value calculation
+            "LZW30-SN",  # red on/off switch
+            "LZW31-SN",  # red dimmer
+            "LZW36",  # red fan/light combo
+        }:
+            value = (
+                params["color"]
+                + (int(params["level"] / 10) << 8)
+                + (params["duration"] << 16)
+                + (led_effect << 24)
+            )
+        else:
+            value = (
+                params["duration"]
+                + (params["level"] << 8)
+                + (params["color"] << 16)
+                + (led_effect << 24)
+            )
+
+        await self._hass.services.async_call(
+            ZWAVE_DOMAIN,
+            "bulk_set_partial_config_parameters",
+            {
+                "device_id": device_info.id,
+                "parameter": parameter,
+                "value": value,
+            },
+        )
+
+    async def _matter_service_command(
+        self,
+        *,
+        switch_id: SwitchId,
+        switch_info: LampieSwitchInfo,
+        device_info: dr.DeviceEntry,
+        led_mode: _LEDMode,
+        params: dict[str, Any],
+    ) -> None:
+        if led_mode == _LEDMode.INDIVIDUAL and (led_number := params["led"]) != 0:
+            _LOGGER.warning(
+                "skipping setting LED_%s (idx %s) on for model %s: "
+                "individual LEDs unsupported",
+                led_number + 1,
+                led_number,
+                device_info.model,
+            )
+            return
+
+        switch_info = self.switch_info(switch_id)
+
+        service_call_action = "turn_on"
+        service_call_data = {
+            "brightness_pct": params["level"],
+            "hs_color": [round(((params["color"] / 255) * 360), 1), 100],
+        }
+
+        if params["effect"] == Effect.CLEAR.value:
+            service_call_action = "turn_off"
+            service_call_data = {}
+
+        await self._hass.services.async_call(
+            LIGHT_DOMAIN,
+            service_call_action,
+            {
+                "entity_id": switch_info.integration_info.effect_id,
+                **service_call_data,
+            },
         )
 
     def _switch_command_led_params(
@@ -1047,9 +1254,17 @@ class LampieOrchestrator:
             z2m_info: Z2MSwitchInfo = integration_info
             return bool(z2m_info.local_protection_enabled)
 
+        def _zwave() -> bool:
+            return False  # unsupported for now
+
+        def _matter() -> bool:
+            return False  # unsupported for now
+
         return {
             Integration.ZHA: _zha,
             Integration.Z2M: _z2m,
+            Integration.ZWAVE: _zwave,
+            Integration.MATTER: _matter,
         }[integration]()
 
     def _double_tap_clear_notifications_disabled(self, switch_id: SwitchId) -> bool:
@@ -1072,9 +1287,17 @@ class LampieOrchestrator:
             z2m_info: Z2MSwitchInfo = integration_info
             return bool(z2m_info.double_tap_clear_notifications_disabled)
 
+        def _zwave() -> bool:
+            return False  # unsupported for now
+
+        def _matter() -> bool:
+            return False  # unsupported for now
+
         return {
             Integration.ZHA: _zha,
             Integration.Z2M: _z2m,
+            Integration.ZWAVE: _zwave,
+            Integration.MATTER: _matter,
         }[integration]()
 
     def _any_has_expiration_messaging(self, switches: Sequence[SwitchId]) -> bool:
@@ -1087,6 +1310,8 @@ class LampieOrchestrator:
                 `led_effect_complete_{ALL|LED_1-7}` commands.
             Z2M: Processes these and turns them into
                 `{"notificationComplete": "{ALL|LED_1-7}"}` messages.
+            ZWAVE: May or may not create these messages.
+            MATTER: May or may not create these messages.
 
         Returns:
             A boolean indicating if any of the switches are part of such an
@@ -1210,6 +1435,80 @@ class LampieOrchestrator:
                 switch_id,
                 integration_info=zha_info,
             )
+
+    @callback
+    def _filter_zwave_events(
+        self,
+        event_data: ZWaveEventData,
+    ) -> bool:
+        switch_key = _SwitchKey(_SwitchKeyType.DEVICE_ID, event_data["device_id"])
+        command = ZWAVE_COMMAND_MAP.get(
+            (
+                event_data["property_key_name"],
+                event_data["value"],
+            )
+        )
+        return switch_key in self._switch_ids and command in DISMISSAL_COMMANDS
+
+    @callback
+    async def _handle_zwave_event(self, event: Event[ZWaveEventData]) -> None:
+        device_id = event.data["device_id"]
+        switch_key = _SwitchKey(_SwitchKeyType.DEVICE_ID, device_id)
+        switch_id = self._switch_ids[switch_key]
+        command = ZWAVE_COMMAND_MAP[
+            event.data["property_key_name"],
+            event.data["value"],
+        ]
+        await self._handle_generic_event(
+            command=command,
+            switch_id=switch_id,
+            integration=Integration.ZWAVE,
+        )
+
+    @callback
+    def _filter_matter_events(
+        self,
+        event_data: MatterEventData,
+    ) -> bool:
+        entity_id = event_data["entity_id"]
+
+        if (
+            not entity_id.startswith("event.")
+            or not (entity_registry := er.async_get(self._hass))
+            or not (event_entity := entity_registry.async_get(entity_id))
+            or not (
+                switch_key := _SwitchKey(
+                    _SwitchKeyType.DEVICE_ID, event_entity.device_id
+                )
+            )
+        ):
+            return False
+
+        state = event_data["new_state"]
+        attributes = state["attributes"]
+        command = MATTER_COMMAND_MAP.get(
+            (event_entity.translation_key, attributes.get("event_type"))
+        )
+        return switch_key in self._switch_ids and command in DISMISSAL_COMMANDS
+
+    @callback
+    async def _handle_matter_event(self, event: Event[MatterEventData]) -> None:
+        entity_id = event.data["entity_id"]
+        entity_registry = er.async_get(self._hass)
+        event_entity = entity_registry.async_get(entity_id)
+        device_id = event_entity.device_id
+        switch_key = _SwitchKey(_SwitchKeyType.DEVICE_ID, device_id)
+        switch_id = self._switch_ids[switch_key]
+        state = event.data["new_state"]
+        attributes = state["attributes"]
+        command = MATTER_COMMAND_MAP[
+            event_entity.translation_key, attributes["event_type"]
+        ]
+        await self._handle_generic_event(
+            command=command,
+            switch_id=switch_id,
+            integration=Integration.MATTER,
+        )
 
     async def _handle_generic_event(
         self,

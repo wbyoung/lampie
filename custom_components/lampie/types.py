@@ -250,6 +250,8 @@ class Integration(StrEnum):
 
     ZHA = auto()
     Z2M = auto()
+    ZWAVE = auto()
+    MATTER = auto()
 
 
 @dataclass(frozen=True)
@@ -293,6 +295,18 @@ class Z2MSwitchInfo:
     full_topic: str
     local_protection_enabled: bool | None = None
     double_tap_clear_notifications_disabled: bool | None = None
+
+
+@dataclass(frozen=True)
+class ZWaveSwitchInfo:
+    """ZWave switch info data class."""
+
+
+@dataclass(frozen=True)
+class MatterSwitchInfo:
+    """Matter switch info data class."""
+
+    effect_id: EntityId | None = None
 
 
 @dataclass(frozen=True)
